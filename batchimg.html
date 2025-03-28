@@ -4,166 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batch Image Padder</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
     <style>
         html, body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f5f5f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #222;
+        }
+        h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        .settings-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 15px;
+            user-select: none;
+            font-size: 14px;
+        }
+        input[type="radio"], 
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .side-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .side-input {
+            display: flex;
+            align-items: center;
+        }
+        .side-input label {
+            width: 110px;
+        }
+        .upload-container {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .upload-button {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            max-width: 130px;
+        }
+        .upload-button:hover {
+            background-color: #e4e6eb;
+        }
+        .icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 8px;
         }
         .hidden {
             display: none;
         }
-        .image-container {
-            position: relative;
+        .file-entry {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
         }
-        .image-container img {
+        .file-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .file-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toggle-btn:hover {
+            color: #333;
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ff4d4d;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .remove-btn:hover {
+            color: #e60000;
+        }
+        .individual-settings {
+            margin-top: 12px;
+            margin-left: 24px;
+            padding-left: 12px;
+            border-left: 2px solid #eee;
+        }
+        .process-btn {
+            background-color: #4a7eff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+        .process-btn:hover {
+            background-color: #3a6eef;
+        }
+        .process-btn:disabled {
+            background-color: #a0b8ff;
+            cursor: not-allowed;
+        }
+        .processed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .download-all-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .download-all-btn:hover {
+            background-color: #218838;
+        }
+        .processed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .processed-item {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        .processed-image {
             max-width: 100%;
             height: auto;
+            margin-bottom: 10px;
         }
-        input[type="number"] {
-            width: 80px;
+        .processed-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        label {
-            user-select: none;
+        .download-btn {
+            background-color: #4a7eff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .download-btn:hover {
+            background-color: #3a6eef;
+        }
+        .file-name {
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 200px;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto p-4 max-w-2xl">
-        <h1 class="text-2xl font-bold mb-4 text-center">Batch Image Padder</h1>
+<body>
+    <div class="container">
+        <h1>Batch Image Padder</h1>
         
-        <div class="bg-white p-4 rounded-lg shadow-md">
+        <div class="card">
             <!-- Batch Settings -->
-            <div class="mb-4 space-y-3">
-                <div class="p-3 bg-gray-50 rounded">
-                    <h3 class="font-medium mb-2 text-lg">Batch Settings</h3>
-                    
-                    <div id="batchPaddingControls" class="space-y-2">
-                        <div class="flex gap-4">
-                            <label class="flex items-center">
-                                <input
-                                    type="radio"
-                                    name="batchPaddingMode"
-                                    value="universal"
-                                    checked
-                                    class="mr-1"
-                                />
-                                <span class="text-sm">Universal Padding</span>
-                            </label>
-                            <label class="flex items-center">
-                                <input
-                                    type="radio"
-                                    name="batchPaddingMode"
-                                    value="perSide"
-                                    class="mr-1"
-                                />
-                                <span class="text-sm">Per Side Padding</span>
-                            </label>
-                        </div>
+            <div class="settings-section">
+                <h3>Batch Settings</h3>
+                
+                <div id="batchPaddingControls">
+                    <div class="form-row">
+                        <label>
+                            <input type="radio" name="batchPaddingMode" value="universal" checked>
+                            Universal Padding
+                        </label>
+                        <label>
+                            <input type="radio" name="batchPaddingMode" value="perSide">
+                            Per Side Padding
+                        </label>
+                    </div>
 
-                        <div id="batchUniversalControls">
-                            <label class="block text-sm mb-1">Padding (pixels):</label>
-                            <input
-                                type="number"
-                                id="batchUniversalPadding"
-                                value="5"
-                                class="border rounded p-1 text-sm"
-                                min="0"
-                                max="50"
-                            />
+                    <div id="batchUniversalControls" class="form-group">
+                        <div class="side-input">
+                            <label>Padding (pixels):</label>
+                            <input type="number" id="batchUniversalPadding" value="5" min="0" max="100">
                         </div>
+                    </div>
 
-                        <div id="batchPerSideControls" class="grid grid-cols-2 gap-2 hidden">
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Top Padding:</label>
-                                <input
-                                    type="number"
-                                    id="batchPaddingTop"
-                                    value="5"
-                                    class="border rounded p-2 w-24"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Right Padding:</label>
-                                <input
-                                    type="number"
-                                    id="batchPaddingRight"
-                                    value="5"
-                                    class="border rounded p-2 w-24"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Bottom Padding:</label>
-                                <input
-                                    type="number"
-                                    id="batchPaddingBottom"
-                                    value="5"
-                                    class="border rounded p-2 w-24"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Left Padding:</label>
-                                <input
-                                    type="number"
-                                    id="batchPaddingLeft"
-                                    value="5"
-                                    class="border rounded p-2 w-24"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
+                    <div id="batchPerSideControls" class="side-controls hidden">
+                        <div class="side-input">
+                            <label>Top Padding:</label>
+                            <input type="number" id="batchPaddingTop" value="5" min="0" max="100">
+                        </div>
+                        <div class="side-input">
+                            <label>Right Padding:</label>
+                            <input type="number" id="batchPaddingRight" value="5" min="0" max="100">
+                        </div>
+                        <div class="side-input">
+                            <label>Bottom Padding:</label>
+                            <input type="number" id="batchPaddingBottom" value="5" min="0" max="100">
+                        </div>
+                        <div class="side-input">
+                            <label>Left Padding:</label>
+                            <input type="number" id="batchPaddingLeft" value="5" min="0" max="100">
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div>
-                    <label class="block text-sm mb-1">Max Width (pixels):</label>
-                    <input
-                        type="number"
-                        id="maxWidth"
-                        value="225"
-                        class="border rounded p-1 text-sm"
-                        min="50"
-                        max="600"
-                    />
+            <div class="form-group">
+                <div class="side-input">
+                    <label>Max Width (pixels):</label>
+                    <input type="number" id="maxWidth" value="300" min="50" max="1000">
                 </div>
+            </div>
 
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                    <input
-                        type="file"
-                        id="fileInput"
-                        accept="image/*"
-                        class="hidden"
-                        multiple
-                    />
-                    <label for="fileInput" class="cursor-pointer inline-block">
-                        <div class="bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition-colors inline-flex flex-col items-center" style="max-width: 150px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <p class="mt-2 text-sm text-gray-600">Click to upload images</p>
-                        </div>
-                    </label>
-                </div>
+            <div class="upload-container">
+                <input type="file" id="fileInput" accept="image/*" class="hidden" multiple>
+                <label for="fileInput" class="upload-button">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Click to upload images</span>
+                </label>
             </div>
 
             <!-- Selected Files -->
-            <div id="fileListContainer" class="mb-4 hidden">
-                <h3 class="font-medium mb-2">Selected Files:</h3>
-                <div id="fileList" class="space-y-2"></div>
+            <div id="fileListContainer" class="hidden">
+                <h3>Selected Files</h3>
+                <div id="fileList"></div>
             </div>
 
             <!-- Process Button -->
-            <button
-                id="processButton"
-                class="w-full bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600 transition-colors disabled:bg-blue-300 hidden"
-            >
+            <button id="processButton" class="process-btn hidden">
                 Process All Images
             </button>
 
@@ -171,150 +323,103 @@
             <canvas id="canvas" class="hidden"></canvas>
 
             <!-- Processed Images -->
-            <div id="processedImagesContainer" class="mt-6 hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-medium">Processed Images:</h3>
-                    <button
-                        id="downloadAllButton"
-                        class="bg-green-500 text-white rounded py-2 px-4 hover:bg-green-600 transition-colors text-sm"
-                    >
+            <div id="processedImagesContainer" class="hidden">
+                <div class="processed-header">
+                    <h3>Processed Images</h3>
+                    <button id="downloadAllButton" class="download-all-btn">
                         Download All
                     </button>
                 </div>
                 
-                <div id="processedImagesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="processedImagesList" class="processed-grid"></div>
             </div>
         </div>
-        
-        <!-- File Entry Template -->
-        <template id="fileEntryTemplate">
-            <div class="file-entry border rounded p-2">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <button class="text-gray-500 hover:text-gray-700 toggle-expand">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 chevron-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 chevron-down hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <span class="text-sm file-name"></span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <label class="flex items-center text-sm">
-                            <input
-                                type="checkbox"
-                                class="mr-2 use-batch-settings"
-                                checked
-                            />
-                            Use Batch Settings
-                        </label>
-                        <button class="text-red-500 hover:text-red-700 remove-file">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
+    </div>
+
+    <!-- File Entry Template -->
+    <template id="fileEntryTemplate">
+        <div class="file-entry">
+            <div class="file-header">
+                <div class="file-header-left">
+                    <button class="toggle-btn toggle-expand">
+                        <svg class="chevron-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <svg class="chevron-down hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <span class="file-name"></span>
                 </div>
-
-                <div class="individual-settings mt-4 pl-6 border-l-2 border-gray-200 hidden">
-                    <div class="individual-padding-controls space-y-4">
-                        <div class="flex gap-4">
-                            <label class="flex items-center">
-                                <input
-                                    type="radio"
-                                    name="paddingMode"
-                                    value="universal"
-                                    checked
-                                    class="mr-2 padding-mode-universal"
-                                />
-                                Universal Padding
-                            </label>
-                            <label class="flex items-center">
-                                <input
-                                    type="radio"
-                                    name="paddingMode"
-                                    value="perSide"
-                                    class="mr-2 padding-mode-perside"
-                                />
-                                Per Side Padding
-                            </label>
-                        </div>
-
-                        <div class="universal-controls">
-                            <label class="block text-sm font-medium mb-1">Padding (pixels):</label>
-                            <input
-                                type="number"
-                                class="border rounded p-2 w-24 universal-padding"
-                                value="5"
-                                min="0"
-                                max="50"
-                            />
-                        </div>
-
-                        <div class="perside-controls grid grid-cols-2 gap-4 hidden">
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Top Padding:</label>
-                                <input
-                                    type="number"
-                                    class="border rounded p-2 w-24 padding-top"
-                                    value="5"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Right Padding:</label>
-                                <input
-                                    type="number"
-                                    class="border rounded p-2 w-24 padding-right"
-                                    value="5"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Bottom Padding:</label>
-                                <input
-                                    type="number"
-                                    class="border rounded p-2 w-24 padding-bottom"
-                                    value="5"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Left Padding:</label>
-                                <input
-                                    type="number"
-                                    class="border rounded p-2 w-24 padding-left"
-                                    value="5"
-                                    min="0"
-                                    max="50"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </template>
-
-        <!-- Processed Image Template -->
-        <template id="processedImageTemplate">
-            <div class="border rounded p-4">
-                <div class="image-container mb-2">
-                    <img class="processed-image" alt="Processed image" />
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="text-sm text-gray-600 image-dimensions"></div>
-                    <button class="bg-blue-500 text-white rounded py-1 px-3 text-sm hover:bg-blue-600 transition-colors download-image">
-                        Download
+                <div class="file-header-right">
+                    <label>
+                        <input type="checkbox" class="use-batch-settings" checked>
+                        Use Batch Settings
+                    </label>
+                    <button class="remove-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
                     </button>
                 </div>
             </div>
-        </template>
-    </div>
+
+            <div class="individual-settings hidden">
+                <div class="form-row">
+                    <label>
+                        <input type="radio" class="padding-mode-universal" name="individualPaddingMode" value="universal" checked>
+                        Universal Padding
+                    </label>
+                    <label>
+                        <input type="radio" class="padding-mode-perside" name="individualPaddingMode" value="perSide">
+                        Per Side Padding
+                    </label>
+                </div>
+
+                <div class="universal-controls form-group">
+                    <div class="side-input">
+                        <label>Padding (pixels):</label>
+                        <input type="number" class="universal-padding" value="5" min="0" max="100">
+                    </div>
+                </div>
+
+                <div class="perside-controls side-controls hidden">
+                    <div class="side-input">
+                        <label>Top Padding:</label>
+                        <input type="number" class="padding-top" value="5" min="0" max="100">
+                    </div>
+                    <div class="side-input">
+                        <label>Right Padding:</label>
+                        <input type="number" class="padding-right" value="5" min="0" max="100">
+                    </div>
+                    <div class="side-input">
+                        <label>Bottom Padding:</label>
+                        <input type="number" class="padding-bottom" value="5" min="0" max="100">
+                    </div>
+                    <div class="side-input">
+                        <label>Left Padding:</label>
+                        <input type="number" class="padding-left" value="5" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Processed Image Template -->
+    <template id="processedImageTemplate">
+        <div class="processed-item">
+            <div class="image-container">
+                <img class="processed-image" alt="Processed image">
+            </div>
+            <div class="processed-footer">
+                <div class="image-dimensions"></div>
+                <button class="download-btn download-image">
+                    Download
+                </button>
+            </div>
+        </div>
+    </template>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -338,10 +443,6 @@
             const batchPaddingRight = document.getElementById('batchPaddingRight');
             const batchPaddingBottom = document.getElementById('batchPaddingBottom');
             const batchPaddingLeft = document.getElementById('batchPaddingLeft');
-            
-            // Templates
-            const fileEntryTemplate = document.getElementById('fileEntryTemplate');
-            const processedImageTemplate = document.getElementById('processedImageTemplate');
             
             // State
             let fileEntries = [];
@@ -388,6 +489,14 @@
                 }
             });
             
+            // Fix for the "click anywhere to upload" issue by stopping event propagation
+            document.addEventListener('click', function(e) {
+                // Only proceed with file input click if the upload button was clicked
+                if (!e.target.closest('.upload-button')) {
+                    e.stopPropagation();
+                }
+            }, true);
+            
             // Add file entry to DOM
             function addFileEntryToDOM(entry, index) {
                 const clone = document.importNode(fileEntryTemplate.content, true);
@@ -405,7 +514,8 @@
                 const chevronDown = toggleExpandBtn.querySelector('.chevron-down');
                 const individualSettings = fileEntry.querySelector('.individual-settings');
                 
-                toggleExpandBtn.addEventListener('click', () => {
+                toggleExpandBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent bubbling
                     chevronRight.classList.toggle('hidden');
                     chevronDown.classList.toggle('hidden');
                     individualSettings.classList.toggle('hidden');
@@ -432,6 +542,11 @@
                 const perSideRadio = fileEntry.querySelector('.padding-mode-perside');
                 const universalControls = fileEntry.querySelector('.universal-controls');
                 const perSideControls = fileEntry.querySelector('.perside-controls');
+                
+                // Ensure unique name attributes for radio buttons in each file entry
+                const radioName = `paddingMode-${index}`;
+                universalRadio.name = radioName;
+                perSideRadio.name = radioName;
                 
                 // Set initial mode
                 if (entry.paddingMode === 'universal') {
@@ -492,8 +607,9 @@
                 });
                 
                 // Remove file
-                const removeBtn = fileEntry.querySelector('.remove-file');
-                removeBtn.addEventListener('click', () => {
+                const removeBtn = fileEntry.querySelector('.remove-btn');
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent bubbling
                     removeFile(index);
                 });
                 
