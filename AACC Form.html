@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Integration Action Planning Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], 
+        input[type="email"], 
+        textarea, 
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+        .checkbox-option {
+            margin-bottom: 5px;
+        }
+        .checkbox-option label {
+            font-weight: normal;
+            display: inline;
+            margin-left: 5px;
+        }
+        button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1a252f;
+        }
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+        .hidden {
+            display: none;
+        }
+        #emailSection {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #downloadSection {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #downloadBtn {
+            background-color: #27ae60;
+            margin-top: 10px;
+        }
+        #downloadBtn:hover {
+            background-color: #219653;
+        }
+        #sendEmailBtn {
+            background-color: #3498db;
+            margin-top: 10px;
+        }
+        #sendEmailBtn:hover {
+            background-color: #2980b9;
+        }
+        .email-input {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .add-row-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            width: auto;
+        }
+        .delete-row-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            width: auto;
+        }
+        .security-notice {
+            background-color: #e8f7ee;
+            border-left: 4px solid #27ae60;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        .security-notice h3 {
+            margin-top: 0;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Integration Action Planning Tool</h1>
+    <div class="instructions">
+        <p>Complete this form to generate a personalized AI integration action plan for your 2-year college. 
+        This template will help you develop a structured approach to implementing AI solutions on your campus.</p>
+        
+        <div class="security-notice">
+            <h3>Data Privacy & Security</h3>
+            <p><strong>Your information remains private:</strong> All data processing happens entirely in your browser. Your responses are:</p>
+            <ul>
+                <li>Not transmitted to our servers</li>
+                <li>Not stored in any database</li>
+                <li>Not visible to the workshop facilitators</li>
+                <li>Only sent to your email if you choose that option</li>
+            </ul>
+            <p>This form is hosted on GitHub Pages as a static page with no backend processing capability, ensuring your responses remain completely confidential. Your artifact will only be accessible to you, and you may share as you see fit.</p>
+        </div>
+    </div>
+    
+    <form id="aiPlanningForm">
+        <!-- Institution Information -->
+        <div class="form-section">
+            <h2>Institution Information</h2>
+            <label for="institutionName">Institution Name:</label>
+            <input type="text" id="institutionName" required>
+            
+            <label for="respondentName">Your Name:</label>
+            <input type="text" id="respondentName" required>
+            
+            <label for="respondentRole">Your Role at the Institution:</label>
+            <input type="text" id="respondentRole" required>
+            
+            <label for="respondentEmail">Email:</label>
+            <input type="email" id="respondentEmail">
+        </div>
+        
+        <!-- Section 1: Target Area Selection -->
+        <div class="form-section">
+            <h2>Section 1: Target Area Selection</h2>
+            
+            <label>Priority Area for AI Integration:</label>
+            <div class="checkbox-group">
+                <div class="checkbox-option">
+                    <input type="radio" id="area-instruction" name="priorityArea" value="Instruction & Curriculum" required>
+                    <label for="area-instruction">Instruction & Curriculum</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="radio" id="area-student" name="priorityArea" value="Student Services">
+                    <label for="area-student">Student Services</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="radio" id="area-admin" name="priorityArea" value="Administrative Operations">
+                    <label for="area-admin">Administrative Operations</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="radio" id="area-research" name="priorityArea" value="Institutional Research">
+                    <label for="area-research">Institutional Research</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="radio" id="area-professional" name="priorityArea" value="Professional Development">
+                    <label for="area-professional">Professional Development</label>
+                </div>
+                <div class="checkbox-option">
+                    <input type="radio" id="area-other" name="priorityArea" value="Other">
+                    <label for="area-other">Other</label>
+                    <input type="text" id="area-other-text" placeholder="Please specify" style="display:none; width:50%; margin-left:10px;">
+                </div>
+            </div>
+            
+            <label for="rationale">Rationale for Selection:</label>
+            <textarea id="rationale" placeholder="Why is this area a priority? What specific challenges or opportunities exist?" required></textarea>
+        </div>
+        
+        <!-- Section 2: Current State Assessment -->
+        <div class="form-section">
+            <h2>Section 2: Current State Assessment</h2>
+            
+            <label for="existingProcesses">Existing Processes:</label>
+            <textarea id="existingProcesses" placeholder="Brief description of current workflows or systems in this area" required></textarea>
+            
+            <label for="painPoints">Pain Points/Opportunities:</label>
+            <textarea id="painPoints" placeholder="Specific issues that AI could address or enhance" required></textarea>
+            
+            <label for="availableResources">Available Resources:</label>
+            <textarea id="availableResources" placeholder="What technology, data, expertise, or funding is already available?" required></textarea>
+        </div>
+        
+        <!-- Section 3: Implementation Planning -->
+        <div class="form-section">
+            <h2>Section 3: Implementation Planning</h2>
+            
+            <label for="aiSolution">Specific AI Solution/Approach:</label>
+            <textarea id="aiSolution" placeholder="What type of AI tool or approach will be implemented?" required></textarea>
+            
+            <label>Key Stakeholders:</label>
+            <table id="stakeholdersTable">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Name/Position</th>
+                        <th>Responsibility</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="stakeholderRole[]" required></td>
+                        <td><input type="text" name="stakeholderName[]" required></td>
+                        <td><input type="text" name="stakeholderResponsibility[]" required></td>
+                        <td><button type="button" class="delete-row-btn">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addStakeholderRow" class="add-row-btn">Add Stakeholder</button>
+            
+            <label>Timeline & Milestones:</label>
+            <table id="timelineTable">
+                <thead>
+                    <tr>
+                        <th>Timeframe</th>
+                        <th>Action Steps</th>
+                        <th>Responsible Party</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>30 days</td>
+                        <td><input type="text" name="actionStep[]" required></td>
+                        <td><input type="text" name="responsibleParty[]" required></td>
+                        <td><button type="button" class="delete-row-btn">Delete</button></td>
+                    </tr>
+                    <tr>
+                        <td>60 days</td>
+                        <td><input type="text" name="actionStep[]" required></td>
+                        <td><input type="text" name="responsibleParty[]" required></td>
+                        <td><button type="button" class="delete-row-btn">Delete</button></td>
+                    </tr>
+                    <tr>
+                        <td>90 days</td>
+                        <td><input type="text" name="actionStep[]" required></td>
+                        <td><input type="text" name="responsibleParty[]" required></td>
+                        <td><button type="button" class="delete-row-btn">Delete</button></td>
+                    </tr>
+                    <tr>
+                        <td>6 months</td>
+                        <td><input type="text" name="actionStep[]" required></td>
+                        <td><input type="text" name="responsibleParty[]" required></td>
+                        <td><button type="button" class="delete-row-btn">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addTimelineRow" class="add-row-btn">Add Timeline Item</button>
+        </div>
+        
+        <!-- Section 4: Success Measures & Evaluation -->
+        <div class="form-section">
+            <h2>Section 4: Success Measures & Evaluation</h2>
+            
+            <label for="desiredOutcomes">Desired Outcomes:</label>
+            <textarea id="desiredOutcomes" placeholder="Specific, measurable results expected from this implementation" required></textarea>
+            
+            <label for="evaluationMethod">Evaluation Method:</label>
+            <textarea id="evaluationMethod" placeholder="How will you measure success?" required></textarea>
+            
+            <label>Potential Challenges & Mitigation Strategies:</label>
+            <table id="challengesTable">
+                <thead>
+                    <tr>
+                        <th>Potential Challenge</th>
+                        <th>Mitigation Strategy</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="challenge[]" required></td>
+                        <td><input type="text" name="mitigation[]" required></td>
+                        <td><button type="button" class="delete-row-btn">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addChallengeRow" class="add-row-btn">Add Challenge</button>
+        </div>
+        
+        <!-- Section 5: Sustainability & Scaling -->
+        <div class="form-section">
+            <h2>Section 5: Sustainability & Scaling</h2>
+            
+            <label for="sustainabilityResources">Resources Needed for Sustainability:</label>
+            <textarea id="sustainabilityResources" required></textarea>
+            
+            <label for="expansionOpportunities">Opportunities for Expansion:</label>
+            <textarea id="expansionOpportunities" placeholder="If successful, how might this initiative be scaled or expanded?" required></textarea>
+            
+            <label for="knowledgeSharing">Knowledge Sharing Plan:</label>
+            <textarea id="knowledgeSharing" placeholder="How will lessons learned be documented and shared?" required></textarea>
+        </div>
+        
+        <button type="submit" id="generateBtn">Generate AI Integration Action Plan</button>
+    </form>
+    
+    <div id="resultSection" class="hidden">
+        <div class="form-section">
+            <h2>Your AI Integration Action Plan is Ready!</h2>
+            <p>You can now download your plan or have it emailed to you.</p>
+            
+            <div id="downloadSection">
+                <button id="downloadBtn">Download Action Plan (PDF)</button>
+            </div>
+            
+            <div id="emailSection">
+                <p>Or enter your email to receive the report:</p>
+                <div class="email-input">
+                    <input type="email" id="emailInput" placeholder="your@email.com">
+                    <button id="sendEmailBtn">Send Plan to My Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Include CDN scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate a unique form ID based on institution name or timestamp
+            let formId = 'ai-plan-form';
+            
+            // Handle "Other" option for priority area
+            const areaOtherRadio = document.getElementById('area-other');
+            const areaOtherText = document.getElementById('area-other-text');
+            
+            document.querySelectorAll('input[name="priorityArea"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    if (areaOtherRadio.checked) {
+                        areaOtherText.style.display = 'inline-block';
+                        areaOtherText.required = true;
+                    } else {
+                        areaOtherText.style.display = 'none';
+                        areaOtherText.required = false;
+                    }
+                    saveFormData(); // Save when selection changes
+                });
+            });
+            
+            // Add delete functionality to all delete buttons
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('delete-row-btn')) {
+                    const row = e.target.closest('tr');
+                    const tbody = row.parentNode;
+                    
+                    if (tbody.rows.length > 1) {
+                        tbody.removeChild(row);
+                        saveFormData(); // Save after deleting a row
+                    } else {
+                        alert('You must have at least one row in this table.');
+                    }
+                }
+            });
+            
+            // Add stakeholder row
+            document.getElementById('addStakeholderRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#stakeholdersTable tbody');
+                const row = tbody.insertRow();
+                
+                // Create cells
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+                
+                // Add content to cells
+                cell1.innerHTML = '<input type="text" name="stakeholderRole[]" required>';
+                cell2.innerHTML = '<input type="text" name="stakeholderName[]" required>';
+                cell3.innerHTML = '<input type="text" name="stakeholderResponsibility[]" required>';
+                cell4.innerHTML = '<button type="button" class="delete-row-btn">Delete</button>';
+                
+                saveFormData(); // Save after adding a row
+            });
+            
+            // Add timeline row
+            document.getElementById('addTimelineRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#timelineTable tbody');
+                const row = tbody.insertRow();
+                
+                // Create cells
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+                
+                // Create timeframe dropdown
+                const timeframeSelect = document.createElement('select');
+                timeframeSelect.name = 'timeframe[]';
+                
+                const timeframeOptions = ['30 days', '60 days', '90 days', '6 months', '1 year'];
+                timeframeOptions.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt;
+                    option.textContent = opt;
+                    timeframeSelect.appendChild(option);
+                });
+                
+                // Add content to cells
+                cell1.appendChild(timeframeSelect);
+                cell2.innerHTML = '<input type="text" name="actionStep[]" required>';
+                cell3.innerHTML = '<input type="text" name="responsibleParty[]" required>';
+                cell4.innerHTML = '<button type="button" class="delete-row-btn">Delete</button>';
+                
+                saveFormData(); // Save after adding a row
+            });
+            
+            // Add challenge row
+            document.getElementById('addChallengeRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#challengesTable tbody');
+                const row = tbody.insertRow();
+                
+                // Create cells
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                
+                // Add content to cells
+                cell1.innerHTML = '<input type="text" name="challenge[]" required>';
+                cell2.innerHTML = '<input type="text" name="mitigation[]" required>';
+                cell3.innerHTML = '<button type="button" class="delete-row-btn">Delete</button>';
+                
+                saveFormData(); // Save after adding a row
+            });
+            
+            // Auto-populate email field in result section
+            document.getElementById('respondentEmail').addEventListener('input', function() {
+                document.getElementById('emailInput').value = this.value;
+            });
+            
+            // Form submission
+            document.getElementById('aiPlanningForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Auto-populate email field in result section
+                const emailValue = document.getElementById('respondentEmail').value;
+                if (emailValue) {
+                    document.getElementById('emailInput').value = emailValue;
+                }
+                
+                // Show the result section
+                document.getElementById('resultSection').classList.remove('hidden');
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Download PDF button
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                generatePDF();
+            });
+            
+            // Send email button
+            document.getElementById('sendEmailBtn').addEventListener('click', function() {
+                const email = document.getElementById('emailInput').value || document.getElementById('respondentEmail').value;
+                
+                if (!email) {
+                    alert('Please enter your email address');
+                    return;
+                }
+                
+                // In a real implementation, this would send the email
+                // For now, we'll simulate success
+                alert(`Your AI Integration Action Plan would be sent to ${email}. This is a demo version without actual email sending functionality. Please download the PDF instead.`);
+            });
+            
+            // Add input event listeners to all form fields for auto-save
+            document.querySelectorAll('#aiPlanningForm input, #aiPlanningForm textarea, #aiPlanningForm select').forEach(element => {
+                element.addEventListener('input', function() {
+                    saveFormData();
+                });
+            });
+            
+            // Save form data to localStorage
+            function saveFormData() {
+                // Get all form input values
+                const formData = {
+                    institutionName: document.getElementById('institutionName').value,
+                    respondentName: document.getElementById('respondentName').value,
+                    respondentRole: document.getElementById('respondentRole').value,
+                    respondentEmail: document.getElementById('respondentEmail').value,
+                    priorityArea: getSelectedRadioValue('priorityArea'),
+                    otherAreaText: document.getElementById('area-other-text').value,
+                    rationale: document.getElementById('rationale').value,
+                    existingProcesses: document.getElementById('existingProcesses').value,
+                    painPoints: document.getElementById('painPoints').value,
+                    availableResources: document.getElementById('availableResources').value,
+                    aiSolution: document.getElementById('aiSolution').value,
+                    stakeholders: getTableData('#stakeholdersTable', ['stakeholderRole[]', 'stakeholderName[]', 'stakeholderResponsibility[]']),
+                    timeline: getTableData('#timelineTable', ['timeframe', 'actionStep[]', 'responsibleParty[]']),
+                    desiredOutcomes: document.getElementById('desiredOutcomes').value,
+                    evaluationMethod: document.getElementById('evaluationMethod').value,
+                    challenges: getTableData('#challengesTable', ['challenge[]', 'mitigation[]']),
+                    sustainabilityResources: document.getElementById('sustainabilityResources').value,
+                    expansionOpportunities: document.getElementById('expansionOpportunities').value,
+                    knowledgeSharing: document.getElementById('knowledgeSharing').value
+                };
+                
+                // Create a timestamp of when the data was last saved
+                const timestamp = new Date();
+                localStorage.setItem('formLastSaved', timestamp.toString());
+                
+                // Save to localStorage
+                try {
+                    localStorage.setItem(formId, JSON.stringify(formData));
+                    console.log('Form data saved at ' + timestamp.toLocaleTimeString());
+                } catch (e) {
+                    console.error('Error saving form data to localStorage', e);
+                }
+            }
+            
+            // Helper function to get selected radio button value
+            function getSelectedRadioValue(name) {
+                const radios = document.getElementsByName(name);
+                for (const radio of radios) {
+                    if (radio.checked) {
+                        return radio.value;
+                    }
+                }
+                return '';
+            }
+            
+            // Helper function to get table data
+            function getTableData(tableSelector, columnNames) {
+                const rows = document.querySelectorAll(`${tableSelector} tbody tr`);
+                const data = [];
+                
+                rows.forEach(row => {
+                    const rowData = {};
+                    
+                    // Handle different column types
+                    columnNames.forEach((columnName, index) => {
+                        if (columnName === 'timeframe') {
+                            // Handle timeframe which might be text or a select element
+                            const cell = row.cells[index];
+                            const select = cell.querySelector('select');
+                            if (select) {
+                                rowData[columnName] = select.value;
+                            } else {
+                                rowData[columnName] = cell.innerText.trim();
+                            }
+                        } else {
+                            // Handle regular input fields
+                            const input = row.querySelector(`input[name="${columnName}"]`);
+                            if (input) {
+                                rowData[columnName.replace('[]', '')] = input.value;
+                            }
+                        }
+                    });
+                    
+                    data.push(rowData);
+                });
+                
+                return data;
+            }
+            
+            // Load saved form data
+            function loadFormData() {
+                try {
+                    const savedData = localStorage.getItem(formId);
+                    if (savedData) {
+                        const formData = JSON.parse(savedData);
+                        const lastSaved = localStorage.getItem('formLastSaved');
+                        
+                        // Add notification that saved data was found
+                        if (lastSaved) {
+                            const notification = document.createElement('div');
+                            notification.className = 'notification';
+                            notification.innerHTML = `
+                                <div style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>Saved Data Restored!</strong> Your previous work from ${new Date(lastSaved).toLocaleString()} has been loaded.
+                                    </div>
+                                    <button id="clearFormData" style="background-color: #6c757d; border: none; color: white; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Clear Saved Data</button>
+                                </div>
+                            `;
+                            
+                            const instructionsDiv = document.querySelector('.instructions');
+                            instructionsDiv.parentNode.insertBefore(notification, instructionsDiv.nextSibling);
+                            
+                            // Add clear data button functionality
+                            document.getElementById('clearFormData').addEventListener('click', function() {
+                                if (confirm('Are you sure you want to clear all saved data? This cannot be undone.')) {
+                                    localStorage.removeItem(formId);
+                                    localStorage.removeItem('formLastSaved');
+                                    location.reload();
+                                }
+                            });
+                        }
+                        
+                        // Populate simple form fields
+                        document.getElementById('institutionName').value = formData.institutionName || '';
+                        document.getElementById('respondentName').value = formData.respondentName || '';
+                        document.getElementById('respondentRole').value = formData.respondentRole || '';
+                        document.getElementById('respondentEmail').value = formData.respondentEmail || '';
+                        document.getElementById('rationale').value = formData.rationale || '';
+                        document.getElementById('existingProcesses').value = formData.existingProcesses || '';
+                        document.getElementById('painPoints').value = formData.painPoints || '';
+                        document.getElementById('availableResources').value = formData.availableResources || '';
+                        document.getElementById('aiSolution').value = formData.aiSolution || '';
+                        document.getElementById('desiredOutcomes').value = formData.desiredOutcomes || '';
+                        document.getElementById('evaluationMethod').value = formData.evaluationMethod || '';
+                        document.getElementById('sustainabilityResources').value = formData.sustainabilityResources || '';
+                        document.getElementById('expansionOpportunities').value = formData.expansionOpportunities || '';
+                        document.getElementById('knowledgeSharing').value = formData.knowledgeSharing || '';
+                        
+                        // Set radio button
+                        if (formData.priorityArea) {
+                            const radio = document.querySelector(`input[name="priorityArea"][value="${formData.priorityArea}"]`);
+                            if (radio) {
+                                radio.checked = true;
+                                if (formData.priorityArea === 'Other') {
+                                    document.getElementById('area-other-text').style.display = 'inline-block';
+                                    document.getElementById('area-other-text').value = formData.otherAreaText || '';
+                                }
+                            }
+                        }
+                        
+                        // Populate tables
+                        populateTable('#stakeholdersTable', formData.stakeholders, [
+                            { name: 'stakeholderRole', type: 'input', inputName: 'stakeholderRole[]' },
+                            { name: 'stakeholderName', type: 'input', inputName: 'stakeholderName[]' },
+                            { name: 'stakeholderResponsibility', type: 'input', inputName: 'stakeholderResponsibility[]' }
+                        ]);
+                        
+                        populateTable('#timelineTable', formData.timeline, [
+                            { name: 'timeframe', type: 'text-or-select', options: ['30 days', '60 days', '90 days', '6 months', '1 year'] },
+                            { name: 'actionStep', type: 'input', inputName: 'actionStep[]' },
+                            { name: 'responsibleParty', type: 'input', inputName: 'responsibleParty[]' }
+                        ]);
+                        
+                        populateTable('#challengesTable', formData.challenges, [
+                            { name: 'challenge', type: 'input', inputName: 'challenge[]' },
+                            { name: 'mitigation', type: 'input', inputName: 'mitigation[]' }
+                        ]);
+                        
+                        console.log('Form data loaded successfully');
+                    }
+                } catch (e) {
+                    console.error('Error loading form data', e);
+                }
+            }
+            
+            // Helper function to populate a table with saved data
+            function populateTable(tableSelector, data, columns) {
+                if (!data || !data.length) return;
+                
+                const tbody = document.querySelector(`${tableSelector} tbody`);
+                // Clear default rows
+                tbody.innerHTML = '';
+                
+                // Add rows from saved data
+                data.forEach(rowData => {
+                    const row = tbody.insertRow();
+                    
+                    // Create cells based on column configuration
+                    columns.forEach((column, index) => {
+                        const cell = row.insertCell();
+                        
+                        if (column.type === 'input') {
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.name = column.inputName;
+                            input.value = rowData[column.name] || '';
+                            input.required = true;
+                            cell.appendChild(input);
+                        } 
+                        else if (column.type === 'text-or-select') {
+                            // For timeframe which could be static text or a dropdown
+                            if (index === 0 && ['30 days', '60 days', '90 days', '6 months'].includes(rowData[column.name])) {
+                                // Use static text for standard timeframes
+                                cell.textContent = rowData[column.name];
+                            } else {
+                                // Use dropdown for custom timeframes
+                                const select = document.createElement('select');
+                                select.name = 'timeframe[]';
+                                column.options.forEach(opt => {
+                                    const option = document.createElement('option');
+                                    option.value = opt;
+                                    option.textContent = opt;
+                                    if (rowData[column.name] === opt) {
+                                        option.selected = true;
+                                    }
+                                    select.appendChild(option);
+                                });
+                                cell.appendChild(select);
+                            }
+                        }
+                    });
+                    
+                    // Add delete button cell
+                    const deleteCell = row.insertCell();
+                    deleteCell.innerHTML = '<button type="button" class="delete-row-btn">Delete</button>';
+                });
+            }
+            
+            // Load saved data when the page loads
+            loadFormData();
+            
+            // Function to generate PDF from form data
+            function generatePDF() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                let yPosition = 20;
+                
+                // Helper function to add text with word wrap
+                function addText(text, x, y, maxWidth, lineHeight) {
+                    const lines = doc.splitTextToSize(text, maxWidth);
+                    doc.text(lines, x, y);
+                    return y + (lines.length * lineHeight);
+                }
+                
+                // Title and institution info
+                doc.setFontSize(20);
+                doc.setTextColor(44, 62, 80);
+                doc.text('AI Integration Action Plan', 105, yPosition, { align: 'center' });
+                yPosition += 10;
+                
+                const institution = document.getElementById('institutionName').value;
+                doc.setFontSize(16);
+                doc.text(institution, 105, yPosition, { align: 'center' });
+                yPosition += 10;
+                
+                const name = document.getElementById('respondentName').value;
+                const role = document.getElementById('respondentRole').value;
+                doc.setFontSize(12);
+                doc.text(`Prepared by: ${name}, ${role}`, 105, yPosition, { align: 'center' });
+                yPosition += 5;
+                
+                doc.text(`Date: ${new Date().toLocaleDateString()}`, 105, yPosition, { align: 'center' });
+                yPosition += 10;
+                
+                // Add divider
+                doc.setDrawColor(44, 62, 80);
+                doc.line(20, yPosition, 190, yPosition);
+                yPosition += 10;
+                
+                // Section 1: Target Area Selection
+                doc.setFontSize(16);
+                doc.setTextColor(44, 62, 80);
+                doc.text('Section 1: Target Area Selection', 20, yPosition);
+                yPosition += 10;
+                
+                // Get selected priority area
+                let priorityArea = '';
+                const radios = document.getElementsByName('priorityArea');
+                for (const radio of radios) {
+                    if (radio.checked) {
+                        priorityArea = radio.value;
+                        if (priorityArea === 'Other') {
+                            priorityArea += ': ' + document.getElementById('area-other-text').value;
+                        }
+                        break;
+                    }
+                }
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text(`Priority Area for AI Integration: ${priorityArea}`, 20, yPosition);
+                yPosition += 10;
+                
+                doc.text('Rationale for Selection:', 20, yPosition);
+                yPosition += 5;
+                
+                const rationale = document.getElementById('rationale').value;
+                yPosition = addText(rationale, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                // Start a new page if needed
+                if (yPosition > 260) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                
+                // Section 2: Current State Assessment
+                doc.setFontSize(16);
+                doc.setTextColor(44, 62, 80);
+                doc.text('Section 2: Current State Assessment', 20, yPosition);
+                yPosition += 10;
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Existing Processes:', 20, yPosition);
+                yPosition += 5;
+                
+                const processes = document.getElementById('existingProcesses').value;
+                yPosition = addText(processes, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Pain Points/Opportunities:', 20, yPosition);
+                yPosition += 5;
+                
+                const painPoints = document.getElementById('painPoints').value;
+                yPosition = addText(painPoints, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Available Resources:', 20, yPosition);
+                yPosition += 5;
+                
+                const resources = document.getElementById('availableResources').value;
+                yPosition = addText(resources, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                // Start a new page if needed
+                if (yPosition > 260) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                
+                // Section 3: Implementation Planning
+                doc.setFontSize(16);
+                doc.setTextColor(44, 62, 80);
+                doc.text('Section 3: Implementation Planning', 20, yPosition);
+                yPosition += 10;
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Specific AI Solution/Approach:', 20, yPosition);
+                yPosition += 5;
+                
+                const aiSolution = document.getElementById('aiSolution').value;
+                yPosition = addText(aiSolution, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Key Stakeholders:', 20, yPosition);
+                yPosition += 5;
+                
+                // Create stakeholders table
+                const stakeholderRows = document.querySelectorAll('#stakeholdersTable tbody tr');
+                if (stakeholderRows.length > 0) {
+                    doc.setFontSize(10);
+                    doc.text('Role', 20, yPosition);
+                    doc.text('Name/Position', 70, yPosition);
+                    doc.text('Responsibility', 130, yPosition);
+                    yPosition += 5;
+                    
+                    doc.setDrawColor(200, 200, 200);
+                    doc.line(20, yPosition, 190, yPosition);
+                    yPosition += 5;
+                    
+                    stakeholderRows.forEach(row => {
+                        const role = row.querySelector('input[name="stakeholderRole[]"]').value;
+                        const name = row.querySelector('input[name="stakeholderName[]"]').value;
+                        const responsibility = row.querySelector('input[name="stakeholderResponsibility[]"]').value;
+                        
+                        doc.text(role, 20, yPosition);
+                        doc.text(name, 70, yPosition);
+                        const respLines = doc.splitTextToSize(responsibility, 60);
+                        doc.text(respLines, 130, yPosition);
+                        
+                        // Adjust yPosition based on how many lines of text were in the responsibility
+                        yPosition += Math.max(respLines.length * 5, 8);
+                        
+                        // Start a new page if needed
+                        if (yPosition > 270) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                    });
+                }
+                
+                yPosition += 5;
+                
+                // Output timeline
+                doc.setFontSize(12);
+                doc.text('Timeline & Milestones:', 20, yPosition);
+                yPosition += 10;
+                
+                doc.setFontSize(10);
+                doc.text('Timeframe', 20, yPosition);
+                doc.text('Action Steps', 70, yPosition);
+                doc.text('Responsible Party', 150, yPosition);
+                yPosition += 5;
+                
+                doc.setDrawColor(200, 200, 200);
+                doc.line(20, yPosition, 190, yPosition);
+                yPosition += 5;
+                
+                // Get timeline data from the table
+                const timelineRows = document.querySelectorAll('#timelineTable tbody tr');
+                timelineRows.forEach(row => {
+                    let timeframe = row.cells[0].innerText;
+                    if (timeframe === "") {
+                        const selectElement = row.cells[0].querySelector('select');
+                        if (selectElement) timeframe = selectElement.value;
+                    }
+                    
+                    let action = "";
+                    let responsible = "";
+                    
+                    // Handle different input name patterns
+                    const actionInput = row.cells[1].querySelector('input');
+                    if (actionInput) action = actionInput.value;
+                    
+                    const responsibleInput = row.cells[2].querySelector('input');
+                    if (responsibleInput) responsible = responsibleInput.value;
+                    
+                    doc.text(timeframe, 20, yPosition);
+                    
+                    const actionLines = doc.splitTextToSize(action, 70);
+                    doc.text(actionLines, 70, yPosition);
+                    
+                    const responsibleLines = doc.splitTextToSize(responsible, 35);
+                    doc.text(responsibleLines, 150, yPosition);
+                    
+                    // Calculate the maximum height needed for this row
+                    const maxLines = Math.max(actionLines.length, responsibleLines.length);
+                    yPosition += maxLines * 5 + 3;
+                    
+                    // Start a new page if needed
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                });
+                
+                yPosition += 10;
+                
+                // Start a new page if needed
+                if (yPosition > 240) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                
+                // Section 4: Success Measures & Evaluation
+                doc.setFontSize(16);
+                doc.setTextColor(44, 62, 80);
+                doc.text('Section 4: Success Measures & Evaluation', 20, yPosition);
+                yPosition += 10;
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Desired Outcomes:', 20, yPosition);
+                yPosition += 5;
+                
+                const outcomes = document.getElementById('desiredOutcomes').value;
+                yPosition = addText(outcomes, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Evaluation Method:', 20, yPosition);
+                yPosition += 5;
+                
+                const evaluation = document.getElementById('evaluationMethod').value;
+                yPosition = addText(evaluation, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Potential Challenges & Mitigation Strategies:', 20, yPosition);
+                yPosition += 5;
+                
+                // Draw challenges table
+                doc.setFontSize(10);
+                doc.text('Challenge', 20, yPosition);
+                doc.text('Mitigation Strategy', 100, yPosition);
+                yPosition += 5;
+                
+                doc.setDrawColor(200, 200, 200);
+                doc.line(20, yPosition, 190, yPosition);
+                yPosition += 5;
+                
+                // Get challenges data from the table
+                const challengeRows = document.querySelectorAll('#challengesTable tbody tr');
+                challengeRows.forEach(row => {
+                    const challenge = row.querySelector('input[name="challenge[]"]').value;
+                    const mitigation = row.querySelector('input[name="mitigation[]"]').value;
+                    
+                    const challengeLines = doc.splitTextToSize(challenge, 70);
+                    doc.text(challengeLines, 20, yPosition);
+                    
+                    const mitigationLines = doc.splitTextToSize(mitigation, 80);
+                    doc.text(mitigationLines, 100, yPosition);
+                    
+                    // Calculate the maximum height needed for this row
+                    const maxLines = Math.max(challengeLines.length, mitigationLines.length);
+                    yPosition += maxLines * 5 + 3;
+                    
+                    // Start a new page if needed
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                });
+                
+                yPosition += 10;
+                
+                // Start a new page if needed
+                if (yPosition > 240) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                
+                // Section 5: Sustainability & Scaling
+                doc.setFontSize(16);
+                doc.setTextColor(44, 62, 80);
+                doc.text('Section 5: Sustainability & Scaling', 20, yPosition);
+                yPosition += 10;
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Resources Needed for Sustainability:', 20, yPosition);
+                yPosition += 5;
+                
+                const sustainabilityResources = document.getElementById('sustainabilityResources').value;
+                yPosition = addText(sustainabilityResources, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Opportunities for Expansion:', 20, yPosition);
+                yPosition += 5;
+                
+                const expansion = document.getElementById('expansionOpportunities').value;
+                yPosition = addText(expansion, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                doc.text('Knowledge Sharing Plan:', 20, yPosition);
+                yPosition += 5;
+                
+                const sharing = document.getElementById('knowledgeSharing').value;
+                yPosition = addText(sharing, 20, yPosition, 170, 6);
+                
+                // Save the PDF
+                const filenameSafe = institution.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                doc.save(`${filenameSafe}_ai_integration_plan.pdf`);
+            }
+        });
+    </script>
+</body>
+</html>
