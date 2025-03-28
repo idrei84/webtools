@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI as the Democratic Tutor: Dialogue Designer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .tagline {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], 
+        input[type="email"], 
+        textarea, 
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+        .checkbox-option {
+            margin-bottom: 5px;
+        }
+        .checkbox-option label {
+            font-weight: normal;
+            display: inline;
+            margin-left: 5px;
+        }
+        button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1a252f;
+        }
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+        .hidden {
+            display: none;
+        }
+        .bloom-box {
+            background-color: #f7f9fe;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .dialog-box {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .student-query {
+            background-color: #e1f5fe;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .ai-response {
+            background-color: #f0f4c3;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .meta-prompt {
+            background-color: #e8eaf6;
+            border-left: 4px solid #5c6bc0;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .add-component-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 5px;
+            width: auto;
+            font-size: 14px;
+        }
+        .component-container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .remove-component {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #f9f9f9;
+            border-color: #ddd;
+            border-bottom-color: #f9f9f9;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI as the Democratic Tutor</h1>
+    <div class="tagline">Design structured AI tutoring dialogues to democratize access to personalized learning</div>
+    
+    <div class="instructions">
+        <div class="bloom-box">
+            <h3>The 2 Sigma Problem & AI Tutoring</h3>
+            <p>In 1984, educational researcher Benjamin Bloom demonstrated that one-on-one tutoring improved student performance by two standard deviations (the "2 Sigma Problem") compared to conventional instruction. However, providing human tutors for every student has been economically unfeasible—until now.</p>
+            <p>AI tutors can democratize access to personalized learning by providing 24/7 guidance, adapted to individual needs, across all disciplines. This tool helps you design structured AI tutoring dialogues that scaffold student learning while developing their skills in effectively engaging with AI.</p>
+        </div>
+        <p>This dialogue designer helps educators create scaffolded AI tutoring experiences that guide students to engage with AI as a learning partner rather than simply an answer provider. Each dialogue template includes structured interactions, metacognitive prompts, and knowledge application opportunities.</p>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="design">Design Tutoring Dialogue</div>
+        <div class="tab" data-tab="preview">Preview</div>
+    </div>
+    
+    <div class="tab-content active" id="design-tab">
+        <form id="tutorDialogueForm">
+            <!-- Tutoring Context -->
+            <div class="form-section">
+                <h2>Tutoring Context</h2>
+                
+                <label for="dialogueTitle">Tutoring Dialogue Title:</label>
+                <input type="text" id="dialogueTitle" placeholder="e.g., Critical Analysis of Research Studies" required>
+                
+                <label for="courseInfo">Course Information:</label>
+                <input type="text" id="courseInfo" placeholder="e.g., COMM 301: Advanced Communication Theory">
+                
+                <label for="disciplineArea">Discipline Area:</label>
+                <select id="disciplineArea" required>
+                    <option value="">-- Select Discipline --</option>
+                    <option value="arts-humanities">Arts & Humanities</option>
+                    <option value="business">Business</option>
+                    <option value="communication">Communication</option>
+                    <option value="education">Education</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="health-sciences">Health Sciences</option>
+                    <option value="natural-sciences">Natural Sciences</option>
+                    <option value="social-sciences">Social Sciences</option>
+                    <option value="other">Other (specify below)</option>
+                </select>
+                <input type="text" id="otherDiscipline" placeholder="Specify discipline if 'Other'" style="display: none;">
+                
+                <label for="learningChallenges">Learning Challenges Addressed:</label>
+                <textarea id="learningChallenges" placeholder="What specific learning challenges or obstacles will AI tutoring help students overcome?" required></textarea>
+                
+                <label for="learningObjectives">Learning Objectives:</label>
+                <textarea id="learningObjectives" placeholder="List the specific learning objectives this tutoring dialogue addresses" required></textarea>
+            </div>
+            
+            <!-- AI Tutoring Platform -->
+            <div class="form-section">
+                <h2>AI Tutoring Platform</h2>
+                
+                <label>Recommended AI Tutoring Platforms:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="tool-claude" name="aiTools" value="Claude (Anthropic)">
+                        <label for="tool-claude">Claude (Anthropic) - Strong for nuanced discussions, ethical considerations</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="tool-chatgpt" name="aiTools" value="ChatGPT (OpenAI)">
+                        <label for="tool-chatgpt">ChatGPT (OpenAI) - Good general-purpose tutor with wide knowledge</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="tool-gemini" name="aiTools" value="Gemini (Google)">
+                        <label for="tool-gemini">Gemini (Google) - Strong for visual learning and explanations</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="tool-copilot" name="aiTools" value="Microsoft Copilot">
+                        <label for="tool-copilot">Microsoft Copilot - Good integration with Office tools for projects</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="tool-other" name="aiTools" value="Other">
+                        <label for="tool-other">Other</label>
+                        <input type="text" id="otherToolInput" placeholder="Specify other AI tools" style="display:none; width:50%; margin-left:10px;">
+                    </div>
+                </div>
+                
+                <label for="platformRationale">Platform Selection Rationale:</label>
+                <textarea id="platformRationale" placeholder="Why are these AI tutoring platforms appropriate for addressing the identified learning challenges?"></textarea>
+            </div>
+            
+            <!-- Pre-Assessment -->
+            <div class="form-section">
+                <h2>Pre-Learning Assessment</h2>
+                <p>Design an initial assessment to help the AI tutor understand what students already know and where they need support.</p>
+                
+                <label for="preAssessmentGoals">Assessment Goals:</label>
+                <textarea id="preAssessmentGoals" placeholder="What does the AI tutor need to understand about the student's current knowledge and skills?"></textarea>
+                
+                <label for="assessmentPrompts">Assessment Prompts:</label>
+                <textarea id="assessmentPrompts" placeholder="List 3-5 questions the AI tutor should ask to gauge student understanding (one per line)"></textarea>
+                
+                <label for="assessmentInstructions">Instructions for Students:</label>
+                <textarea id="assessmentInstructions" placeholder="How should students approach this assessment? What should they know about its purpose?"></textarea>
+            </div>
+            
+            <!-- Tutoring Dialogue Structure -->
+            <div class="form-section">
+                <h2>Tutoring Dialogue Structure</h2>
+                <p>Design the structure of the AI tutoring dialogue. Include student prompts, expected AI responses, and metacognitive questions.</p>
+                
+                <!-- Sample dialogue module for inspiration -->
+                <div class="dialog-box">
+                    <h3>Sample Dialogue Module: Concept Explanation</h3>
+                    
+                    <div class="student-query">
+                        <strong>Student:</strong> I'm struggling to understand the difference between correlation and causation in research. Can you explain it?
+                    </div>
+                    
+                    <div class="ai-response">
+                        <strong>AI Tutor:</strong> I'd be happy to explain the difference between correlation and causation! 
+                        
+                        <p>Correlation means two variables change together in a pattern. For example, ice cream sales and swimming pool visits both increase in summer. They're correlated, but one doesn't cause the other.</p>
+                        
+                        <p>Causation means one variable directly causes a change in another. For example, applying heat to water causes it to boil.</p>
+                        
+                        <p>What makes this distinction challenging in your current studies?</p>
+                    </div>
+                    
+                    <div class="student-query">
+                        <strong>Student:</strong> I see the difference, but I'm not sure how to identify when a research paper is claiming correlation versus causation.
+                    </div>
+                    
+                    <div class="ai-response">
+                        <strong>AI Tutor:</strong> That's an excellent question! Researchers use specific language and research designs to indicate causation vs. correlation.
+                        
+                        <p>Look for these clues:</p>
+                        <ul>
+                            <li>Words like "associated with," "related to," or "linked to" suggest correlation</li>
+                            <li>Words like "causes," "leads to," or "results in" suggest causation</li>
+                            <li>Experimental designs with random assignment typically test causation</li>
+                            <li>Observational or survey research typically establishes correlation</li>
+                        </ul>
+                        
+                        <p>Let's practice with an example. Here's a research finding: "Students who eat breakfast show higher test scores." Is this claiming correlation or causation?</p>
+                    </div>
+                    
+                    <div class="meta-prompt">
+                        <strong>Metacognitive Prompt:</strong> Before responding, think about what additional information you would need to determine if this relationship is causal. What alternative explanations might exist?
+                    </div>
+                </div>
+                
+                <label for="dialogueModules">Dialogue Modules (topics to cover):</label>
+                <textarea id="dialogueModules" placeholder="List the key concepts or topics this tutoring dialogue should address (one per line)"></textarea>
+                
+                <div class="component-container">
+                    <h3>Dialogue Module 1</h3>
+                    
+                    <label for="module1Title">Module Title:</label>
+                    <input type="text" id="module1Title" placeholder="e.g., Understanding Core Concepts">
+                    
+                    <label for="initialStudentPrompt">Initial Student Query:</label>
+                    <textarea id="initialStudentPrompt" placeholder="What question or statement might the student begin with?"></textarea>
+                    
+                    <label for="aiResponseGuidance">AI Response Guidance:</label>
+                    <textarea id="aiResponseGuidance" placeholder="How should the AI tutor respond? What key points should it cover? What questions should it ask to engage the student further?"></textarea>
+                    
+                    <label for="followupPrompts">Potential Follow-up Queries:</label>
+                    <textarea id="followupPrompts" placeholder="What follow-up questions might students ask? (one per line)"></textarea>
+                    
+                    <label for="metacognitivePrompts">Metacognitive Prompts:</label>
+                    <textarea id="metacognitivePrompts" placeholder="Questions that help students reflect on their thinking process (one per line)"></textarea>
+                    
+                    <button type="button" class="add-component-btn">+ Add Another Dialogue Module</button>
+                </div>
+            </div>
+            
+            <!-- Knowledge Application -->
+            <div class="form-section">
+                <h2>Knowledge Application</h2>
+                <p>Design activities where students apply what they've learned through the AI tutoring dialogue.</p>
+                
+                <label for="applicationDescription">Application Activity Description:</label>
+                <textarea id="applicationDescription" placeholder="Describe an activity where students apply their learning from this tutoring dialogue"></textarea>
+                
+                <label for="applicationInstructions">Instructions for Students:</label>
+                <textarea id="applicationInstructions" placeholder="Detailed instructions for completing the application activity"></textarea>
+                
+                <label for="applicationTutor">Role of AI Tutor in Application:</label>
+                <textarea id="applicationTutor" placeholder="How should students engage with the AI tutor during the application activity? What guidance or feedback should they seek?"></textarea>
+            </div>
+            
+            <!-- Post-Assessment -->
+            <div class="form-section">
+                <h2>Post-Learning Assessment</h2>
+                <p>Design an assessment to measure learning gains from the AI tutoring dialogue.</p>
+                
+                <label for="postAssessmentGoals">Assessment Goals:</label>
+                <textarea id="postAssessmentGoals" placeholder="What specific learning gains should this assessment measure?"></textarea>
+                
+                <label for="postAssessmentPrompts">Assessment Prompts:</label>
+                <textarea id="postAssessmentPrompts" placeholder="List 3-5 questions or tasks to measure learning gains (one per line)"></textarea>
+                
+                <label for="studentReflection">Student Reflection Prompts:</label>
+                <textarea id="studentReflection" placeholder="Questions that help students reflect on what they've learned and how AI tutoring helped them (one per line)"></textarea>
+            </div>
+            
+            <!-- Tutoring Relationship Guidelines -->
+            <div class="form-section">
+                <h2>Tutoring Relationship Guidelines</h2>
+                
+                <label for="studentAgency">Student Agency Guidelines:</label>
+                <textarea id="studentAgency" placeholder="How should students maintain ownership of their learning while working with the AI tutor?"></textarea>
+                
+                <label for="ethicalGuidelines">Ethical Guidelines:</label>
+                <textarea id="ethicalGuidelines" placeholder="Ethical considerations for the AI tutoring relationship (e.g., avoiding dependency, ensuring academic integrity)"></textarea>
+                
+                <label for="attributionGuidelines">Attribution Guidelines:</label>
+                <textarea id="attributionGuidelines" placeholder="How should students attribute insights gained from AI tutoring in their academic work?"></textarea>
+            </div>
+            
+            <!-- Generate Button -->
+            <button type="submit" id="generateBtn">Generate AI Tutoring Dialogue</button>
+        </form>
+    </div>
+    
+    <div class="tab-content" id="preview-tab">
+        <div class="form-section">
+            <h2 id="previewTitle">Tutoring Dialogue Preview</h2>
+            <div id="previewContent">
+                <p class="preview-placeholder">Complete the form to see your tutoring dialogue preview</p>
+            </div>
+            
+            <button id="downloadBtn">Download Tutoring Dialogue (PDF)</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab, .tab-content').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+                    
+                    if (this.dataset.tab === 'preview') {
+                        generatePreview();
+                    }
+                });
+            });
+            
+            // Show/hide other discipline input
+            document.getElementById('disciplineArea').addEventListener('change', function() {
+                const otherInput = document.getElementById('otherDiscipline');
+                otherInput.style.display = this.value === 'other' ? 'block' : 'none';
+            });
+            
+            // Show/hide other tool input
+            document.getElementById('tool-other').addEventListener('change', function() {
+                document.getElementById('otherToolInput').style.display = this.checked ? 'inline-block' : 'none';
+            });
+            
+            // Add dialogue module button
+            document.querySelector('.add-component-btn').addEventListener('click', function() {
+                const container = document.querySelector('.component-container');
+                const newContainer = container.cloneNode(true);
+                const moduleCount = document.querySelectorAll('.component-container').length + 1;
+                
+                // Update title and IDs
+                newContainer.querySelector('h3').textContent = `Dialogue Module ${moduleCount}`;
+                
+                // Clear input values
+                newContainer.querySelectorAll('input, textarea').forEach(input => {
+                    const newId = input.id.replace(/\d+/, moduleCount);
+                    input.id = newId;
+                    input.value = '';
+                });
+                
+                // Insert after the last module
+                container.parentNode.insertBefore(newContainer, document.querySelector('.add-component-btn').parentNode);
+            });
+            
+            // Form submission
+            document.getElementById('tutorDialogueForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Switch to preview tab
+                document.querySelector('.tab[data-tab="design"]').classList.remove('active');
+                document.querySelector('.tab[data-tab="preview"]').classList.add('active');
+                document.getElementById('design-tab').classList.remove('active');
+                document.getElementById('preview-tab').classList.add('active');
+                
+                generatePreview();
+            });
+            
+            // Download button
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                alert('In a production version, this would generate a PDF of your tutoring dialogue template.');
+            });
+            
+            // Generate preview
+            function generatePreview() {
+                const title = document.getElementById('dialogueTitle').value || 'AI Tutoring Dialogue';
+                const courseInfo = document.getElementById('courseInfo').value;
+                const disciplineSelect = document.getElementById('disciplineArea');
+                let discipline = disciplineSelect.options[disciplineSelect.selectedIndex].text;
+                
+                if (discipline === 'Other (specify below)') {
+                    discipline = document.getElementById('otherDiscipline').value;
+                }
+                
+                // Get selected AI platforms
+                const selectedPlatforms = [];
+                document.querySelectorAll('input[name="aiTools"]:checked').forEach(checkbox => {
+                    if (checkbox.value === 'Other') {
+                        selectedPlatforms.push(document.getElementById('otherToolInput').value);
+                    } else {
+                        selectedPlatforms.push(checkbox.value);
+                    }
+                });
+                
+                // Build preview HTML
+                let previewHTML = `
+                    <h2>${title}</h2>
+                    <p><strong>Course:</strong> ${courseInfo}</p>
+                    <p><strong>Discipline:</strong> ${discipline}</p>
+                    <p><strong>Recommended AI Platforms:</strong> ${selectedPlatforms.join(', ') || 'None specified'}</p>
+                    
+                    <div class="section">
+                        <h3>Learning Challenges Addressed</h3>
+                        <p>${document.getElementById('learningChallenges').value.replace(/\n/g, '<br>') || 'None specified'}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>Learning Objectives</h3>
+                        <p>${document.getElementById('learningObjectives').value.replace(/\n/g, '<br>') || 'None specified'}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>Pre-Learning Assessment</h3>
+                        <p><strong>Goals:</strong> ${document.getElementById('preAssessmentGoals').value || 'None specified'}</p>
+                        
+                        <p><strong>Assessment Prompts:</strong></p>
+                        <ul>
+                `;
+                
+                // Add assessment prompts
+                const assessmentPrompts = document.getElementById('assessmentPrompts').value.split('\n').filter(line => line.trim());
+                if (assessmentPrompts.length > 0) {
+                    assessmentPrompts.forEach(prompt => {
+                        previewHTML += `<li>${prompt}</li>`;
+                    });
+                } else {
+                    previewHTML += '<li>No prompts specified</li>';
+                }
+                
+                previewHTML += `
+                        </ul>
+                        
+                        <p><strong>Instructions for Students:</strong> ${document.getElementById('assessmentInstructions').value || 'None specified'}</p>
+                    </div>
+                `;
+                
+                // Add dialogue modules
+                const modules = document.querySelectorAll('.component-container');
+                previewHTML += `<div class="section"><h3>Tutoring Dialogue Modules</h3>`;
+                
+                modules.forEach((module, index) => {
+                    const moduleTitle = module.querySelector('input[id^="module"]').value || `Module ${index + 1}`;
+                    const initialPrompt = module.querySelector('textarea[id^="initialStudent"]').value || 'No initial prompt specified';
+                    const responseGuidance = module.querySelector('textarea[id^="aiResponse"]').value || 'No response guidance specified';
+                    
+                    previewHTML += `
+                        <div class="dialog-box">
+                            <h4>${moduleTitle}</h4>
+                            
+                            <div class="student-query">
+                                <strong>Student:</strong> ${initialPrompt}
+                            </div>
+                            
+                            <div class="ai-response">
+                                <strong>AI Tutor Response Guidance:</strong>
+                                <p>${responseGuidance.replace(/\n/g, '<br>')}</p>
+                            </div>
+                    `;
+                    
+                    // Add follow-up queries if any
+                    const followupPrompts = module.querySelector('textarea[id^="followup"]').value.split('\n').filter(line => line.trim());
+                    if (followupPrompts.length > 0) {
+                        previewHTML += `<p><strong>Potential Follow-up Queries:</strong></p><ul>`;
+                        followupPrompts.forEach(prompt => {
+                            previewHTML += `<li>${prompt}</li>`;
+                        });
+                        previewHTML += `</ul>`;
+                    }
+                    
+                    // Add metacognitive prompts if any
+                    const metaPrompts = module.querySelector('textarea[id^="metacognitive"]').value.split('\n').filter(line => line.trim());
+                    if (metaPrompts.length > 0) {
+                        previewHTML += `<div class="meta-prompt"><strong>Metacognitive Prompts:</strong><ul>`;
+                        metaPrompts.forEach(prompt => {
+                            previewHTML += `<li>${prompt}</li>`;
+                        });
+                        previewHTML += `</ul></div>`;
+                    }
+                    
+                    previewHTML += `</div>`;
+                });
+                
+                previewHTML += `</div>`;
+                
+                // Add knowledge application section
+                previewHTML += `
+                    <div class="section">
+                        <h3>Knowledge Application</h3>
+                        <p><strong>Activity Description:</strong> ${document.getElementById('applicationDescription').value || 'None specified'}</p>
+                        <p><strong>Instructions for Students:</strong> ${document.getElementById('applicationInstructions').value || 'None specified'}</p>
+                        <p><strong>Role of AI Tutor:</strong> ${document.getElementById('applicationTutor').value || 'None specified'}</p>
+                    </div>
+                `;
+                
+                // Add post-assessment section
+                previewHTML += `
+                    <div class="section">
+                        <h3>Post-Learning Assessment</h3>
+                        <p><strong>Assessment Goals:</strong> ${document.getElementById('postAssessmentGoals').value || 'None specified'}</p>
+                        
+                        <p><strong>Assessment Prompts:</strong></p>
+                        <ul>
+                `;
+                
+                // Add post-assessment prompts
+                const postPrompts = document.getElementById('postAssessmentPrompts').value.split('\n').filter(line => line.trim());
+                if (postPrompts.length > 0) {
+                    postPrompts.forEach(prompt => {
+                        previewHTML += `<li>${prompt}</li>`;
+                    });
+                } else {
+                    previewHTML += '<li>No prompts specified</li>';
+                }
+                
+                previewHTML += `
+                        </ul>
+                        
+                        <p><strong>Student Reflection Prompts:</strong></p>
+                        <ul>
+                `;
+                
+                // Add reflection prompts
+                const reflectionPrompts = document.getElementById('studentReflection').value.split('\n').filter(line => line.trim());
+                if (reflectionPrompts.length > 0) {
+                    reflectionPrompts.forEach(prompt => {
+                        previewHTML += `<li>${prompt}</li>`;
+                    });
+                } else {
+                    previewHTML += '<li>No reflection prompts specified</li>';
+                }
+                
+                previewHTML += `
+                        </ul>
+                    </div>
+                `;
+                
+                // Add guidelines section
+                previewHTML += `
+                    <div class="section">
+                        <h3>Tutoring Relationship Guidelines</h3>
+                        <p><strong>Student Agency Guidelines:</strong> ${document.getElementById('studentAgency').value || 'None specified'}</p>
+                        <p><strong>Ethical Guidelines:</strong> ${document.getElementById('ethicalGuidelines').value || 'None specified'}</p>
+                        <p><strong>Attribution Guidelines:</strong> ${document.getElementById('attributionGuidelines').value || 'None specified'}</p>
+                    </div>
+                `;
+                
+                // Update preview
+                document.getElementById('previewContent').innerHTML = previewHTML;
+                document.getElementById('previewTitle').textContent = `${title} Preview`;
+            }
+
+        // Generate PDF function
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let yPosition = 20;
+            
+            // Helper function to add text with word wrap
+            function addText(text, x, y, maxWidth, lineHeight) {
+                if (!text) return y;
+                const lines = doc.splitTextToSize(text.replace(/<br>/g, '\n'), maxWidth);
+                doc.text(lines, x, y);
+                return y + (lines.length * lineHeight);
+            }
+            
+            // Helper function to check and add a new page if needed
+            function checkPageBreak(y, margin = 20) {
+                if (y > 270) {
+                    doc.addPage();
+                    return 20;
+                }
+                return y;
+            }
+            
+            // Title and basic info
+            const title = document.getElementById('dialogueTitle').value || 'AI Tutoring Dialogue';
+            doc.setFontSize(18);
+            doc.setTextColor(44, 62, 80);
+            doc.text(title, 105, yPosition, { align: 'center' });
+            yPosition += 10;
+            
+            const courseInfo = document.getElementById('courseInfo').value;
+            if (courseInfo) {
+                doc.setFontSize(12);
+                doc.text(`Course: ${courseInfo}`, 105, yPosition, { align: 'center' });
+                yPosition += 8;
+            }
+            
+            // Add date
+            doc.text(`Generated on ${new Date().toLocaleDateString()}`, 105, yPosition, { align: 'center' });
+            yPosition += 15;
+            
+            // Add sections
+            doc.setFontSize(14);
+            doc.text('Learning Objectives', 20, yPosition);
+            yPosition += 8;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            yPosition = addText(document.getElementById('learningObjectives').value, 20, yPosition, 170, 5);
+            yPosition += 10;
+            
+            yPosition = checkPageBreak(yPosition);
+            
+            // Pre-Assessment
+            doc.setFontSize(14);
+            doc.setTextColor(44, 62, 80);
+            doc.text('Pre-Learning Assessment', 20, yPosition);
+            yPosition += 8;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            yPosition = addText(document.getElementById('preAssessmentGoals').value, 20, yPosition, 170, 5);
+            yPosition += 5;
+            
+            // Get all dialogue modules
+            const modules = document.querySelectorAll('.component-container');
+            modules.forEach((module,
+</body>
+</html>
