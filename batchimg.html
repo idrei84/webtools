@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Image Padder</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .image-container {
+            position: relative;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto p-4 max-w-4xl">
+        <h1 class="text-2xl font-bold mb-6 text-center">Batch Image Padder</h1>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <!-- Batch Settings -->
+            <div class="mb-6 space-y-4">
+                <div class="p-4 bg-gray-50 rounded">
+                    <h3 class="font-medium mb-4">Batch Settings</h3>
+                    
+                    <div id="batchPaddingControls" class="space-y-4">
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="batchPaddingMode"
+                                    value="universal"
+                                    checked
+                                    class="mr-2"
+                                />
+                                Universal Padding
+                            </label>
+                            <label class="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="batchPaddingMode"
+                                    value="perSide"
+                                    class="mr-2"
+                                />
+                                Per Side Padding
+                            </label>
+                        </div>
+
+                        <div id="batchUniversalControls">
+                            <label class="block text-sm font-medium mb-1">Padding (pixels):</label>
+                            <input
+                                type="number"
+                                id="batchUniversalPadding"
+                                value="5"
+                                class="border rounded p-2 w-24"
+                                min="0"
+                                max="50"
+                            />
+                        </div>
+
+                        <div id="batchPerSideControls" class="grid grid-cols-2 gap-4 hidden">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Top Padding:</label>
+                                <input
+                                    type="number"
+                                    id="batchPaddingTop"
+                                    value="5"
+                                    class="border rounded p-2 w-24"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Right Padding:</label>
+                                <input
+                                    type="number"
+                                    id="batchPaddingRight"
+                                    value="5"
+                                    class="border rounded p-2 w-24"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Bottom Padding:</label>
+                                <input
+                                    type="number"
+                                    id="batchPaddingBottom"
+                                    value="5"
+                                    class="border rounded p-2 w-24"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Left Padding:</label>
+                                <input
+                                    type="number"
+                                    id="batchPaddingLeft"
+                                    value="5"
+                                    class="border rounded p-2 w-24"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Max Width (pixels):</label>
+                    <input
+                        type="number"
+                        id="maxWidth"
+                        value="225"
+                        class="border rounded p-2 w-24"
+                        min="50"
+                        max="600"
+                    />
+                </div>
+
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept="image/*"
+                        class="hidden"
+                        multiple
+                    />
+                    <label for="fileInput" class="cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <p class="mt-2 text-sm text-gray-600">Click to upload images</p>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Selected Files -->
+            <div id="fileListContainer" class="mb-4 hidden">
+                <h3 class="font-medium mb-2">Selected Files:</h3>
+                <div id="fileList" class="space-y-2"></div>
+            </div>
+
+            <!-- Process Button -->
+            <button
+                id="processButton"
+                class="w-full bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600 transition-colors disabled:bg-blue-300 hidden"
+            >
+                Process All Images
+            </button>
+
+            <!-- Canvas for processing -->
+            <canvas id="canvas" class="hidden"></canvas>
+
+            <!-- Processed Images -->
+            <div id="processedImagesContainer" class="mt-6 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-medium">Processed Images:</h3>
+                    <button
+                        id="downloadAllButton"
+                        class="bg-green-500 text-white rounded py-2 px-4 hover:bg-green-600 transition-colors text-sm"
+                    >
+                        Download All
+                    </button>
+                </div>
+                
+                <div id="processedImagesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+        </div>
+        
+        <!-- File Entry Template -->
+        <template id="fileEntryTemplate">
+            <div class="file-entry border rounded p-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <button class="text-gray-500 hover:text-gray-700 toggle-expand">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 chevron-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 chevron-down hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <span class="text-sm file-name"></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="flex items-center text-sm">
+                            <input
+                                type="checkbox"
+                                class="mr-2 use-batch-settings"
+                                checked
+                            />
+                            Use Batch Settings
+                        </label>
+                        <button class="text-red-500 hover:text-red-700 remove-file">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="individual-settings mt-4 pl-6 border-l-2 border-gray-200 hidden">
+                    <div class="individual-padding-controls space-y-4">
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="paddingMode"
+                                    value="universal"
+                                    checked
+                                    class="mr-2 padding-mode-universal"
+                                />
+                                Universal Padding
+                            </label>
+                            <label class="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="paddingMode"
+                                    value="perSide"
+                                    class="mr-2 padding-mode-perside"
+                                />
+                                Per Side Padding
+                            </label>
+                        </div>
+
+                        <div class="universal-controls">
+                            <label class="block text-sm font-medium mb-1">Padding (pixels):</label>
+                            <input
+                                type="number"
+                                class="border rounded p-2 w-24 universal-padding"
+                                value="5"
+                                min="0"
+                                max="50"
+                            />
+                        </div>
+
+                        <div class="perside-controls grid grid-cols-2 gap-4 hidden">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Top Padding:</label>
+                                <input
+                                    type="number"
+                                    class="border rounded p-2 w-24 padding-top"
+                                    value="5"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Right Padding:</label>
+                                <input
+                                    type="number"
+                                    class="border rounded p-2 w-24 padding-right"
+                                    value="5"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Bottom Padding:</label>
+                                <input
+                                    type="number"
+                                    class="border rounded p-2 w-24 padding-bottom"
+                                    value="5"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Left Padding:</label>
+                                <input
+                                    type="number"
+                                    class="border rounded p-2 w-24 padding-left"
+                                    value="5"
+                                    min="0"
+                                    max="50"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Processed Image Template -->
+        <template id="processedImageTemplate">
+            <div class="border rounded p-4">
+                <div class="image-container mb-2">
+                    <img class="processed-image" alt="Processed image" />
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-600 image-dimensions"></div>
+                    <button class="bg-blue-500 text-white rounded py-1 px-3 text-sm hover:bg-blue-600 transition-colors download-image">
+                        Download
+                    </button>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const fileInput = document.getElementById('fileInput');
+            const fileListContainer = document.getElementById('fileListContainer');
+            const fileList = document.getElementById('fileList');
+            const processButton = document.getElementById('processButton');
+            const processedImagesContainer = document.getElementById('processedImagesContainer');
+            const processedImagesList = document.getElementById('processedImagesList');
+            const downloadAllButton = document.getElementById('downloadAllButton');
+            const canvas = document.getElementById('canvas');
+            const maxWidthInput = document.getElementById('maxWidth');
+            
+            // Batch settings elements
+            const batchPaddingModeInputs = document.getElementsByName('batchPaddingMode');
+            const batchUniversalControls = document.getElementById('batchUniversalControls');
+            const batchPerSideControls = document.getElementById('batchPerSideControls');
+            const batchUniversalPadding = document.getElementById('batchUniversalPadding');
+            const batchPaddingTop = document.getElementById('batchPaddingTop');
+            const batchPaddingRight = document.getElementById('batchPaddingRight');
+            const batchPaddingBottom = document.getElementById('batchPaddingBottom');
+            const batchPaddingLeft = document.getElementById('batchPaddingLeft');
+            
+            // Templates
+            const fileEntryTemplate = document.getElementById('fileEntryTemplate');
+            const processedImageTemplate = document.getElementById('processedImageTemplate');
+            
+            // State
+            let fileEntries = [];
+            let processedImages = [];
+            
+            // Handle batch padding mode change
+            batchPaddingModeInputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    if (input.value === 'universal') {
+                        batchUniversalControls.classList.remove('hidden');
+                        batchPerSideControls.classList.add('hidden');
+                    } else {
+                        batchUniversalControls.classList.add('hidden');
+                        batchPerSideControls.classList.remove('hidden');
+                    }
+                });
+            });
+            
+            // Handle file selection
+            fileInput.addEventListener('change', (e) => {
+                const newFiles = Array.from(e.target.files || []);
+                
+                if (newFiles.length > 0) {
+                    fileListContainer.classList.remove('hidden');
+                    processButton.classList.remove('hidden');
+                    
+                    newFiles.forEach(file => {
+                        const entry = {
+                            file,
+                            useBatchSettings: true,
+                            paddingMode: 'universal',
+                            universalPadding: 5,
+                            sidePadding: {
+                                top: 5,
+                                right: 5,
+                                bottom: 5,
+                                left: 5
+                            }
+                        };
+                        
+                        fileEntries.push(entry);
+                        addFileEntryToDOM(entry, fileEntries.length - 1);
+                    });
+                }
+            });
+            
+            // Add file entry to DOM
+            function addFileEntryToDOM(entry, index) {
+                const clone = document.importNode(fileEntryTemplate.content, true);
+                const fileEntry = clone.querySelector('.file-entry');
+                
+                // Set file name
+                fileEntry.querySelector('.file-name').textContent = entry.file.name;
+                
+                // Set data index for later reference
+                fileEntry.dataset.index = index;
+                
+                // Toggle expansion
+                const toggleExpandBtn = fileEntry.querySelector('.toggle-expand');
+                const chevronRight = toggleExpandBtn.querySelector('.chevron-right');
+                const chevronDown = toggleExpandBtn.querySelector('.chevron-down');
+                const individualSettings = fileEntry.querySelector('.individual-settings');
+                
+                toggleExpandBtn.addEventListener('click', () => {
+                    chevronRight.classList.toggle('hidden');
+                    chevronDown.classList.toggle('hidden');
+                    individualSettings.classList.toggle('hidden');
+                });
+                
+                // Handle batch settings checkbox
+                const useBatchSettings = fileEntry.querySelector('.use-batch-settings');
+                useBatchSettings.checked = entry.useBatchSettings;
+                useBatchSettings.addEventListener('change', (e) => {
+                    entry.useBatchSettings = e.target.checked;
+                    if (e.target.checked) {
+                        individualSettings.classList.add('hidden');
+                        chevronRight.classList.remove('hidden');
+                        chevronDown.classList.add('hidden');
+                    } else {
+                        individualSettings.classList.remove('hidden');
+                        chevronRight.classList.add('hidden');
+                        chevronDown.classList.remove('hidden');
+                    }
+                });
+                
+                // Handle padding mode
+                const universalRadio = fileEntry.querySelector('.padding-mode-universal');
+                const perSideRadio = fileEntry.querySelector('.padding-mode-perside');
+                const universalControls = fileEntry.querySelector('.universal-controls');
+                const perSideControls = fileEntry.querySelector('.perside-controls');
+                
+                // Set initial mode
+                if (entry.paddingMode === 'universal') {
+                    universalRadio.checked = true;
+                    perSideRadio.checked = false;
+                } else {
+                    universalRadio.checked = false;
+                    perSideRadio.checked = true;
+                    universalControls.classList.add('hidden');
+                    perSideControls.classList.remove('hidden');
+                }
+                
+                universalRadio.addEventListener('change', () => {
+                    if (universalRadio.checked) {
+                        entry.paddingMode = 'universal';
+                        universalControls.classList.remove('hidden');
+                        perSideControls.classList.add('hidden');
+                    }
+                });
+                
+                perSideRadio.addEventListener('change', () => {
+                    if (perSideRadio.checked) {
+                        entry.paddingMode = 'perSide';
+                        universalControls.classList.add('hidden');
+                        perSideControls.classList.remove('hidden');
+                    }
+                });
+                
+                // Set padding values
+                const universalPadding = fileEntry.querySelector('.universal-padding');
+                universalPadding.value = entry.universalPadding;
+                universalPadding.addEventListener('change', (e) => {
+                    entry.universalPadding = Number(e.target.value);
+                });
+                
+                const paddingTop = fileEntry.querySelector('.padding-top');
+                paddingTop.value = entry.sidePadding.top;
+                paddingTop.addEventListener('change', (e) => {
+                    entry.sidePadding.top = Number(e.target.value);
+                });
+                
+                const paddingRight = fileEntry.querySelector('.padding-right');
+                paddingRight.value = entry.sidePadding.right;
+                paddingRight.addEventListener('change', (e) => {
+                    entry.sidePadding.right = Number(e.target.value);
+                });
+                
+                const paddingBottom = fileEntry.querySelector('.padding-bottom');
+                paddingBottom.value = entry.sidePadding.bottom;
+                paddingBottom.addEventListener('change', (e) => {
+                    entry.sidePadding.bottom = Number(e.target.value);
+                });
+                
+                const paddingLeft = fileEntry.querySelector('.padding-left');
+                paddingLeft.value = entry.sidePadding.left;
+                paddingLeft.addEventListener('change', (e) => {
+                    entry.sidePadding.left = Number(e.target.value);
+                });
+                
+                // Remove file
+                const removeBtn = fileEntry.querySelector('.remove-file');
+                removeBtn.addEventListener('click', () => {
+                    removeFile(index);
+                });
+                
+                fileList.appendChild(fileEntry);
+            }
+            
+            // Remove file entry
+            function removeFile(index) {
+                fileEntries = fileEntries.filter((_, i) => i !== index);
+                refreshFileList();
+                
+                if (fileEntries.length === 0) {
+                    fileListContainer.classList.add('hidden');
+                    processButton.classList.add('hidden');
+                }
+            }
+            
+            // Refresh file list in DOM
+            function refreshFileList() {
+                fileList.innerHTML = '';
+                fileEntries.forEach((entry, index) => {
+                    addFileEntryToDOM(entry, index);
+                });
+            }
+            
+            // Get padding values for an entry
+            function getPaddingValues(entry) {
+                if (entry.useBatchSettings) {
+                    const batchMode = Array.from(batchPaddingModeInputs).find(input => input.checked).value;
+                    
+                    if (batchMode === 'universal') {
+                        const universal = Number(batchUniversalPadding.value);
+                        return {
+                            top: universal,
+                            right: universal,
+                            bottom: universal,
+                            left: universal
+                        };
+                    } else {
+                        return {
+                            top: Number(batchPaddingTop.value),
+                            right: Number(batchPaddingRight.value),
+                            bottom: Number(batchPaddingBottom.value),
+                            left: Number(batchPaddingLeft.value)
+                        };
+                    }
+                }
+                
+                if (entry.paddingMode === 'universal') {
+                    return {
+                        top: entry.universalPadding,
+                        right: entry.universalPadding,
+                        bottom: entry.universalPadding,
+                        left: entry.universalPadding
+                    };
+                }
+                
+                return entry.sidePadding;
+            }
+            
+            // Process an image
+            function processImage(entry) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            let newWidth = img.width;
+                            let newHeight = img.height;
+                            
+                            const maxWidth = Number(maxWidthInput.value);
+                            if (newWidth > maxWidth) {
+                                const ratio = maxWidth / newWidth;
+                                newWidth = maxWidth;
+                                newHeight = Math.round(img.height * ratio);
+                            }
+                            
+                            const padding = getPaddingValues(entry);
+                            const paddedWidth = newWidth + padding.left + padding.right;
+                            const paddedHeight = newHeight + padding.top + padding.bottom;
+                            
+                            canvas.width = paddedWidth;
+                            canvas.height = paddedHeight;
+                            const ctx = canvas.getContext('2d');
+                            
+                            ctx.fillStyle = 'white';
+                            ctx.fillRect(0, 0, paddedWidth, paddedHeight);
+                            ctx.drawImage(img, padding.left, padding.top, newWidth, newHeight);
+                            
+                            resolve({
+                                originalName: entry.file.name,
+                                processedUrl: canvas.toDataURL('image/png'),
+                                width: paddedWidth,
+                                height: paddedHeight
+                            });
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(entry.file);
+                });
+            }
+            
+            // Process all images
+            processButton.addEventListener('click', async () => {
+                processButton.disabled = true;
+                processButton.textContent = 'Processing...';
+                
+                processedImages = [];
+                processedImagesList.innerHTML = '';
+                
+                for (const entry of fileEntries) {
+                    const processedImage = await processImage(entry);
+                    processedImages.push(processedImage);
+                    addProcessedImageToDOM(processedImage);
+                }
+                
+                processedImagesContainer.classList.remove('hidden');
+                processButton.disabled = false;
+                processButton.textContent = 'Process All Images';
+            });
+            
+            // Add processed image to DOM
+            function addProcessedImageToDOM(img) {
+                const clone = document.importNode(processedImageTemplate.content, true);
+                
+                clone.querySelector('.processed-image').src = img.processedUrl;
+                clone.querySelector('.processed-image').alt = `Processed ${img.originalName}`;
+                clone.querySelector('.image-dimensions').textContent = `${img.width}x${img.height}px`;
+                
+                const downloadBtn = clone.querySelector('.download-image');
+                downloadBtn.addEventListener('click', () => {
+                    downloadSingle(img);
+                });
+                
+                processedImagesList.appendChild(clone);
+            }
+            
+            // Download a single image
+            function downloadSingle(img) {
+                const link = document.createElement('a');
+                const nameWithoutExt = img.originalName.split('.').slice(0, -1).join('.');
+                link.download = `${nameWithoutExt}-padded.png`;
+                link.href = img.processedUrl;
+                link.click();
+            }
+            
+            // Download all images
+            downloadAllButton.addEventListener('click', () => {
+                processedImages.forEach(img => {
+                    downloadSingle(img);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
