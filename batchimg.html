@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batch Image Padder</title>
+    <title>Batch Image Padder - Transparent Padding</title>
     <style>
         html, body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -242,7 +242,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Batch Image Padder</h1>
+        <h1>Batch Image Padder <small style="display: block; font-size: 14px; font-weight: normal; color: #666; margin-top: 5px;">with transparent padding</small></h1>
         
         <div class="card">
             <!-- Batch Settings -->
@@ -695,13 +695,13 @@
                             canvas.height = paddedHeight;
                             const ctx = canvas.getContext('2d');
                             
-                            ctx.fillStyle = 'white';
-                            ctx.fillRect(0, 0, paddedWidth, paddedHeight);
+                            // Use transparent background
+                            ctx.clearRect(0, 0, paddedWidth, paddedHeight);
                             ctx.drawImage(img, padding.left, padding.top, newWidth, newHeight);
                             
                             resolve({
                                 originalName: entry.file.name,
-                                processedUrl: canvas.toDataURL('image/png'),
+                                processedUrl: canvas.toDataURL('image/png'),  // Ensure PNG format for transparency support
                                 width: paddedWidth,
                                 height: paddedHeight
                             });
