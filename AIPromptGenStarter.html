@@ -380,21 +380,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="l1-considerations">For Language Classes - L1 Considerations <span class="optional-label">(optional)</span></label>
-                    <select id="l1-considerations">
-                        <option value="">-- Not applicable/Select --</option>
-                        <option value="spanish">Spanish</option>
-                        <option value="chinese">Chinese (Mandarin/Cantonese)</option>
-                        <option value="arabic">Arabic</option>
-                        <option value="korean">Korean</option>
-                        <option value="vietnamese">Vietnamese</option>
-                        <option value="russian">Russian</option>
-                        <option value="french">French</option>
-                        <option value="portuguese">Portuguese</option>
-                        <option value="japanese">Japanese</option>
-                        <option value="mixed">Mixed L1 classroom</option>
-                        <option value="other">Other</option>
-                    </select>
+                    <label for="additional-notes">Additional Notes or Requirements <span class="optional-label">(optional)</span></label>
+                    <textarea id="additional-notes" placeholder="Any other information that would help create a better prompt"></textarea>
                 </div>
             </div>
             
@@ -636,10 +623,9 @@
                     });
                 }
                 
-                const l1Considerations = document.getElementById('l1-considerations').value;
+                const additionalNotes = document.getElementById('additional-notes').value;
                 const aiTool = document.getElementById('ai-tool').value;
                 const promptType = document.querySelector('input[name="prompt-type"]:checked').value;
-                const additionalNotes = document.getElementById('additional-notes').value;
                 
                 return {
                     professorName,
@@ -653,10 +639,9 @@
                     aiFormat,
                     structureLevel,
                     focusAreas,
-                    l1Considerations,
+                    additionalNotes,
                     aiTool,
-                    promptType,
-                    additionalNotes
+                    promptType
                 };
             }
             
@@ -710,11 +695,55 @@
                 if (document.getElementById('stage-na').checked) {
                     prompt += "I'm looking for suggestions on how students might use AI tools during different stages of this assignment.\n\n";
                 } else {
-                    prompt += `I want students to use AI specifically during the ${data.stages.join(', ')} phase(s) of their work.\n\n`;
+                    const stageLabels = {
+                        'brainstorming': 'brainstorming',
+                        'planning': 'planning/outlining',
+                        'drafting': 'drafting',
+                        'revising': 'revising/editing',
+                        'analyzing': 'analyzing/reflecting'
+                    };
+                    
+                    // Convert stage values to their corresponding labels
+                    const stageNames = data.stages.map(stage => stageLabels[stage] || stage);
+                    
+                    // Join with commas, and 'and' for the last item if there are multiple
+                    let stageText = '';
+                    if (stageNames.length === 1) {
+                        stageText = stageNames[0];
+                    } else if (stageNames.length === 2) {
+                        stageText = stageNames.join(' and ');
+                    } else {
+                        const lastStage = stageNames.pop();
+                        stageText = stageNames.join(', ') + ', and ' + lastStage;
+                    }
+                    
+                    prompt += `I want students to use AI specifically during the ${stageText} phase(s) of their work.\n\n`;
                 }
                 
                 // Add what AI should help with
-                prompt += `I want AI to help students with: ${data.helpTypes.join(', ')}.\n\n`;
+                const helpLabels = {
+                    'ideas': 'generating ideas',
+                    'structure': 'structuring content',
+                    'language': 'language improvement',
+                    'critical': 'critical thinking',
+                    'research': 'research guidance'
+                };
+                
+                // Convert help values to their corresponding labels
+                const helpNames = data.helpTypes.map(help => helpLabels[help] || help);
+                
+                // Join with commas, and 'and' for the last item if there are multiple
+                let helpText = '';
+                if (helpNames.length === 1) {
+                    helpText = helpNames[0];
+                } else if (helpNames.length === 2) {
+                    helpText = helpNames.join(' and ');
+                } else {
+                    const lastHelp = helpNames.pop();
+                    helpText = helpNames.join(', ') + ', and ' + lastHelp;
+                }
+                
+                prompt += `I want AI to help students with ${helpText}.\n\n`;
                 
                 // Add AI format
                 const formatMap = {
@@ -734,13 +763,30 @@
                 prompt += `Students will need ${structureMap[data.structureLevel] || data.structureLevel}.\n\n`;
                 
                 // Add focus areas if applicable
-                if (!document.getElementById('focus-na').checked) {
-                    prompt += `The specific areas to focus on are: ${data.focusAreas.join(', ')}.\n\n`;
-                }
-                
-                // Add L1 considerations if applicable
-                if (data.l1Considerations && data.l1Considerations !== '') {
-                    prompt += `Many of my students are ${data.l1Considerations} speakers, so language transfer issues should be considered.\n\n`;
+                if (!document.getElementById('focus-na').checked && data.focusAreas.length > 0) {
+                    const focusLabels = {
+                        'grammar': 'grammar',
+                        'vocabulary': 'vocabulary',
+                        'organization': 'organization',
+                        'content': 'content development',
+                        'citation': 'citation/references'
+                    };
+                    
+                    // Convert focus values to their corresponding labels
+                    const focusNames = data.focusAreas.map(focus => focusLabels[focus] || focus);
+                    
+                    // Join with commas, and 'and' for the last item if there are multiple
+                    let focusText = '';
+                    if (focusNames.length === 1) {
+                        focusText = focusNames[0];
+                    } else if (focusNames.length === 2) {
+                        focusText = focusNames.join(' and ');
+                    } else {
+                        const lastFocus = focusNames.pop();
+                        focusText = focusNames.join(', ') + ', and ' + lastFocus;
+                    }
+                    
+                    prompt += `The specific areas to focus on are: ${focusText}.\n\n`;
                 }
                 
                 // Add additional notes if provided
