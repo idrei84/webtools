@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Prompt Generator for Communication Faculty</title>
-    <!-- Load jsPDF library from CDN -->
+    <!-- Import jsPDF properly -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -22,17 +22,17 @@
                 
                 <div class="form-group">
                     <label for="professor-name">Professor Name</label>
-                    <input type="text" id="professor-name" placeholder="Your name">
+                    <input type="text" id="professor-name" name="professor-name" placeholder="Your name">
                 </div>
                 
                 <div class="form-group">
                     <label for="course">Course Name/Number</label>
-                    <input type="text" id="course" placeholder="E.g., ENG 101, Public Speaking 220">
+                    <input type="text" id="course" name="course" placeholder="E.g., ENG 101, Public Speaking 220">
                 </div>
                 
                 <div class="form-group">
                     <label for="assignment-type">Assignment Type</label>
-                    <select id="assignment-type">
+                    <select id="assignment-type" name="assignment-type">
                         <option value="">-- Select an option --</option>
                         <option value="essay">Essay</option>
                         <option value="presentation">Presentation</option>
@@ -45,17 +45,17 @@
                 
                 <div class="form-group">
                     <label for="assignment-description">Brief Assignment Description <span class="optional-label">(optional but recommended)</span></label>
-                    <textarea id="assignment-description" placeholder="Briefly describe the assignment and its requirements"></textarea>
+                    <textarea id="assignment-description" name="assignment-description" placeholder="Briefly describe the assignment and its requirements"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="learning-objectives">Key Learning Objectives</label>
-                    <textarea id="learning-objectives" placeholder="What skills or knowledge should students demonstrate?"></textarea>
+                    <textarea id="learning-objectives" name="learning-objectives" placeholder="What skills or knowledge should students demonstrate?"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="student-challenges">Common Student Challenges <span class="optional-label">(optional)</span></label>
-                    <textarea id="student-challenges" placeholder="What difficulties do students typically encounter with this assignment?"></textarea>
+                    <textarea id="student-challenges" name="student-challenges" placeholder="What difficulties do students typically encounter with this assignment?"></textarea>
                 </div>
             </div>
             
@@ -119,14 +119,14 @@
                         <div class="checkbox-item">
                             <input type="checkbox" id="help-other" name="help" value="other">
                             <label for="help-other">Other</label>
-                            <input type="text" id="help-other-text" placeholder="Specify" style="width: 120px; margin-left: 0.5rem;">
+                            <input type="text" id="help-other-text" name="help-other-text" placeholder="Specify" style="width: 120px; margin-left: 0.5rem;">
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="ai-format">Format of AI Assistance</label>
-                    <select id="ai-format">
+                    <select id="ai-format" name="ai-format">
                         <option value="">-- Select an option --</option>
                         <option value="in-class">In-class activity</option>
                         <option value="homework">Homework support</option>
@@ -142,7 +142,7 @@
                 
                 <div class="form-group">
                     <label for="structure-level">Structure Needed</label>
-                    <select id="structure-level">
+                    <select id="structure-level" name="structure-level">
                         <option value="">-- Select an option --</option>
                         <option value="high">Highly structured (step-by-step guidance)</option>
                         <option value="medium">Moderate structure (some guidance)</option>
@@ -182,7 +182,7 @@
                 
                 <div class="form-group">
                     <label for="additional-notes">Additional Notes or Requirements <span class="optional-label">(optional)</span></label>
-                    <textarea id="additional-notes" placeholder="Any other information that would help create a better prompt"></textarea>
+                    <textarea id="additional-notes" name="additional-notes" placeholder="Any other information that would help create a better prompt"></textarea>
                 </div>
             </div>
             
@@ -192,7 +192,7 @@
                 
                 <div class="form-group">
                     <label for="ai-tool">Primary AI Tool</label>
-                    <select id="ai-tool">
+                    <select id="ai-tool" name="ai-tool">
                         <option value="">-- Select an option --</option>
                         <option value="any">Any AI tool</option>
                         <option value="claude">Claude (Anthropic)</option>
@@ -223,12 +223,12 @@
             </div>
         </form>
         
-        <div id="result-section">
+        <div id="result-section" style="display: none;">
             <h2>Your Custom AI Prompt</h2>
             <div id="prompt-text"></div>
             <div class="button-group">
-                <button class="copy-button" id="copy-button">Copy to Clipboard</button>
-                <button id="download-button">Download as PDF</button>
+                <button type="button" class="copy-button" id="copy-button">Copy to Clipboard</button>
+                <button type="button" id="download-button">Download as PDF</button>
             </div>
             <p class="small-text">Remember to review and customize this prompt before using it with students.</p>
         </div>
