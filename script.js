@@ -13,19 +13,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const regularStageCheckboxes = Array.from(document.querySelectorAll('input[name="stage"]'))
         .filter(checkbox => checkbox.id !== 'stage-na');
     
-    // When "Not sure yet" is checked, uncheck all other options - using change event instead of click
+    // When "Not sure yet" is checked, disable and uncheck all other options
     stageNA.addEventListener('change', function() {
         if (this.checked) {
             regularStageCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
+                checkbox.disabled = true;
+            });
+        } else {
+            regularStageCheckboxes.forEach(checkbox => {
+                checkbox.disabled = false;
             });
         }
     });
     
-    // When any other option is checked, uncheck "Not sure yet" - using change event instead of click
+    // When any other option is checked, disable "Not sure yet"
     regularStageCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
-            if (this.checked) {
+            const anyRegularChecked = regularStageCheckboxes.some(cb => cb.checked);
+            stageNA.disabled = anyRegularChecked;
+            if (anyRegularChecked) {
                 stageNA.checked = false;
             }
         });
@@ -36,19 +43,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const regularFocusCheckboxes = Array.from(document.querySelectorAll('input[name="focus"]'))
         .filter(checkbox => checkbox.id !== 'focus-na');
     
-    // When "Not applicable" is checked, uncheck all other options - using change event instead of click
+    // When "Not applicable" is checked, disable and uncheck all other options
     focusNA.addEventListener('change', function() {
         if (this.checked) {
             regularFocusCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
+                checkbox.disabled = true;
+            });
+        } else {
+            regularFocusCheckboxes.forEach(checkbox => {
+                checkbox.disabled = false;
             });
         }
     });
     
-    // When any other option is checked, uncheck "Not applicable" - using change event instead of click
+    // When any other option is checked, disable "Not applicable"
     regularFocusCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
-            if (this.checked) {
+            const anyRegularChecked = regularFocusCheckboxes.some(cb => cb.checked);
+            focusNA.disabled = anyRegularChecked;
+            if (anyRegularChecked) {
                 focusNA.checked = false;
             }
         });
@@ -62,54 +76,47 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Form data collected:", formData);
             
             if (!validateForm(formData)) {
-                alert('Please fill in all required fields.');
-                return;
+                return; // validateForm now handles its own alerts
             }
             
             const generatedPrompt = generatePrompt(formData);
             console.log("Generated prompt:", generatedPrompt);
+            
+            // Display the generated prompt
             promptText.textContent = generatedPrompt;
             resultSection.style.display = 'block';
             
-            // Scroll to results
-            resultSection.scrollIntoView({ behavior: 'smooth' });
+            // Scroll to results with smooth animation
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } catch (error) {
             console.error("Error generating prompt:", error);
-            alert("There was an error generating your prompt: " + error.message);
+            alert("There was an error generating your prompt. Please try again.");
         }
     });
     
     // Copy prompt to clipboard
-    copyButton.addEventListener('click', function() {
+    copyButton.addEventListener('click', async function() {
         try {
-            navigator.clipboard.writeText(promptText.textContent)
-                .then(() => {
-                    const originalText = copyButton.textContent;
-                    copyButton.textContent = 'Copied!';
-                    setTimeout(() => {
-                        copyButton.textContent = originalText;
-                    }, 2000);
-                })
-                .catch(err => {
-                    console.error('Failed to copy: ', err);
-                    alert('Failed to copy to clipboard');
-                });
+            await navigator.clipboard.writeText(promptText.textContent);
+            const originalText = copyButton.textContent;
+            copyButton.textContent = 'Copied!';
+            setTimeout(() => {
+                copyButton.textContent = originalText;
+            }, 2000);
         } catch (error) {
             console.error("Error copying to clipboard:", error);
-            alert("There was an error copying to clipboard. You may need to select and copy the text manually.");
+            alert("Unable to copy to clipboard. Please select and copy the text manually.");
         }
     });
     
-    // Download as PDF - FIXED jsPDF reference
+    // Download as PDF
     downloadButton.addEventListener('click', function() {
         try {
-            // Check if jsPDF is available - FIXED to use correct object path
             if (typeof window.jspdf === 'undefined') {
                 throw new Error('PDF generation library not loaded');
             }
             
-            // FIXED: Correct way to access jsPDF constructor
-            const jsPDF = window.jspdf.jsPDF;
+            const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
             const professorName = document.getElementById('professor-name').value || 'Professor';
@@ -133,27 +140,31 @@ document.addEventListener('DOMContentLoaded', function() {
             doc.save(filename);
         } catch (error) {
             console.error("Error generating PDF:", error);
-            alert("There was an error generating the PDF: " + error.message);
+            alert("Unable to generate PDF. Please ensure you have a stable internet connection and try again.");
         }
     });
     
-    // Reset form
+    // Reset form with confirmation
     resetButton.addEventListener('click', function() {
-        form.reset();
-        resultSection.style.display = 'none';
+        if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
+            form.reset();
+            resultSection.style.display = 'none';
+            
+            // Re-enable all checkboxes after reset
+            regularStageCheckboxes.forEach(checkbox => checkbox.disabled = false);
+            regularFocusCheckboxes.forEach(checkbox => checkbox.disabled = false);
+            stageNA.disabled = false;
+            focusNA.disabled = false;
+        }
     });
     
-    /**
-     * Collects all form data into an object
-     * @returns {Object} Form data
-     */
     function getFormData() {
-        const professorName = document.getElementById('professor-name').value;
-        const course = document.getElementById('course').value;
+        const professorName = document.getElementById('professor-name').value.trim();
+        const course = document.getElementById('course').value.trim();
         const assignmentType = document.getElementById('assignment-type').value;
-        const assignmentDescription = document.getElementById('assignment-description').value;
-        const learningObjectives = document.getElementById('learning-objectives').value;
-        const studentChallenges = document.getElementById('student-challenges').value;
+        const assignmentDescription = document.getElementById('assignment-description').value.trim();
+        const learningObjectives = document.getElementById('learning-objectives').value.trim();
+        const studentChallenges = document.getElementById('student-challenges').value.trim();
         
         // Get stages
         const stages = [];
@@ -169,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const helpTypes = [];
         document.querySelectorAll('input[name="help"]:checked').forEach(checkbox => {
             if (checkbox.id === 'help-other') {
-                const otherText = document.getElementById('help-other-text').value;
+                const otherText = document.getElementById('help-other-text').value.trim();
                 if (otherText) {
                     helpTypes.push(otherText);
                 }
@@ -191,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        const additionalNotes = document.getElementById('additional-notes').value;
+        const additionalNotes = document.getElementById('additional-notes').value.trim();
         const aiTool = document.getElementById('ai-tool').value;
         const promptType = document.querySelector('input[name="prompt-type"]:checked').value;
         
@@ -213,62 +224,54 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    /**
-     * Validates form data to ensure required fields are filled
-     * @param {Object} data - Form data
-     * @returns {boolean} Is form valid
-     */
     function validateForm(data) {
         console.log("Validating form data:", data);
         
         // Check required fields
-        const requiredFieldsValid = data.course && data.assignmentType && data.learningObjectives && 
-            data.aiFormat && data.structureLevel && data.aiTool;
-        console.log("Required fields valid:", requiredFieldsValid);
+        const requiredFields = {
+            course: 'Course Name/Number',
+            assignmentType: 'Assignment Type',
+            learningObjectives: 'Learning Objectives',
+            aiFormat: 'Format of AI Assistance',
+            structureLevel: 'Structure Level',
+            aiTool: 'Primary AI Tool'
+        };
         
-        // Check if at least one stage is selected or "Not sure yet" is checked
+        const missingFields = [];
+        Object.entries(requiredFields).forEach(([field, label]) => {
+            if (!data[field]) {
+                missingFields.push(label);
+            }
+        });
+        
+        if (missingFields.length > 0) {
+            alert(`Please fill in the following required fields:\n- ${missingFields.join('\n- ')}`);
+            return false;
+        }
+        
+        // Check stages
         const stagesValid = data.stages.length > 0 || document.getElementById('stage-na').checked;
-        console.log("Stages valid:", stagesValid);
-        
-        // Check if at least one help type is selected
-        const helpTypesValid = data.helpTypes.length > 0;
-        console.log("Help types valid:", helpTypesValid);
-        
-        // Check if at least one focus area is selected or "Not applicable" is checked
-        const focusAreasValid = data.focusAreas.length > 0 || document.getElementById('focus-na').checked;
-        console.log("Focus areas valid:", focusAreasValid);
-        
-        const isValid = requiredFieldsValid && stagesValid && helpTypesValid && focusAreasValid;
-        console.log("Form is valid:", isValid);
-        
-        if (!requiredFieldsValid) {
-            alert("Please fill in all required fields (Course, Assignment Type, Learning Objectives, AI Format, Structure Level, and AI Tool).");
-            return false;
-        }
-        
         if (!stagesValid) {
-            alert("Please select at least one stage or check 'Not sure yet'.");
+            alert('Please select at least one stage or check "Not sure yet".');
             return false;
         }
         
-        if (!helpTypesValid) {
-            alert("Please select at least one help type.");
+        // Check help types
+        if (data.helpTypes.length === 0) {
+            alert('Please select at least one option for what AI should help with.');
             return false;
         }
         
+        // Check focus areas
+        const focusAreasValid = data.focusAreas.length > 0 || document.getElementById('focus-na').checked;
         if (!focusAreasValid) {
-            alert("Please select at least one focus area or check 'Not applicable'.");
+            alert('Please select at least one focus area or check "Not applicable".');
             return false;
         }
         
-        return isValid;
+        return true;
     }
     
-    /**
-     * Generates the AI prompt based on form data
-     * @param {Object} data - Form data
-     * @returns {string} Generated prompt
-     */
     function generatePrompt(data) {
         // Base prompt structure
         let prompt = `I am a professor teaching ${data.course} and I'm designing an ${data.assignmentType} assignment`;
@@ -300,19 +303,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'analyzing': 'analyzing/reflecting'
             };
             
-            // Convert stage values to their corresponding labels
             const stageNames = data.stages.map(stage => stageLabels[stage] || stage);
-            
-            // Join with commas, and 'and' for the last item if there are multiple
-            let stageText = '';
-            if (stageNames.length === 1) {
-                stageText = stageNames[0];
-            } else if (stageNames.length === 2) {
-                stageText = stageNames.join(' and ');
-            } else {
-                const lastStage = stageNames.pop();
-                stageText = stageNames.join(', ') + ', and ' + lastStage;
-            }
+            const stageText = formatList(stageNames);
             
             prompt += `I want students to use AI specifically during the ${stageText} phase(s) of their work.\n\n`;
         }
@@ -326,19 +318,8 @@ document.addEventListener('DOMContentLoaded', function() {
             'research': 'research guidance'
         };
         
-        // Convert help values to their corresponding labels
         const helpNames = data.helpTypes.map(help => helpLabels[help] || help);
-        
-        // Join with commas, and 'and' for the last item if there are multiple
-        let helpText = '';
-        if (helpNames.length === 1) {
-            helpText = helpNames[0];
-        } else if (helpNames.length === 2) {
-            helpText = helpNames.join(' and ');
-        } else {
-            const lastHelp = helpNames.pop();
-            helpText = helpNames.join(', ') + ', and ' + lastHelp;
-        }
+        const helpText = formatList(helpNames);
         
         prompt += `I want AI to help students with ${helpText}.\n\n`;
         
@@ -369,19 +350,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'citation': 'citation/references'
             };
             
-            // Convert focus values to their corresponding labels
             const focusNames = data.focusAreas.map(focus => focusLabels[focus] || focus);
-            
-            // Join with commas, and 'and' for the last item if there are multiple
-            let focusText = '';
-            if (focusNames.length === 1) {
-                focusText = focusNames[0];
-            } else if (focusNames.length === 2) {
-                focusText = focusNames.join(' and ');
-            } else {
-                const lastFocus = focusNames.pop();
-                focusText = focusNames.join(', ') + ', and ' + lastFocus;
-            }
+            const focusText = formatList(focusNames);
             
             prompt += `The specific areas to focus on are: ${focusText}.\n\n`;
         }
@@ -412,4 +382,36 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return prompt;
     }
+
+      // Helper function to format lists with proper grammar
+    function formatList(items) {
+        if (items.length === 0) return '';
+        if (items.length === 1) return items[0];
+        if (items.length === 2) return `${items[0]} and ${items[1]}`;
+        return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+    }
+    
+    // Add event listener for the "Other" help type text input
+    const helpOtherCheckbox = document.getElementById('help-other');
+    const helpOtherText = document.getElementById('help-other-text');
+    
+    helpOtherCheckbox.addEventListener('change', function() {
+        helpOtherText.disabled = !this.checked;
+        if (!this.checked) {
+            helpOtherText.value = '';
+        } else {
+            helpOtherText.focus();
+        }
+    });
+    
+    // Initialize the "Other" help type text input state
+    helpOtherText.disabled = !helpOtherCheckbox.checked;
+    
+    // Add input validation for the "Other" help type
+    helpOtherText.addEventListener('input', function() {
+        if (helpOtherCheckbox.checked && !this.value.trim()) {
+            helpOtherCheckbox.checked = false;
+            this.disabled = true;
+        }
+    });
 });
