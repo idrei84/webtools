@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const regularStageCheckboxes = Array.from(document.querySelectorAll('input[name="stage"]'))
         .filter(checkbox => checkbox.id !== 'stage-na');
     
-    // When "Not sure yet" is checked, uncheck all other options
-    stageNA.addEventListener('click', function() {
+    // When "Not sure yet" is checked, uncheck all other options - using change event instead of click
+    stageNA.addEventListener('change', function() {
         if (this.checked) {
             regularStageCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // When any other option is checked, uncheck "Not sure yet"
+    // When any other option is checked, uncheck "Not sure yet" - using change event instead of click
     regularStageCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('click', function() {
+        checkbox.addEventListener('change', function() {
             if (this.checked) {
                 stageNA.checked = false;
             }
@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const regularFocusCheckboxes = Array.from(document.querySelectorAll('input[name="focus"]'))
         .filter(checkbox => checkbox.id !== 'focus-na');
     
-    // When "Not applicable" is checked, uncheck all other options
-    focusNA.addEventListener('click', function() {
+    // When "Not applicable" is checked, uncheck all other options - using change event instead of click
+    focusNA.addEventListener('change', function() {
         if (this.checked) {
             regularFocusCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // When any other option is checked, uncheck "Not applicable"
+    // When any other option is checked, uncheck "Not applicable" - using change event instead of click
     regularFocusCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('click', function() {
+        checkbox.addEventListener('change', function() {
             if (this.checked) {
                 focusNA.checked = false;
             }
@@ -57,7 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generate prompt when button is clicked
     generateButton.addEventListener('click', function() {
         try {
+            console.log("Generate button clicked");
             const formData = getFormData();
+            console.log("Form data collected:", formData);
             
             if (!validateForm(formData)) {
                 alert('Please fill in all required fields.');
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             const generatedPrompt = generatePrompt(formData);
+            console.log("Generated prompt:", generatedPrompt);
             promptText.textContent = generatedPrompt;
             resultSection.style.display = 'block';
             
@@ -97,15 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Download as PDF
+    // Download as PDF - FIXED jsPDF reference
     downloadButton.addEventListener('click', function() {
         try {
-            // Check if jsPDF is available
+            // Check if jsPDF is available - FIXED to use correct object path
             if (typeof window.jspdf === 'undefined') {
                 throw new Error('PDF generation library not loaded');
             }
             
-            const { jsPDF } = window.jspdf;
+            // FIXED: Correct way to access jsPDF constructor
+            const jsPDF = window.jspdf.jsPDF;
             const doc = new jsPDF();
             
             const professorName = document.getElementById('professor-name').value || 'Professor';
@@ -129,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             doc.save(filename);
         } catch (error) {
             console.error("Error generating PDF:", error);
-            alert("There was an error generating the PDF. Please check that you're using a modern browser or try copying the text instead.");
+            alert("There was an error generating the PDF: " + error.message);
         }
     });
     
@@ -215,28 +219,49 @@ document.addEventListener('DOMContentLoaded', function() {
      * @returns {boolean} Is form valid
      */
     function validateForm(data) {
+        console.log("Validating form data:", data);
+        
         // Check required fields
-        if (!data.course || !data.assignmentType || !data.learningObjectives || 
-            !data.aiFormat || !data.structureLevel || !data.aiTool) {
-            return false;
-        }
+        const requiredFieldsValid = data.course && data.assignmentType && data.learningObjectives && 
+            data.aiFormat && data.structureLevel && data.aiTool;
+        console.log("Required fields valid:", requiredFieldsValid);
         
         // Check if at least one stage is selected or "Not sure yet" is checked
-        if (data.stages.length === 0 && !document.getElementById('stage-na').checked) {
-            return false;
-        }
+        const stagesValid = data.stages.length > 0 || document.getElementById('stage-na').checked;
+        console.log("Stages valid:", stagesValid);
         
         // Check if at least one help type is selected
-        if (data.helpTypes.length === 0) {
-            return false;
-        }
+        const helpTypesValid = data.helpTypes.length > 0;
+        console.log("Help types valid:", helpTypesValid);
         
         // Check if at least one focus area is selected or "Not applicable" is checked
-        if (data.focusAreas.length === 0 && !document.getElementById('focus-na').checked) {
+        const focusAreasValid = data.focusAreas.length > 0 || document.getElementById('focus-na').checked;
+        console.log("Focus areas valid:", focusAreasValid);
+        
+        const isValid = requiredFieldsValid && stagesValid && helpTypesValid && focusAreasValid;
+        console.log("Form is valid:", isValid);
+        
+        if (!requiredFieldsValid) {
+            alert("Please fill in all required fields (Course, Assignment Type, Learning Objectives, AI Format, Structure Level, and AI Tool).");
             return false;
         }
         
-        return true;
+        if (!stagesValid) {
+            alert("Please select at least one stage or check 'Not sure yet'.");
+            return false;
+        }
+        
+        if (!helpTypesValid) {
+            alert("Please select at least one help type.");
+            return false;
+        }
+        
+        if (!focusAreasValid) {
+            alert("Please select at least one focus area or check 'Not applicable'.");
+            return false;
+        }
+        
+        return isValid;
     }
     
     /**
