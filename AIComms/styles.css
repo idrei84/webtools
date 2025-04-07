@@ -8,18 +8,20 @@
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f5f7fa;
+    color: #e1e6fb;
+    background-color: #1f1d2b;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cpath fill='%233a3452' fill-opacity='0.4' d='M600 325.1v-1.17c-6.5 3.83-13.06 7.64-14.68 8.64-10.6 6.56-18.57 12.56-24.68 19.09-5.58 5.95-12.44 10.06-22.42 14.15-1.45.6-2.96 1.2-4.83 1.9l-4.75 1.82c-9.78 3.75-14.8 6.27-18.98 10.1-4.23 3.88-9.65 6.6-16.77 8.84-1.95.6-3.99 1.17-6.47 1.8l-6.14 1.53c-5.29 1.35-8.3 2.37-10.54 3.78-3.08 1.92-6.63 3.26-12.74 5.03a384.1 384.1 0 0 1-4.82 1.36c-2.04.58-3.6 1.04-5.17 1.52a110.03 110.03 0 0 0-11.2 4.05c-2.7 1.15-5.5 3.93-8.78 8.4a157.68 157.68 0 0 0-6.15 9.2c-5.75 9.07-7.58 11.74-10.24 14.51a50.97 50.97 0 0 1-4.6 4.22c-2.33 1.9-10.39 7.54-11.81 8.74a14.68 14.68 0 0 0-3.67 4.15c-1.24 2.3-1.9 4.57-2.78 8.87-2.17 10.61-3.52 14.81-8.2 22.1-4.07 6.33-6.8 9.88-9.83 12.99-.47.48-.95.96-1.5 1.48l-3.75 3.56c-1.67 1.6-3.18 3.12-4.86 4.9a42.44 42.44 0 0 0-9.89 16.94c-2.5 8.13-2.72 15.47-1.76 27.22.47 5.82.51 6.36.51 8.18 0 10.51.12 17.53.63 25.78.24 4.05.56 7.8.97 11.22h.9c-1.13-9.58-1.5-21.83-1.5-37 0-1.86-.04-2.4-.52-8.26-.94-11.63-.72-18.87 1.73-26.85a41.44 41.44 0 0 1 9.65-16.55c1.67-1.76 3.18-3.27 4.83-4.85.63-.6 3.13-2.96 3.75-3.57a71.6 71.6 0 0 0 1.52-1.5c3.09-3.16 5.86-6.76 9.96-13.15 4.77-7.42 6.15-11.71 8.34-22.44.86-4.21 1.5-6.4 2.68-8.6.68-1.25 1.79-2.48 3.43-3.86 1.38-1.15 9.43-6.8 11.8-8.72 1.71-1.4 3.26-2.81 4.7-4.3 2.72-2.85 4.56-5.54 10.36-14.67a156.9 156.9 0 0 1 6.1-9.15c3.2-4.33 5.9-7.01 8.37-8.07 3.5-1.5 7.06-2.77 11.1-4.02a233.84 233.84 0 0 1 7.6-2.2l2.38-.67c6.19-1.79 9.81-3.16 12.98-5.15 2.14-1.33 5.08-2.33 10.27-3.65l6.14-1.53c2.5-.63 4.55-1.2 6.52-1.82 7.24-2.27 12.79-5.06 17.15-9.05 4.05-3.72 9-6.2 18.66-9.9l4.75-1.82c1.87-.72 3.39-1.31 4.85-1.91 10.1-4.15 17.07-8.32 22.76-14.4 6.05-6.45 13.95-12.4 24.49-18.92 1.56-.96 7.82-4.6 14.15-8.33v-64.58z'%3E%3C/path%3E%3C/svg%3E");
     padding: 20px;
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: #2a273f;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     padding: 30px;
+    border: 1px solid #3a3452;
 }
 
 /* Header styles */
@@ -29,13 +31,13 @@ header {
 }
 
 h1 {
-    color: #2c3e50;
+    color: #9d86ff;
     margin-bottom: 10px;
     font-weight: 700;
 }
 
 h2 {
-    color: #3498db;
+    color: #7f7af5;
     margin-bottom: 20px;
     font-weight: 600;
     font-size: 1.4rem;
@@ -45,7 +47,7 @@ h2 {
 section {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #e1e4e8;
+    border-bottom: 1px solid #3a3452;
 }
 
 .form-group {
@@ -65,15 +67,25 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
+    color: #c2c8ff;
 }
 
 input, textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid #3a3452;
     border-radius: 4px;
     font-family: inherit;
     font-size: 1rem;
+    background-color: #272337;
+    color: #e1e6fb;
+    transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #7f7af5;
+    box-shadow: 0 0 0 2px rgba(127, 122, 245, 0.2);
 }
 
 textarea {
@@ -84,7 +96,7 @@ textarea {
 small {
     display: block;
     margin-top: 5px;
-    color: #7f8c8d;
+    color: #9e9bb4;
     font-size: 0.8rem;
 }
 
@@ -102,27 +114,35 @@ button {
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 #generateBtn {
-    background-color: #3498db;
+    background-color: #7f7af5;
     color: white;
     flex: 3;
 }
 
 #generateBtn:hover {
-    background-color: #2980b9;
+    background-color: #6e69e4;
 }
 
 #resetBtn {
-    background-color: #e74c3c;
+    background-color: #f25f5c;
     color: white;
     flex: 1;
 }
 
 #resetBtn:hover {
-    background-color: #c0392b;
+    background-color: #e04a47;
 }
 
 /* Output Container Styles */
@@ -144,32 +164,33 @@ button {
 .output-actions button {
     flex: 1;
     min-width: 180px;
-    background-color: #2ecc71;
+    background-color: #56c596;
     color: white;
 }
 
 .output-actions button:hover {
-    background-color: #27ae60;
+    background-color: #46b584;
 }
 
 #backToFormBtn {
-    background-color: #95a5a6;
+    background-color: #8b8aad;
 }
 
 #backToFormBtn:hover {
-    background-color: #7f8c8d;
+    background-color: #7b7a9d;
 }
 
 #promptOutput {
-    background-color: #f9f9f9;
+    background-color: #272337;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #3a3452;
     border-radius: 4px;
     white-space: pre-wrap;
     font-family: 'Courier New', monospace;
     line-height: 1.5;
     max-height: 600px;
     overflow-y: auto;
+    color: #e1e6fb;
 }
 
 /* Responsive Adjustments */
@@ -190,4 +211,29 @@ button {
     button {
         width: 100%;
     }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #272337;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3a3452;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a4462;
+}
+
+/* Placeholder color */
+::placeholder {
+    color: #8b8aad;
+    opacity: 0.7;
 }
