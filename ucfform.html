@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI as the Democratic Tutor: Dialogue Designer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -411,16 +414,20 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tab switching functionality
-            document.querySelectorAll('.tab').forEach(tab => {
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and content
                     document.querySelectorAll('.tab, .tab-content').forEach(el => {
                         el.classList.remove('active');
                     });
                     
+                    // Add active class to clicked tab and corresponding content
                     this.classList.add('active');
                     document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
                     
+                    // If preview tab is clicked, generate the preview
                     if (this.dataset.tab === 'preview') {
                         generatePreview();
                     }
@@ -431,6 +438,7 @@
             document.getElementById('disciplineArea').addEventListener('change', function() {
                 const otherInput = document.getElementById('otherDiscipline');
                 otherInput.style.display = this.value === 'other' ? 'block' : 'none';
+                otherInput.required = this.value === 'other';
             });
             
             // Show/hide other tool input
@@ -438,28 +446,27 @@
                 document.getElementById('otherToolInput').style.display = this.checked ? 'inline-block' : 'none';
             });
             
-            // Add dialogue module button
-            document.querySelector('.add-component-btn').addEventListener('click', function() {
-                const container = document.querySelector('.component-container');
-                const newContainer = container.cloneNode(true);
-                const moduleCount = document.querySelectorAll('.component-container').length + 1;
-                
-                // Update title and IDs
-                newContainer.querySelector('h3').textContent = `Dialogue Module ${moduleCount}`;
-                
-                // Clear input values
-                newContainer.querySelectorAll('input, textarea').forEach(input => {
-                    const newId = input.id.replace(/\d+/, moduleCount);
-                    input.id = newId;
-                    input.value = '';
+            // Add component button functionality
+            document.querySelectorAll('.add-component-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    addComponent(this.dataset.type);
                 });
-                
-                // Insert after the last module
-                container.parentNode.insertBefore(newContainer, document.querySelector('.add-component-btn').parentNode);
+            });
+            
+            // Make component container sortable
+            const sortable = new Sortable(document.getElementById('componentContainer'), {
+                animation: 150,
+                handle: '.drag-handle',
+                onEnd: function() {
+                    // Update the preview when components are reordered
+                    if (document.querySelector('.tab[data-tab="preview"]').classList.contains('active')) {
+                        generatePreview();
+                    }
+                }
             });
             
             // Form submission
-            document.getElementById('tutorDialogueForm').addEventListener('submit', function(e) {
+            document.getElementById('scaffoldForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 // Switch to preview tab
@@ -468,258 +475,442 @@
                 document.getElementById('design-tab').classList.remove('active');
                 document.getElementById('preview-tab').classList.add('active');
                 
+                // Generate preview
                 generatePreview();
             });
             
             // Download button
             document.getElementById('downloadBtn').addEventListener('click', function() {
-                alert('In a production version, this would generate a PDF of your tutoring dialogue template.');
+                generatePDF();
             });
+            
+            // Send email button
+            document.getElementById('sendEmailBtn').addEventListener('click', function() {
+                const email = document.getElementById('emailInput').value;
+                
+                if (!email) {
+                    alert('Please enter your email address');
+                    return;
+                }
+                
+                // In a real implementation, this would send the email
+                // For now, we'll simulate success
+                alert(`Your AI Tutoring Assignment Template would be sent to ${email}. This is a demo version without actual email sending functionality. Please download the PDF instead.`);
+            });
+            
+            // Add a component to the container
+            function addComponent(type) {
+                const template = document.getElementById(`${type}-template`);
+                if (!template) return;
+                
+                const clone = document.importNode(template.content, true);
+                const container = document.getElementById('componentContainer');
+                container.appendChild(clone);
+                
+                // Add event listeners to the new component
+                const component = container.lastElementChild;
+                
+                // Remove button
+                component.querySelector('.remove-component').addEventListener('click', function() {
+                    component.remove();
+                    
+                    // Update preview if we're on the preview tab
+                    if (document.querySelector('.tab[data-tab="preview"]').classList.contains('active')) {
+                        generatePreview();
+                    }
+                });
+                
+                // Move buttons
+                component.querySelector('.move-up').addEventListener('click', function() {
+                    const prev = component.previousElementSibling;
+                    if (prev) {
+                        container.insertBefore(component, prev);
+                    }
+                    
+                    // Update preview if we're on the preview tab
+                    if (document.querySelector('.tab[data-tab="preview"]').classList.contains('active')) {
+                        generatePreview();
+                    }
+                });
+                
+                component.querySelector('.move-down').addEventListener('click', function() {
+                    const next = component.nextElementSibling;
+                    if (next) {
+                        container.insertBefore(next, component);
+                    }
+                    
+                    // Update preview if we're on the preview tab
+                    if (document.querySelector('.tab[data-tab="preview"]').classList.contains('active')) {
+                        generatePreview();
+                    }
+                });
+            }
             
             // Generate preview
             function generatePreview() {
-                const title = document.getElementById('dialogueTitle').value || 'AI Tutoring Dialogue';
+                const preview = document.getElementById('templatePreview');
+                const title = document.getElementById('assignmentTitle').value || 'AI-Enhanced Assignment';
+                
+                // Basic information
                 const courseInfo = document.getElementById('courseInfo').value;
                 const disciplineSelect = document.getElementById('disciplineArea');
                 let discipline = disciplineSelect.options[disciplineSelect.selectedIndex].text;
-                
                 if (discipline === 'Other (specify below)') {
                     discipline = document.getElementById('otherDiscipline').value;
                 }
                 
-                // Get selected AI platforms
-                const selectedPlatforms = [];
+                // AI tools
+                const selectedTools = [];
                 document.querySelectorAll('input[name="aiTools"]:checked').forEach(checkbox => {
                     if (checkbox.value === 'Other') {
-                        selectedPlatforms.push(document.getElementById('otherToolInput').value);
+                        selectedTools.push(document.getElementById('otherToolInput').value);
                     } else {
-                        selectedPlatforms.push(checkbox.value);
+                        selectedTools.push(checkbox.value);
                     }
                 });
                 
-                // Build preview HTML
+                // Build the preview HTML
                 let previewHTML = `
-                    <h2>${title}</h2>
+                    <h2 class="preview-heading">${title}</h2>
                     <p><strong>Course:</strong> ${courseInfo}</p>
                     <p><strong>Discipline:</strong> ${discipline}</p>
-                    <p><strong>Recommended AI Platforms:</strong> ${selectedPlatforms.join(', ') || 'None specified'}</p>
+                    <p><strong>Recommended AI Tools:</strong> ${selectedTools.join(', ') || 'None specified'}</p>
                     
-                    <div class="section">
-                        <h3>Learning Challenges Addressed</h3>
-                        <p>${document.getElementById('learningChallenges').value.replace(/\n/g, '<br>') || 'None specified'}</p>
-                    </div>
+                    <h3>Learning Objectives</h3>
+                    <p>${document.getElementById('learningObjectives').value.replace(/\n/g, '<br>')}</p>
                     
-                    <div class="section">
-                        <h3>Learning Objectives</h3>
-                        <p>${document.getElementById('learningObjectives').value.replace(/\n/g, '<br>') || 'None specified'}</p>
-                    </div>
+                    <h3>Tool Selection Rationale</h3>
+                    <p>${document.getElementById('toolRationale').value || 'No rationale provided.'}</p>
                     
-                    <div class="section">
-                        <h3>Pre-Learning Assessment</h3>
-                        <p><strong>Goals:</strong> ${document.getElementById('preAssessmentGoals').value || 'None specified'}</p>
-                        
-                        <p><strong>Assessment Prompts:</strong></p>
-                        <ul>
+                    <h3>Assignment Scaffold</h3>
                 `;
                 
-                // Add assessment prompts
-                const assessmentPrompts = document.getElementById('assessmentPrompts').value.split('\n').filter(line => line.trim());
-                if (assessmentPrompts.length > 0) {
-                    assessmentPrompts.forEach(prompt => {
-                        previewHTML += `<li>${prompt}</li>`;
+                // Add components
+                const components = document.querySelectorAll('#componentContainer .component-container');
+                if (components.length > 0) {
+                    components.forEach((component, index) => {
+                        const type = component.dataset.type;
+                        const title = component.querySelector(`input[name="${type}-title"]`).value || 'Untitled Component';
+                        
+                        previewHTML += `
+                            <div class="stage">
+                                <h4 class="stage-title">Stage ${index + 1}: ${title}</h4>
+                        `;
+                        
+                        switch (type) {
+                            case 'pre-work':
+                                previewHTML += `
+                                    <p>${component.querySelector('textarea[name="pre-work-description"]').value}</p>
+                                `;
+                                break;
+                                
+                            case 'prompt-template':
+                                previewHTML += `
+                                    <p><strong>Purpose:</strong> ${component.querySelector('textarea[name="prompt-purpose"]').value}</p>
+                                    <div class="prompt-box">
+                                        <p><strong>Prompt Template:</strong></p>
+                                        <p>${component.querySelector('textarea[name="prompt-template"]').value.replace(/\n/g, '<br>')}</p>
+                                    </div>
+                                    <p><strong>Instructions:</strong> ${component.querySelector('textarea[name="prompt-instructions"]').value}</p>
+                                `;
+                                break;
+                                
+                            case 'reflection':
+                                previewHTML += `
+                                    <p>${component.querySelector('textarea[name="reflection-description"]').value}</p>
+                                    <p><strong>Reflection Questions:</strong></p>
+                                    <ul>
+                                    ${component.querySelector('textarea[name="reflection-questions"]').value.split('\n').map(q => `<li>${q}</li>`).join('')}
+                                    </ul>
+                                `;
+                                break;
+                                
+                            case 'evaluation':
+                                previewHTML += `
+                                    <p>${component.querySelector('textarea[name="evaluation-description"]').value}</p>
+                                    <p><strong>Evaluation Criteria:</strong></p>
+                                    <ul>
+                                    ${component.querySelector('textarea[name="evaluation-criteria"]').value.split('\n').map(c => `<li>${c}</li>`).join('')}
+                                    </ul>
+                                `;
+                                break;
+                                
+                            case 'iteration':
+                                previewHTML += `
+                                    <p>${component.querySelector('textarea[name="iteration-description"]').value}</p>
+                                    <p><strong>Guidance:</strong> ${component.querySelector('textarea[name="iteration-guidance"]').value}</p>
+                                `;
+                                break;
+                                
+                            case 'synthesis':
+                                previewHTML += `
+                                    <p>${component.querySelector('textarea[name="synthesis-description"]').value}</p>
+                                    <p><strong>Instructions:</strong> ${component.querySelector('textarea[name="synthesis-instructions"]').value}</p>
+                                `;
+                                break;
+                                
+                            case 'custom':
+                                previewHTML += `
+                                    <p>${component.querySelector('textarea[name="custom-description"]').value}</p>
+                                    <p>${component.querySelector('textarea[name="custom-content"]').value.replace(/\n/g, '<br>')}</p>
+                                `;
+                                break;
+                        }
+                        
+                        previewHTML += `</div>`;
                     });
                 } else {
-                    previewHTML += '<li>No prompts specified</li>';
+                    previewHTML += `<p><em>No scaffold components added yet. Return to the Design tab to add components.</em></p>`;
                 }
                 
+                // Add guidelines
                 previewHTML += `
-                        </ul>
-                        
-                        <p><strong>Instructions for Students:</strong> ${document.getElementById('assessmentInstructions').value || 'None specified'}</p>
-                    </div>
-                `;
-                
-                // Add dialogue modules
-                const modules = document.querySelectorAll('.component-container');
-                previewHTML += `<div class="section"><h3>Tutoring Dialogue Modules</h3>`;
-                
-                modules.forEach((module, index) => {
-                    const moduleTitle = module.querySelector('input[id^="module"]').value || `Module ${index + 1}`;
-                    const initialPrompt = module.querySelector('textarea[id^="initialStudent"]').value || 'No initial prompt specified';
-                    const responseGuidance = module.querySelector('textarea[id^="aiResponse"]').value || 'No response guidance specified';
+                    <h3>Guidelines for Students</h3>
+                    <p><strong>Ethical Guidelines:</strong></p>
+                    <p>${document.getElementById('ethicalGuidelines').value || 'No ethical guidelines provided.'}</p>
                     
-                    previewHTML += `
-                        <div class="dialog-box">
-                            <h4>${moduleTitle}</h4>
-                            
-                            <div class="student-query">
-                                <strong>Student:</strong> ${initialPrompt}
-                            </div>
-                            
-                            <div class="ai-response">
-                                <strong>AI Tutor Response Guidance:</strong>
-                                <p>${responseGuidance.replace(/\n/g, '<br>')}</p>
-                            </div>
-                    `;
-                    
-                    // Add follow-up queries if any
-                    const followupPrompts = module.querySelector('textarea[id^="followup"]').value.split('\n').filter(line => line.trim());
-                    if (followupPrompts.length > 0) {
-                        previewHTML += `<p><strong>Potential Follow-up Queries:</strong></p><ul>`;
-                        followupPrompts.forEach(prompt => {
-                            previewHTML += `<li>${prompt}</li>`;
-                        });
-                        previewHTML += `</ul>`;
-                    }
-                    
-                    // Add metacognitive prompts if any
-                    const metaPrompts = module.querySelector('textarea[id^="metacognitive"]').value.split('\n').filter(line => line.trim());
-                    if (metaPrompts.length > 0) {
-                        previewHTML += `<div class="meta-prompt"><strong>Metacognitive Prompts:</strong><ul>`;
-                        metaPrompts.forEach(prompt => {
-                            previewHTML += `<li>${prompt}</li>`;
-                        });
-                        previewHTML += `</ul></div>`;
-                    }
-                    
-                    previewHTML += `</div>`;
-                });
-                
-                previewHTML += `</div>`;
-                
-                // Add knowledge application section
-                previewHTML += `
-                    <div class="section">
-                        <h3>Knowledge Application</h3>
-                        <p><strong>Activity Description:</strong> ${document.getElementById('applicationDescription').value || 'None specified'}</p>
-                        <p><strong>Instructions for Students:</strong> ${document.getElementById('applicationInstructions').value || 'None specified'}</p>
-                        <p><strong>Role of AI Tutor:</strong> ${document.getElementById('applicationTutor').value || 'None specified'}</p>
-                    </div>
-                `;
-                
-                // Add post-assessment section
-                previewHTML += `
-                    <div class="section">
-                        <h3>Post-Learning Assessment</h3>
-                        <p><strong>Assessment Goals:</strong> ${document.getElementById('postAssessmentGoals').value || 'None specified'}</p>
-                        
-                        <p><strong>Assessment Prompts:</strong></p>
-                        <ul>
-                `;
-                
-                // Add post-assessment prompts
-                const postPrompts = document.getElementById('postAssessmentPrompts').value.split('\n').filter(line => line.trim());
-                if (postPrompts.length > 0) {
-                    postPrompts.forEach(prompt => {
-                        previewHTML += `<li>${prompt}</li>`;
-                    });
-                } else {
-                    previewHTML += '<li>No prompts specified</li>';
-                }
-                
-                previewHTML += `
-                        </ul>
-                        
-                        <p><strong>Student Reflection Prompts:</strong></p>
-                        <ul>
-                `;
-                
-                // Add reflection prompts
-                const reflectionPrompts = document.getElementById('studentReflection').value.split('\n').filter(line => line.trim());
-                if (reflectionPrompts.length > 0) {
-                    reflectionPrompts.forEach(prompt => {
-                        previewHTML += `<li>${prompt}</li>`;
-                    });
-                } else {
-                    previewHTML += '<li>No reflection prompts specified</li>';
-                }
-                
-                previewHTML += `
-                        </ul>
-                    </div>
-                `;
-                
-                // Add guidelines section
-                previewHTML += `
-                    <div class="section">
-                        <h3>Tutoring Relationship Guidelines</h3>
-                        <p><strong>Student Agency Guidelines:</strong> ${document.getElementById('studentAgency').value || 'None specified'}</p>
-                        <p><strong>Ethical Guidelines:</strong> ${document.getElementById('ethicalGuidelines').value || 'None specified'}</p>
-                        <p><strong>Attribution Guidelines:</strong> ${document.getElementById('attributionGuidelines').value || 'None specified'}</p>
-                    </div>
+                    <p><strong>Attribution Guidelines:</strong></p>
+                    <p>${document.getElementById('attributionGuidelines').value || 'No attribution guidelines provided.'}</p>
                 `;
                 
                 // Update preview
-                document.getElementById('previewContent').innerHTML = previewHTML;
+                preview.innerHTML = previewHTML;
                 document.getElementById('previewTitle').textContent = `${title} Preview`;
             }
-
-        // Generate PDF function
-        function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            let yPosition = 20;
             
-            // Helper function to add text with word wrap
-            function addText(text, x, y, maxWidth, lineHeight) {
-                if (!text) return y;
-                const lines = doc.splitTextToSize(text.replace(/<br>/g, '\n'), maxWidth);
-                doc.text(lines, x, y);
-                return y + (lines.length * lineHeight);
-            }
-            
-            // Helper function to check and add a new page if needed
-            function checkPageBreak(y, margin = 20) {
-                if (y > 270) {
-                    doc.addPage();
-                    return 20;
+            // Generate PDF
+            function generatePDF() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                let yPosition = 20;
+                
+                // Helper function to add text with word wrap
+                function addText(text, x, y, maxWidth, lineHeight) {
+                    if (!text) return y;
+                    const lines = doc.splitTextToSize(text.replace(/<br>/g, '\n'), maxWidth);
+                    doc.text(lines, x, y);
+                    return y + (lines.length * lineHeight);
                 }
-                return y;
-            }
-            
-            // Title and basic info
-            const title = document.getElementById('dialogueTitle').value || 'AI Tutoring Dialogue';
-            doc.setFontSize(18);
-            doc.setTextColor(44, 62, 80);
-            doc.text(title, 105, yPosition, { align: 'center' });
-            yPosition += 10;
-            
-            const courseInfo = document.getElementById('courseInfo').value;
-            if (courseInfo) {
+                
+                // Helper function to add a section header
+                function addSectionHeader(text, x, y) {
+                    doc.setFontSize(16);
+                    doc.setTextColor(44, 62, 80);
+                    doc.text(text, x, y);
+                    return y + 8;
+                }
+                
+                // Helper function to add a subsection header
+                function addSubsectionHeader(text, x, y) {
+                    doc.setFontSize(14);
+                    doc.setTextColor(44, 62, 80);
+                    doc.text(text, x, y);
+                    return y + 7;
+                }
+                
+                // Helper function to check and add a new page if needed
+                function checkPageBreak(y, margin = 20) {
+                    if (y > 270) {
+                        doc.addPage();
+                        return 20;
+                    }
+                    return y;
+                }
+                
+                // Title and course info
+                const title = document.getElementById('assignmentTitle').value || 'AI-Enhanced Assignment';
+                const courseInfo = document.getElementById('courseInfo').value;
+                
+                doc.setFontSize(20);
+                doc.setTextColor(44, 62, 80);
+                doc.text(title, 105, yPosition, { align: 'center' });
+                yPosition += 10;
+                
+                if (courseInfo) {
+                    doc.setFontSize(14);
+                    doc.text(courseInfo, 105, yPosition, { align: 'center' });
+                    yPosition += 8;
+                }
+                
+                doc.text(`Generated on ${new Date().toLocaleDateString()}`, 105, yPosition, { align: 'center' });
+                yPosition += 15;
+                
+                // Add divider
+                doc.setDrawColor(44, 62, 80);
+                doc.line(20, yPosition, 190, yPosition);
+                yPosition += 10;
+                
+                // Learning objectives
+                yPosition = addSectionHeader('Learning Objectives', 20, yPosition);
                 doc.setFontSize(12);
-                doc.text(`Course: ${courseInfo}`, 105, yPosition, { align: 'center' });
-                yPosition += 8;
+                doc.setTextColor(0, 0, 0);
+                yPosition = addText(document.getElementById('learningObjectives').value, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                yPosition = checkPageBreak(yPosition);
+                
+                // AI Tools
+                yPosition = addSectionHeader('Recommended AI Tools', 20, yPosition);
+                
+                const selectedTools = [];
+                document.querySelectorAll('input[name="aiTools"]:checked').forEach(checkbox => {
+                    if (checkbox.value === 'Other') {
+                        selectedTools.push(document.getElementById('otherToolInput').value);
+                    } else {
+                        selectedTools.push(checkbox.value);
+                    }
+                });
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                yPosition = addText(selectedTools.join(', ') || 'None specified', 20, yPosition, 170, 6);
+                yPosition += 5;
+                
+                yPosition = addText('Rationale: ' + document.getElementById('toolRationale').value, 20, yPosition, 170, 6);
+                yPosition += 10;
+                
+                yPosition = checkPageBreak(yPosition);
+                
+                // Assignment Scaffold
+                yPosition = addSectionHeader('Assignment Scaffold', 20, yPosition);
+                yPosition += 5;
+                
+                // Add components
+                const components = document.querySelectorAll('#componentContainer .component-container');
+                if (components.length > 0) {
+                    components.forEach((component, index) => {
+                        yPosition = checkPageBreak(yPosition);
+                        
+                        const type = component.dataset.type;
+                        const title = component.querySelector(`input[name="${type}-title"]`).value || 'Untitled Component';
+                        
+                        // Stage header
+                        yPosition = addSubsectionHeader(`Stage ${index + 1}: ${title}`, 20, yPosition);
+                        doc.setFontSize(12);
+                        doc.setTextColor(0, 0, 0);
+                        
+                        switch (type) {
+                            case 'pre-work':
+                                yPosition = addText(component.querySelector('textarea[name="pre-work-description"]').value, 20, yPosition, 170, 6);
+                                break;
+                                
+                            case 'prompt-template':
+                                doc.text('Purpose:', 20, yPosition);
+                                yPosition += 5;
+                                yPosition = addText(component.querySelector('textarea[name="prompt-purpose"]').value, 25, yPosition, 165, 6);
+                                yPosition += 5;
+                                
+                                doc.text('Prompt Template:', 20, yPosition);
+                                yPosition += 5;
+                                
+                                // Draw prompt box
+                                doc.setFillColor(245, 245, 245);
+                                doc.rect(20, yPosition, 170, 30, 'F');
+                                yPosition = addText(component.querySelector('textarea[name="prompt-template"]').value, 25, yPosition + 5, 160, 6);
+                                yPosition += 10;
+                                
+                                doc.text('Instructions:', 20, yPosition);
+                                yPosition += 5;
+                                yPosition = addText(component.querySelector('textarea[name="prompt-instructions"]').value, 25, yPosition, 165, 6);
+                                break;
+                                
+                            case 'reflection':
+                                yPosition = addText(component.querySelector('textarea[name="reflection-description"]').value, 20, yPosition, 170, 6);
+                                yPosition += 5;
+                                
+                                doc.text('Reflection Questions:', 20, yPosition);
+                                yPosition += 5;
+                                
+                                // Add reflection questions as bullets
+                                const questions = component.querySelector('textarea[name="reflection-questions"]').value.split('\n');
+                                questions.forEach(question => {
+                                    if (question.trim()) {
+                                        yPosition = checkPageBreak(yPosition);
+                                        doc.text('• ', 25, yPosition);
+                                        yPosition = addText(question, 30, yPosition, 160, 6);
+                                        yPosition += 2;
+                                    }
+                                });
+                                break;
+                                
+                            case 'evaluation':
+                                yPosition = addText(component.querySelector('textarea[name="evaluation-description"]').value, 20, yPosition, 170, 6);
+                                yPosition += 5;
+                                
+                                doc.text('Evaluation Criteria:', 20, yPosition);
+                                yPosition += 5;
+                                
+                                // Add evaluation criteria as bullets
+                                const criteria = component.querySelector('textarea[name="evaluation-criteria"]').value.split('\n');
+                                criteria.forEach(criterion => {
+                                    if (criterion.trim()) {
+                                        yPosition = checkPageBreak(yPosition);
+                                        doc.text('• ', 25, yPosition);
+                                        yPosition = addText(criterion, 30, yPosition, 160, 6);
+                                        yPosition += 2;
+                                    }
+                                });
+                                break;
+                                
+                            case 'iteration':
+                                yPosition = addText(component.querySelector('textarea[name="iteration-description"]').value, 20, yPosition, 170, 6);
+                                yPosition += 5;
+                                
+                                doc.text('Guidance:', 20, yPosition);
+                                yPosition += 5;
+                                yPosition = addText(component.querySelector('textarea[name="iteration-guidance"]').value, 25, yPosition, 165, 6);
+                                break;
+                                
+                            case 'synthesis':
+                                yPosition = addText(component.querySelector('textarea[name="synthesis-description"]').value, 20, yPosition, 170, 6);
+                                yPosition += 5;
+                                
+                                doc.text('Instructions:', 20, yPosition);
+                                yPosition += 5;
+                                yPosition = addText(component.querySelector('textarea[name="synthesis-instructions"]').value, 25, yPosition, 165, 6);
+                                break;
+                                
+                            case 'custom':
+                                yPosition = addText(component.querySelector('textarea[name="custom-description"]').value, 20, yPosition, 170, 6);
+                                yPosition += 5;
+                                yPosition = addText(component.querySelector('textarea[name="custom-content"]').value, 20, yPosition, 170, 6);
+                                break;
+                        }
+                        
+                        yPosition += 10;
+                    });
+                } else {
+                    yPosition = addText('No scaffold components added.', 20, yPosition, 170, 6);
+                    yPosition += 10;
+                }
+                
+                yPosition = checkPageBreak(yPosition);
+                
+                // Guidelines
+                yPosition = addSectionHeader('Guidelines for Students', 20, yPosition);
+                yPosition += 5;
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Ethical Guidelines:', 20, yPosition);
+                yPosition += 5;
+                yPosition = addText(document.getElementById('ethicalGuidelines').value || 'No ethical guidelines provided.', 25, yPosition, 165, 6);
+                yPosition += 10;
+                
+                yPosition = checkPageBreak(yPosition);
+                
+                doc.text('Attribution Guidelines:', 20, yPosition);
+                yPosition += 5;
+                yPosition = addText(document.getElementById('attributionGuidelines').value || 'No attribution guidelines provided.', 25, yPosition, 165, 6);
+                
+                // Save the PDF
+                const titleForFilename = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                doc.save(`${titleForFilename}_ai_assignment.pdf`);
             }
             
-            // Add date
-            doc.text(`Generated on ${new Date().toLocaleDateString()}`, 105, yPosition, { align: 'center' });
-            yPosition += 15;
-            
-            // Add sections
-            doc.setFontSize(14);
-            doc.text('Learning Objectives', 20, yPosition);
-            yPosition += 8;
-            
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            yPosition = addText(document.getElementById('learningObjectives').value, 20, yPosition, 170, 5);
-            yPosition += 10;
-            
-            yPosition = checkPageBreak(yPosition);
-            
-            // Pre-Assessment
-            doc.setFontSize(14);
-            doc.setTextColor(44, 62, 80);
-            doc.text('Pre-Learning Assessment', 20, yPosition);
-            yPosition += 8;
-            
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            yPosition = addText(document.getElementById('preAssessmentGoals').value, 20, yPosition, 170, 5);
-            yPosition += 5;
-            
-            // Get all dialogue modules
-            const modules = document.querySelectorAll('.component-container');
-            modules.forEach((module,
+            // Add an initial component as an example
+            addComponent('prompt-template');
+        });
+    </script>
 </body>
 </html>
