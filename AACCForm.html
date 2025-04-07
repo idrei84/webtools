@@ -758,34 +758,27 @@
             // Load saved data when the page loads
             loadFormData();
             
-            // Enhanced addText function with automatic page breaks
+            // Enhanced addText function that allows text to span across pages
             function addText(text, x, y, maxWidth, lineHeight, doc) {
                 // Split text into lines that fit within maxWidth
                 const lines = doc.splitTextToSize(text, maxWidth);
+                let currentY = y;
                 
-                // Calculate total height needed
-                const totalHeight = lines.length * lineHeight;
-                
-                // Check if we need a page break
-                if (y + totalHeight > 270) {
-                    doc.addPage();
-                    y = 20; // Reset y position on new page
+                // Process each line, creating page breaks as needed
+                for (let i = 0; i < lines.length; i++) {
+                    // Check if we need a page break
+                    if (currentY > 270) {
+                        doc.addPage();
+                        currentY = 20; // Reset Y position on new page
+                    }
+                    
+                    // Add the current line
+                    doc.text(lines[i], x, currentY);
+                    currentY += lineHeight;
                 }
-                
-                // Now add the text
-                doc.text(lines, x, y);
                 
                 // Return the new y position
-                return y + totalHeight;
-            }
-            
-            // Enhanced function to check if an element will fit on the page
-            function checkPageBreak(yPosition, heightNeeded, doc) {
-                if (yPosition + heightNeeded > 270) {
-                    doc.addPage();
-                    return 20; // Start position on new page
-                }
-                return yPosition; // Current position is fine
+                return currentY;
             }
             
             // Function to generate PDF from form data
