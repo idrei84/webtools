@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Integration Action Planning Tool</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your public key
+        (function() {
+            emailjs.init({
+                publicKey: "5nilv_95RamRdxRq_",
+            });
+        })();
+    </script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -511,19 +520,244 @@
                 generatePDF();
             });
             
-            // Send email button
+            // Implementation for the Send Email button (add to your existing JavaScript)
             document.getElementById('sendEmailBtn').addEventListener('click', function() {
-                const email = document.getElementById('emailInput').value || document.getElementById('respondentEmail').value;
+                const emailInput = document.getElementById('emailInput').value || document.getElementById('respondentEmail').value;
                 
-                if (!email) {
+                if (!emailInput) {
                     alert('Please enter your email address');
                     return;
                 }
                 
-                // In a real implementation, this would send the email
-                // For now, we'll simulate success
-                alert(`Your AI Integration Action Plan would be sent to ${email}. This is a demo version without actual email sending functionality. Please download the PDF instead.`);
+                // Show loading state
+                const sendEmailBtn = document.getElementById('sendEmailBtn');
+                const originalBtnText = sendEmailBtn.textContent;
+                sendEmailBtn.disabled = true;
+                sendEmailBtn.textContent = 'Sending...';
+                
+                // Get all form data and format it for the email
+                const formData = collectFormData();
+                
+                // Prepare template parameters for EmailJS
+                const templateParams = {
+                    to_email: emailInput,
+                    subject: `AI Integration Action Plan - ${formData.institutionName}`,
+                    form_content: formatFormDataAsText(formData)
+                };
+            
+                // Send the email using EmailJS
+                emailjs.send(
+                    'service_kqxfaew',         // Your EmailJS service ID
+                    'template_et8dfv6',        // Your template ID
+                    templateParams
+                )
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Your AI Integration Action Plan has been sent to your email!');
+                    // Reset button state
+                    sendEmailBtn.disabled = false;
+                    sendEmailBtn.textContent = originalBtnText;
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    alert('Failed to send email. Please try downloading the PDF instead.');
+                    // Reset button state
+                    sendEmailBtn.disabled = false;
+                    sendEmailBtn.textContent = originalBtnText;
+                });
             });
+            
+            // Function to collect all form data
+            function collectFormData() {
+                // Get value for priority area
+                let priorityArea = '';
+                const radios = document.getElementsByName('priorityArea');
+                for (const radio of radios) {
+                    if (radio.checked) {
+                        priorityArea = radio.value;
+                        if (priorityArea === 'Other') {
+                            priorityArea += ': ' + document.getElementById('area-other-text').value;
+                        }
+                        break;
+                    }
+                }
+                
+                // Collect stakeholder data
+                const stakeholders = [];
+                const stakeholderRows = document.querySelectorAll('#stakeholdersTable tbody tr');
+                stakeholderRows.forEach(row => {
+                    const role = row.querySelector('input[name="stakeholderRole[]"]')?.value || '';
+                    const name = row.querySelector('input[name="stakeholderName[]"]')?.value || '';
+                    const responsibility = row.querySelector('input[name="stakeholderResponsibility[]"]')?.value || '';
+                    
+                    if (role || name || responsibility) {
+                        stakeholders.push({ role, name, responsibility });
+                    }
+                });
+                
+                // Collect timeline data
+                const timeline = [];
+                const timelineRows = document.querySelectorAll('#timelineTable tbody tr');
+                timelineRows.forEach(row => {
+                    let timeframe = row.cells[0].innerText;
+                    if (timeframe === "") {
+                        const selectElement = row.cells[0].querySelector('select');
+                        if (selectElement) timeframe = selectElement.value;
+                    }
+                    
+                    let action = "";
+                    let responsible = "";
+                    
+                    // Handle different input name patterns
+                    const actionInput = row.cells[1].querySelector('input');
+                    if (actionInput) action = actionInput.value;
+                    
+                    const responsibleInput = row.cells[2].querySelector('input');
+                    if (responsibleInput) responsible = responsibleInput.value;
+                    
+                    if (timeframe || action || responsible) {
+                        timeline.push({ timeframe, action, responsible });
+                    }
+                });
+                
+                // Collect challenges data
+                const challenges = [];
+                const challengeRows = document.querySelectorAll('#challengesTable tbody tr');
+                challengeRows.forEach(row => {
+                    const challenge = row.querySelector('input[name="challenge[]"]')?.value || '';
+                    const mitigation = row.querySelector('input[name="mitigation[]"]')?.value || '';
+                    
+                    if (challenge || mitigation) {
+                        challenges.push({ challenge, mitigation });
+                    }
+                });
+                
+                // Return all collected data
+                return {
+                    institutionName: document.getElementById('institutionName').value,
+                    respondentName: document.getElementById('respondentName').value,
+                    respondentRole: document.getElementById('respondentRole').value,
+                    respondentEmail: document.getElementById('respondentEmail').value,
+                    priorityArea: priorityArea,
+                    rationale: document.getElementById('rationale').value,
+                    existingProcesses: document.getElementById('existingProcesses').value,
+                    painPoints: document.getElementById('painPoints').value,
+                    availableResources: document.getElementById('availableResources').value,
+                    aiSolution: document.getElementById('aiSolution').value,
+                    stakeholders: stakeholders,
+                    timeline: timeline,
+                    desiredOutcomes: document.getElementById('desiredOutcomes').value,
+                    evaluationMethod: document.getElementById('evaluationMethod').value,
+                    challenges: challenges,
+                    sustainabilityResources: document.getElementById('sustainabilityResources').value,
+                    expansionOpportunities: document.getElementById('expansionOpportunities').value,
+                    knowledgeSharing: document.getElementById('knowledgeSharing').value
+                };
+            }
+            
+            // Function to format form data as readable text
+            function formatFormDataAsText(data) {
+                let text = `
+            AI INTEGRATION ACTION PLAN
+            ==========================
+            
+            Institution: ${data.institutionName}
+            Prepared by: ${data.respondentName}, ${data.respondentRole}
+            Date: ${new Date().toLocaleDateString()}
+            
+            SECTION 1: TARGET AREA SELECTION
+            --------------------------------
+            Priority Area for AI Integration: ${data.priorityArea}
+            
+            Rationale for Selection:
+            ${data.rationale}
+            
+            SECTION 2: CURRENT STATE ASSESSMENT
+            -----------------------------------
+            Existing Processes:
+            ${data.existingProcesses}
+            
+            Pain Points/Opportunities:
+            ${data.painPoints}
+            
+            Available Resources:
+            ${data.availableResources}
+            
+            SECTION 3: IMPLEMENTATION PLANNING
+            ----------------------------------
+            Specific AI Solution/Approach:
+            ${data.aiSolution}
+            
+            Key Stakeholders:
+            ${formatStakeholdersAsText(data.stakeholders)}
+            
+            Timeline & Milestones:
+            ${formatTimelineAsText(data.timeline)}
+            
+            SECTION 4: SUCCESS MEASURES & EVALUATION
+            ----------------------------------------
+            Desired Outcomes:
+            ${data.desiredOutcomes}
+            
+            Evaluation Method:
+            ${data.evaluationMethod}
+            
+            Potential Challenges & Mitigation Strategies:
+            ${formatChallengesAsText(data.challenges)}
+            
+            SECTION 5: SUSTAINABILITY & SCALING
+            -----------------------------------
+            Resources Needed for Sustainability:
+            ${data.sustainabilityResources}
+            
+            Opportunities for Expansion:
+            ${data.expansionOpportunities}
+            
+            Knowledge Sharing Plan:
+            ${data.knowledgeSharing}
+            
+            ==========================
+            This plan was generated using the AI Integration Action Planning Tool.
+            `;
+                
+                return text;
+            }
+            
+            // Helper function to format stakeholders data
+            function formatStakeholdersAsText(stakeholders) {
+                if (!stakeholders || stakeholders.length === 0) return "None specified";
+                
+                let text = "";
+                stakeholders.forEach((item, index) => {
+                    text += `${index + 1}. Role: ${item.role}\n   Name/Position: ${item.name}\n   Responsibility: ${item.responsibility}\n\n`;
+                });
+                
+                return text;
+            }
+            
+            // Helper function to format timeline data
+            function formatTimelineAsText(timeline) {
+                if (!timeline || timeline.length === 0) return "None specified";
+                
+                let text = "";
+                timeline.forEach((item, index) => {
+                    text += `${item.timeframe}: ${item.action} (Responsible: ${item.responsible})\n\n`;
+                });
+                
+                return text;
+            }
+            
+            // Helper function to format challenges data
+            function formatChallengesAsText(challenges) {
+                if (!challenges || challenges.length === 0) return "None specified";
+                
+                let text = "";
+                challenges.forEach((item, index) => {
+                    text += `${index + 1}. Challenge: ${item.challenge}\n   Mitigation Strategy: ${item.mitigation}\n\n`;
+                });
+                
+                return text;
+            }
             
             // Add input event listeners to all form fields for auto-save
             document.querySelectorAll('#aiPlanningForm input, #aiPlanningForm textarea, #aiPlanningForm select').forEach(element => {
