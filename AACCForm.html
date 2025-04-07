@@ -758,18 +758,41 @@
             // Load saved data when the page loads
             loadFormData();
             
+            // Enhanced addText function with automatic page breaks
+            function addText(text, x, y, maxWidth, lineHeight, doc) {
+                // Split text into lines that fit within maxWidth
+                const lines = doc.splitTextToSize(text, maxWidth);
+                
+                // Calculate total height needed
+                const totalHeight = lines.length * lineHeight;
+                
+                // Check if we need a page break
+                if (y + totalHeight > 270) {
+                    doc.addPage();
+                    y = 20; // Reset y position on new page
+                }
+                
+                // Now add the text
+                doc.text(lines, x, y);
+                
+                // Return the new y position
+                return y + totalHeight;
+            }
+            
+            // Enhanced function to check if an element will fit on the page
+            function checkPageBreak(yPosition, heightNeeded, doc) {
+                if (yPosition + heightNeeded > 270) {
+                    doc.addPage();
+                    return 20; // Start position on new page
+                }
+                return yPosition; // Current position is fine
+            }
+            
             // Function to generate PDF from form data
             function generatePDF() {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
                 let yPosition = 20;
-                
-                // Helper function to add text with word wrap
-                function addText(text, x, y, maxWidth, lineHeight) {
-                    const lines = doc.splitTextToSize(text, maxWidth);
-                    doc.text(lines, x, y);
-                    return y + (lines.length * lineHeight);
-                }
                 
                 // Title and institution info
                 doc.setFontSize(20);
@@ -796,6 +819,9 @@
                 doc.line(20, yPosition, 190, yPosition);
                 yPosition += 10;
                 
+                // Check page break before each section
+                yPosition = checkPageBreak(yPosition, 30, doc);
+                
                 // Section 1: Target Area Selection
                 doc.setFontSize(16);
                 doc.setTextColor(44, 62, 80);
@@ -820,18 +846,16 @@
                 doc.text(`Priority Area for AI Integration: ${priorityArea}`, 20, yPosition);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Rationale for Selection:', 20, yPosition);
                 yPosition += 5;
                 
                 const rationale = document.getElementById('rationale').value;
-                yPosition = addText(rationale, 20, yPosition, 170, 6);
+                yPosition = addText(rationale, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
-                // Start a new page if needed
-                if (yPosition > 260) {
-                    doc.addPage();
-                    yPosition = 20;
-                }
+                // Check page break before section 2
+                yPosition = checkPageBreak(yPosition, 30, doc);
                 
                 // Section 2: Current State Assessment
                 doc.setFontSize(16);
@@ -841,32 +865,33 @@
                 
                 doc.setFontSize(12);
                 doc.setTextColor(0, 0, 0);
+                
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Existing Processes:', 20, yPosition);
                 yPosition += 5;
                 
                 const processes = document.getElementById('existingProcesses').value;
-                yPosition = addText(processes, 20, yPosition, 170, 6);
+                yPosition = addText(processes, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Pain Points/Opportunities:', 20, yPosition);
                 yPosition += 5;
                 
                 const painPoints = document.getElementById('painPoints').value;
-                yPosition = addText(painPoints, 20, yPosition, 170, 6);
+                yPosition = addText(painPoints, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Available Resources:', 20, yPosition);
                 yPosition += 5;
                 
                 const resources = document.getElementById('availableResources').value;
-                yPosition = addText(resources, 20, yPosition, 170, 6);
+                yPosition = addText(resources, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
-                // Start a new page if needed
-                if (yPosition > 260) {
-                    doc.addPage();
-                    yPosition = 20;
-                }
+                // Check page break before section 3
+                yPosition = checkPageBreak(yPosition, 30, doc);
                 
                 // Section 3: Implementation Planning
                 doc.setFontSize(16);
@@ -876,19 +901,23 @@
                 
                 doc.setFontSize(12);
                 doc.setTextColor(0, 0, 0);
+                
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Specific AI Solution/Approach:', 20, yPosition);
                 yPosition += 5;
                 
                 const aiSolution = document.getElementById('aiSolution').value;
-                yPosition = addText(aiSolution, 20, yPosition, 170, 6);
+                yPosition = addText(aiSolution, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Key Stakeholders:', 20, yPosition);
                 yPosition += 5;
                 
                 // Create stakeholders table
                 const stakeholderRows = document.querySelectorAll('#stakeholdersTable tbody tr');
                 if (stakeholderRows.length > 0) {
+                    yPosition = checkPageBreak(yPosition, 10, doc);
                     doc.setFontSize(10);
                     doc.text('Role', 20, yPosition);
                     doc.text('Name/Position', 70, yPosition);
@@ -904,29 +933,30 @@
                         const name = row.querySelector('input[name="stakeholderName[]"]').value;
                         const responsibility = row.querySelector('input[name="stakeholderResponsibility[]"]').value;
                         
+                        // Calculate needed height for this row
+                        const respLines = doc.splitTextToSize(responsibility, 60);
+                        const rowHeight = Math.max(respLines.length * 5, 8);
+                        
+                        // Check if we need a page break for this row
+                        yPosition = checkPageBreak(yPosition, rowHeight, doc);
+                        
                         doc.text(role, 20, yPosition);
                         doc.text(name, 70, yPosition);
-                        const respLines = doc.splitTextToSize(responsibility, 60);
                         doc.text(respLines, 130, yPosition);
                         
-                        // Adjust yPosition based on how many lines of text were in the responsibility
-                        yPosition += Math.max(respLines.length * 5, 8);
-                        
-                        // Start a new page if needed
-                        if (yPosition > 270) {
-                            doc.addPage();
-                            yPosition = 20;
-                        }
+                        yPosition += rowHeight;
                     });
                 }
                 
                 yPosition += 5;
                 
                 // Output timeline
+                yPosition = checkPageBreak(yPosition, 20, doc);
                 doc.setFontSize(12);
                 doc.text('Timeline & Milestones:', 20, yPosition);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.setFontSize(10);
                 doc.text('Timeframe', 20, yPosition);
                 doc.text('Action Steps', 70, yPosition);
@@ -956,32 +986,26 @@
                     const responsibleInput = row.cells[2].querySelector('input');
                     if (responsibleInput) responsible = responsibleInput.value;
                     
-                    doc.text(timeframe, 20, yPosition);
-                    
+                    // Calculate the space needed for this row
                     const actionLines = doc.splitTextToSize(action, 70);
-                    doc.text(actionLines, 70, yPosition);
-                    
                     const responsibleLines = doc.splitTextToSize(responsible, 35);
+                    const maxLines = Math.max(actionLines.length, responsibleLines.length);
+                    const rowHeight = maxLines * 5 + 3;
+                    
+                    // Check if we need a page break for this row
+                    yPosition = checkPageBreak(yPosition, rowHeight, doc);
+                    
+                    doc.text(timeframe, 20, yPosition);
+                    doc.text(actionLines, 70, yPosition);
                     doc.text(responsibleLines, 150, yPosition);
                     
-                    // Calculate the maximum height needed for this row
-                    const maxLines = Math.max(actionLines.length, responsibleLines.length);
-                    yPosition += maxLines * 5 + 3;
-                    
-                    // Start a new page if needed
-                    if (yPosition > 270) {
-                        doc.addPage();
-                        yPosition = 20;
-                    }
+                    yPosition += rowHeight;
                 });
                 
                 yPosition += 10;
                 
-                // Start a new page if needed
-                if (yPosition > 240) {
-                    doc.addPage();
-                    yPosition = 20;
-                }
+                // Check page break before section 4
+                yPosition = checkPageBreak(yPosition, 30, doc);
                 
                 // Section 4: Success Measures & Evaluation
                 doc.setFontSize(16);
@@ -991,24 +1015,29 @@
                 
                 doc.setFontSize(12);
                 doc.setTextColor(0, 0, 0);
+                
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Desired Outcomes:', 20, yPosition);
                 yPosition += 5;
                 
                 const outcomes = document.getElementById('desiredOutcomes').value;
-                yPosition = addText(outcomes, 20, yPosition, 170, 6);
+                yPosition = addText(outcomes, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Evaluation Method:', 20, yPosition);
                 yPosition += 5;
                 
                 const evaluation = document.getElementById('evaluationMethod').value;
-                yPosition = addText(evaluation, 20, yPosition, 170, 6);
+                yPosition = addText(evaluation, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Potential Challenges & Mitigation Strategies:', 20, yPosition);
                 yPosition += 5;
                 
                 // Draw challenges table
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.setFontSize(10);
                 doc.text('Challenge', 20, yPosition);
                 doc.text('Mitigation Strategy', 100, yPosition);
@@ -1025,29 +1054,25 @@
                     const mitigation = row.querySelector('input[name="mitigation[]"]').value;
                     
                     const challengeLines = doc.splitTextToSize(challenge, 70);
-                    doc.text(challengeLines, 20, yPosition);
-                    
                     const mitigationLines = doc.splitTextToSize(mitigation, 80);
-                    doc.text(mitigationLines, 100, yPosition);
                     
                     // Calculate the maximum height needed for this row
                     const maxLines = Math.max(challengeLines.length, mitigationLines.length);
-                    yPosition += maxLines * 5 + 3;
+                    const rowHeight = maxLines * 5 + 3;
                     
-                    // Start a new page if needed
-                    if (yPosition > 270) {
-                        doc.addPage();
-                        yPosition = 20;
-                    }
+                    // Check if we need a page break for this row
+                    yPosition = checkPageBreak(yPosition, rowHeight, doc);
+                    
+                    doc.text(challengeLines, 20, yPosition);
+                    doc.text(mitigationLines, 100, yPosition);
+                    
+                    yPosition += rowHeight;
                 });
                 
                 yPosition += 10;
                 
-                // Start a new page if needed
-                if (yPosition > 240) {
-                    doc.addPage();
-                    yPosition = 20;
-                }
+                // Check page break before section 5
+                yPosition = checkPageBreak(yPosition, 30, doc);
                 
                 // Section 5: Sustainability & Scaling
                 doc.setFontSize(16);
@@ -1057,25 +1082,29 @@
                 
                 doc.setFontSize(12);
                 doc.setTextColor(0, 0, 0);
+                
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Resources Needed for Sustainability:', 20, yPosition);
                 yPosition += 5;
                 
                 const sustainabilityResources = document.getElementById('sustainabilityResources').value;
-                yPosition = addText(sustainabilityResources, 20, yPosition, 170, 6);
+                yPosition = addText(sustainabilityResources, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Opportunities for Expansion:', 20, yPosition);
                 yPosition += 5;
                 
                 const expansion = document.getElementById('expansionOpportunities').value;
-                yPosition = addText(expansion, 20, yPosition, 170, 6);
+                yPosition = addText(expansion, 20, yPosition, 170, 6, doc);
                 yPosition += 10;
                 
+                yPosition = checkPageBreak(yPosition, 15, doc);
                 doc.text('Knowledge Sharing Plan:', 20, yPosition);
                 yPosition += 5;
                 
                 const sharing = document.getElementById('knowledgeSharing').value;
-                yPosition = addText(sharing, 20, yPosition, 170, 6);
+                yPosition = addText(sharing, 20, yPosition, 170, 6, doc);
                 
                 // Save the PDF
                 const filenameSafe = institution.replace(/[^a-z0-9]/gi, '_').toLowerCase();
