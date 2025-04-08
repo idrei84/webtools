@@ -5,80 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Integration Planning Tool</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles1.css">
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="hero">
             <h1>AI Integration Planning Tool</h1>
-            <p style="max-width:65%; text-align: center; margin-left: auto; margin-right: auto;">Complete this form to generate a prompt for starting a thoughtful conversation about integrating AI into your assignment.</p>
-        </header>
+            <p>Complete this form to generate a prompt for starting a thoughtful conversation about integrating AI into your assignment.</p>
+        </div>
 
-        <form id="aiPlanningForm">
-            <section>
-                <h2>Instructor Information</h2>
-                <div class="form-group">
-                    <label for="instructorName">Name</label>
-                    <input type="text" id="instructorName" name="instructorName" required>
-                </div>
-                <div class="form-group">
-                    <label for="department">Department/Subject Area</label>
-                    <input type="text" id="department" name="department" required>
-                </div>
-                <div class="form-row">
+        <div class="form-content">
+            <form id="aiPlanningForm">
+                <section>
+                    <h2>Instructor Information</h2>
                     <div class="form-group">
-                        <label for="courseName">Course Name</label>
-                        <input type="text" id="courseName" name="courseName" required>
+                        <label for="instructorName">Name</label>
+                        <input type="text" id="instructorName" name="instructorName" required>
                     </div>
                     <div class="form-group">
-                        <label for="courseNumber">Course Number</label>
-                        <input type="text" id="courseNumber" name="courseNumber" required>
+                        <label for="department">Department/Subject Area</label>
+                        <input type="text" id="department" name="department" required>
                     </div>
-                </div>
-            </section>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseName">Course Name</label>
+                            <input type="text" id="courseName" name="courseName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseNumber">Course Number</label>
+                            <input type="text" id="courseNumber" name="courseNumber" required>
+                        </div>
+                    </div>
+                </section>
 
-            <section>
-                <h2>Assignment Details</h2>
-                <div class="form-group">
-                    <label for="assignmentTitle">Assignment Title</label>
-                    <input type="text" id="assignmentTitle" name="assignmentTitle" required>
-                </div>
-                <div class="form-group">
-                    <label for="assignmentType">Assignment Type</label>
-                    <input type="text" id="assignmentType" name="assignmentType" placeholder="Essay, Project, Presentation, etc." required>
-                </div>
-                <div class="form-group">
-                    <label for="assignmentDescription">Assignment Description</label>
-                    <textarea id="assignmentDescription" name="assignmentDescription" placeholder="What students need to do..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="learningObjectives">Learning Objectives</label>
-                    <textarea id="learningObjectives" name="learningObjectives" placeholder="List the skills/knowledge students should gain..." required></textarea>
-                    <small>Tip: Use numbered points (1. 2. 3.) for clarity</small>
-                </div>
-                <div class="form-group">
-                    <label for="currentChallenges">Current Challenges</label>
-                    <textarea id="currentChallenges" name="currentChallenges" placeholder="Where do students typically struggle with this assignment?" required></textarea>
-                </div>
-            </section>
+                <section>
+                    <h2>Assignment Details</h2>
+                    <div class="form-group">
+                        <label for="assignmentTitle">Assignment Title</label>
+                        <input type="text" id="assignmentTitle" name="assignmentTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignmentType">Assignment Type</label>
+                        <input type="text" id="assignmentType" name="assignmentType" placeholder="Essay, Project, Presentation, etc." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignmentDescription">Assignment Description</label>
+                        <textarea id="assignmentDescription" name="assignmentDescription" placeholder="What students need to do..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="learningObjectives">Learning Objectives</label>
+                        <textarea id="learningObjectives" name="learningObjectives" placeholder="List the skills/knowledge students should gain..." required></textarea>
+                        <small>Tip: Use numbered points (1. 2. 3.) for clarity</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="currentChallenges">Current Challenges</label>
+                        <textarea id="currentChallenges" name="currentChallenges" placeholder="Where do students typically struggle with this assignment?" required></textarea>
+                    </div>
+                </section>
 
-            <section>
-                <h2>Core Requirements</h2>
-                <div class="form-group">
-                    <label for="keySkills">Skills Students Must Develop</label>
-                    <textarea id="keySkills" name="keySkills" placeholder="What specific skills are you trying to develop in students?" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="independentWork">Components Students Must Complete Independently</label>
-                    <textarea id="independentWork" name="independentWork" placeholder="What parts of the assignment must students complete on their own?" required></textarea>
-                </div>
-            </section>
+                <section>
+                    <h2>Core Requirements</h2>
+                    <div class="form-group">
+                        <label for="keySkills">Skills Students Must Develop</label>
+                        <textarea id="keySkills" name="keySkills" placeholder="What specific skills are you trying to develop in students?" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="independentWork">Components Students Must Complete Independently</label>
+                        <textarea id="independentWork" name="independentWork" placeholder="What parts of the assignment must students complete on their own?" required></textarea>
+                    </div>
+                </section>
 
-            <div class="button-container">
-                <button type="submit" id="generateBtn">Generate Prompt</button>
-                <button type="reset" id="resetBtn">Reset Form</button>
-            </div>
-        </form>
+                <div class="button-container">
+                    <button type="submit" id="generateBtn">Generate Prompt</button>
+                    <button type="reset" id="resetBtn">Reset Form</button>
+                </div>
+            </form>
+        </div>
 
         <div id="outputContainer" class="hidden">
             <h2>Your AI Integration Prompt</h2>
