@@ -112,6 +112,10 @@ Once we complete Step 1, we'll:
 - STEP 3: Draft a VERBATIM prompt template for students to copy-paste when using AI tools (ChatGPT, Claude, etc.)
 - STEP 4: Develop guidelines for ethical and effective AI use
 
+Through this process, ensure that the support types and prompts we generate focus on:  
+1. The process being at least as crucial as the product.
+2. Incorporation of metacognitive strategies to ensure students are focused on their thinking and learning.
+
 Let's start with Step 1. What are 2-3 ways AI could enhance this assignment?`;
     }
 });
