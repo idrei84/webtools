@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Form elements
     const form = document.getElementById('aiPlanningForm');
+    const formContent = document.querySelector('.form-content');
     const outputContainer = document.getElementById('outputContainer');
     const promptOutput = document.getElementById('promptOutput');
     
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         promptOutput.textContent = generatedPrompt;
         
         // Show the output container
-        form.classList.add('hidden');
+        formContent.style.display = 'none';
         outputContainer.classList.remove('hidden');
         
         // Scroll to top
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Go back to form
     backToFormBtn.addEventListener('click', () => {
         outputContainer.classList.add('hidden');
-        form.classList.remove('hidden');
+        formContent.style.display = 'block';
     });
     
     // Generate prompt based on form data
