@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Ready Campus Blueprint: Resources</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e67e22;
+            --light-bg: #f9f9f9;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .presenter-info {
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        
+        section {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .framework-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .framework-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .framework-item {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .framework-item h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        ul {
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .resource-card h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+        
+        .resource-card a {
+            display: inline-block;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Crafting Your AI-Ready Campus Blueprint</h1>
+        <p>Resources & Supporting Materials for Community College Leaders</p>
+        <div class="presenter-info">Presented by Ian Dreilinger & Edie Gaythwaite, Valencia College</div>
+    </header>
+    
+    <section>
+        <h2>AI Readiness Assessment Framework</h2>
+        <p>Use this framework to evaluate your institution's current AI readiness across five key dimensions.</p>
+        
+        <div class="framework-container">
+            <div class="framework-section">
+                <div class="framework-item">
+                    <h3>1. Leadership & Strategic Vision</h3>
+                    <ul>
+                        <li>Does your institution have a formal AI strategy or position statement?</li>
+                        <li>Is there executive sponsorship for AI initiatives?</li>
+                        <li>Has AI been incorporated into strategic planning documents?</li>
+                        <li>Are there dedicated resources (budget, personnel) for AI initiatives?</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h3>2. Infrastructure & Technology</h3>
+                    <ul>
+                        <li>Does your IT infrastructure support AI implementation?</li>
+                        <li>Is there sufficient data storage and computing capacity?</li>
+                        <li>Are data governance policies in place for AI use?</li>
+                        <li>Is there appropriate cybersecurity for AI applications?</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h3>3. Policy & Ethics Framework</h3>
+                    <ul>
+                        <li>Are there policies governing ethical AI use on campus?</li>
+                        <li>Do you have data privacy guidelines for AI applications?</li>
+                        <li>Is there a review process for new AI implementations?</li>
+                        <li>Are equity considerations explicitly addressed in AI adoption?</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="framework-section">
+                <div class="framework-item">
+                    <h3>4. Faculty & Staff Readiness</h3>
+                    <ul>
+                        <li>What percentage of faculty/staff have received AI training?</li>
+                        <li>Are there professional development opportunities for AI skills?</li>
+                        <li>Is there a support system for AI implementation questions?</li>
+                        <li>Are there faculty champions or early adopters leading innovations?</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h3>5. Teaching, Learning & Student Support</h3>
+                    <ul>
+                        <li>How is AI currently used in instructional contexts?</li>
+                        <li>Are AI literacy skills incorporated into student learning outcomes?</li>
+                        <li>Are AI tools used to enhance student support services?</li>
+                        <li>How are students being prepared for AI in their future careers?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>AI Literacy Program Components Framework</h2>
+        <p>A comprehensive framework for developing AI literacy across your institution.</p>
+        
+        <div class="framework-container">
+            <div class="framework-section">
+                <div class="framework-item">
+                    <h3>1. Foundational Knowledge Components</h3>
+                    <ul>
+                        <li>AI terminology and concepts</li>
+                        <li>Types of AI applications relevant to community colleges</li>
+                        <li>Capabilities and limitations of current AI tools</li>
+                        <li>Ethical considerations and responsible AI use</li>
+                        <li>Data literacy fundamentals</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h3>2. Stakeholder-Specific Modules</h3>
+                    
+                    <h4>For Leadership:</h4>
+                    <ul>
+                        <li>Strategic implementation of AI across campus</li>
+                        <li>Resource allocation and ROI considerations</li>
+                        <li>Policy development and governance</li>
+                        <li>Risk management and legal considerations</li>
+                    </ul>
+                    
+                    <h4>For Faculty:</h4>
+                    <ul>
+                        <li>AI tools for enhancing teaching effectiveness</li>
+                        <li>Adapting assessments in an AI-enabled environment</li>
+                        <li>Subject-specific applications of AI</li>
+                        <li>Developing AI literacy among students</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="framework-section">
+                <div class="framework-item">
+                    <h4>For Staff:</h4>
+                    <ul>
+                        <li>Operational efficiencies through AI</li>
+                        <li>Department-specific AI applications</li>
+                        <li>AI-augmented student services</li>
+                        <li>Process automation opportunities</li>
+                    </ul>
+                    
+                    <h4>For Students:</h4>
+                    <ul>
+                        <li>AI tools for academic success</li>
+                        <li>Critical evaluation of AI-generated content</li>
+                        <li>Career preparation for an AI-integrated workforce</li>
+                        <li>Digital citizenship in an AI world</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h3>3. Implementation Approaches</h3>
+                    
+                    <h4>Delivery Methods:</h4>
+                    <ul>
+                        <li>Workshops and seminars</li>
+                        <li>Online self-paced modules</li>
+                        <li>Communities of practice</li>
+                        <li>Certification programs</li>
+                        <li>Embedded in existing courses</li>
+                    </ul>
+                    
+                    <h4>Program Phases:</h4>
+                    <ul>
+                        <li>Phase 1: Awareness building</li>
+                        <li>Phase 2: Skills development</li>
+                        <li>Phase 3: Application & integration</li>
+                        <li>Phase 4: Innovation & leadership</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h3>4. Assessment & Continuous Improvement</h3>
+                    <ul>
+                        <li>Measuring literacy acquisition</li>
+                        <li>Tracking implementation success</li>
+                        <li>Gathering feedback for program refinement</li>
+                        <li>Staying current with evolving AI technologies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Additional Resources</h2>
+        <p>Explore these resources to support your institution's AI integration journey.</p>
+        
+        <div class="resources">
+            <div class="resource-card">
+                <h3>Example: AI Integration Action Plan</h3>
+                <p>View a completed example of the AI Integration Action Plan to guide your planning process.</p>
+                <a href="#">View Example Plan →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Policy Templates</h3>
+                <p>Customizable template documents to help develop institutional AI policies and guidelines.</p>
+                <a href="#">Download Templates →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>Faculty Development Materials</h3>
+                <p>Resources for creating faculty workshops and training on AI integration in teaching.</p>
+                <a href="#">Access Materials →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>Student AI Literacy Modules</h3>
+                <p>Ready-to-use materials for developing student AI literacy and responsible use guidelines.</p>
+                <a href="#">Explore Modules →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>Community College AI Case Studies</h3>
+                <p>Real-world examples of successful AI implementations at community colleges nationwide.</p>
+                <a href="#">Read Case Studies →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Tools Evaluation Framework</h3>
+                <p>A structured approach to evaluating and selecting AI tools for educational contexts.</p>
+                <a href="#">View Framework →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Governance Model</h3>
+                <p>Template for establishing effective AI governance structures at community colleges.</p>
+                <a href="#">Download Model →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>Ethical AI Decision Guide</h3>
+                <p>Guidance for making ethical decisions around AI implementation and use cases.</p>
+                <a href="#">Access Guide →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Integration Funding Strategies</h3>
+                <p>Resources for identifying and securing funding for AI initiatives.</p>
+                <a href="#">View Strategies →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Professional Development Roadmap</h3>
+                <p>A structured pathway for developing AI literacy among faculty and staff.</p>
+                <a href="#">View Roadmap →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>Student AI Awareness Campaign</h3>
+                <p>Materials for launching an AI awareness campaign for students.</p>
+                <a href="#">Access Campaign Kit →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Curriculum Integration Guide</h3>
+                <p>Strategies for embedding AI literacy into existing curriculum.</p>
+                <a href="#">View Guide →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Vendor Evaluation Checklist</h3>
+                <p>A checklist for evaluating AI vendors and service providers.</p>
+                <a href="#">Download Checklist →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>Community College AI Network</h3>
+                <p>Connect with other community colleges working on AI integration initiatives.</p>
+                <a href="#">Join Network →</a>
+            </div>
+            
+            <div class="resource-card">
+                <h3>AI Readiness Self-Assessment Tool</h3>
+                <p>An interactive tool to assess your institution's current AI readiness.</p>
+                <a href="#">Take Assessment →</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 Crafting Your AI-Ready Campus Blueprint | AACC Conference Materials</p>
+        <p>Presenters: Ian Dreilinger & Edie Gaythwaite, Valencia College</p>
+    </footer>
+</body>
+</html>
