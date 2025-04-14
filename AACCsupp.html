@@ -17,7 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 1200px;
+            max-width: 640px; /* Slightly wider to accommodate padding */
             margin: 0 auto;
             padding: 20px;
         }
@@ -25,7 +25,7 @@
         header {
             background-color: var(--primary-color);
             color: white;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             border-radius: 5px;
             margin-bottom: 2rem;
             text-align: center;
@@ -36,17 +36,22 @@
         }
         
         h1 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            line-height: 1.2;
         }
         
         header p {
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
+            font-size: 1.5rem;
+            margin-top: 1.2rem;
+            line-height: 1.4;
+            padding: 0 1rem;
         }
         
         .presenter-info {
             font-style: italic;
-            margin-top: 0.5rem;
+            margin-top: 1.2rem;
+            font-size: 1.1rem;
         }
         
         section {
@@ -55,18 +60,13 @@
             border-radius: 5px;
             margin-bottom: 2rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .framework-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
             margin-top: 1rem;
-        }
-        
-        .framework-section {
-            flex: 1;
-            min-width: 300px;
         }
         
         .framework-item {
@@ -94,16 +94,17 @@
         
         .resources {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
         
         .resource-card {
             background-color: white;
             border-radius: 5px;
-            padding: 1.5rem;
+            padding: 1rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: transform 0.2s ease-in-out;
+            font-size: 0.9rem;
         }
         
         .resource-card:hover {
@@ -114,6 +115,12 @@
         .resource-card h3 {
             color: var(--secondary-color);
             margin-top: 0;
+            font-size: 1rem;
+        }
+        
+        .resource-card p {
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
         }
         
         .resource-card a {
@@ -121,7 +128,8 @@
             color: var(--accent-color);
             text-decoration: none;
             font-weight: bold;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
         }
         
         .resource-card a:hover {
@@ -135,6 +143,9 @@
             border-top: 1px solid var(--border-color);
             font-size: 0.9rem;
             color: #666;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -150,58 +161,54 @@
         <p>Use this framework to evaluate your institution's current AI readiness across five key dimensions.</p>
         
         <div class="framework-container">
-            <div class="framework-section">
-                <div class="framework-item">
-                    <h3>1. Leadership & Strategic Vision</h3>
-                    <ul>
-                        <li>Does your institution have a formal AI strategy or position statement?</li>
-                        <li>Is there executive sponsorship for AI initiatives?</li>
-                        <li>Has AI been incorporated into strategic planning documents?</li>
-                        <li>Are there dedicated resources (budget, personnel) for AI initiatives?</li>
-                    </ul>
-                </div>
-                
-                <div class="framework-item">
-                    <h3>2. Infrastructure & Technology</h3>
-                    <ul>
-                        <li>Does your IT infrastructure support AI implementation?</li>
-                        <li>Is there sufficient data storage and computing capacity?</li>
-                        <li>Are data governance policies in place for AI use?</li>
-                        <li>Is there appropriate cybersecurity for AI applications?</li>
-                    </ul>
-                </div>
-                
-                <div class="framework-item">
-                    <h3>3. Policy & Ethics Framework</h3>
-                    <ul>
-                        <li>Are there policies governing ethical AI use on campus?</li>
-                        <li>Do you have data privacy guidelines for AI applications?</li>
-                        <li>Is there a review process for new AI implementations?</li>
-                        <li>Are equity considerations explicitly addressed in AI adoption?</li>
-                    </ul>
-                </div>
+            <div class="framework-item">
+                <h3>1. Leadership & Strategic Vision</h3>
+                <ul>
+                    <li>Does your institution have a formal AI strategy or position statement?</li>
+                    <li>Is there executive sponsorship for AI initiatives?</li>
+                    <li>Has AI been incorporated into strategic planning documents?</li>
+                    <li>Are there dedicated resources (budget, personnel) for AI initiatives?</li>
+                </ul>
             </div>
             
-            <div class="framework-section">
-                <div class="framework-item">
-                    <h3>4. Faculty & Staff Readiness</h3>
-                    <ul>
-                        <li>What percentage of faculty/staff have received AI training?</li>
-                        <li>Are there professional development opportunities for AI skills?</li>
-                        <li>Is there a support system for AI implementation questions?</li>
-                        <li>Are there faculty champions or early adopters leading innovations?</li>
-                    </ul>
-                </div>
+            <div class="framework-item">
+                <h3>2. Infrastructure & Technology</h3>
+                <ul>
+                    <li>Does your IT infrastructure support AI implementation?</li>
+                    <li>Is there sufficient data storage and computing capacity?</li>
+                    <li>Are data governance policies in place for AI use?</li>
+                    <li>Is there appropriate cybersecurity for AI applications?</li>
+                </ul>
+            </div>
+            
+            <div class="framework-item">
+                <h3>3. Policy & Ethics Framework</h3>
+                <ul>
+                    <li>Are there policies governing ethical AI use on campus?</li>
+                    <li>Do you have data privacy guidelines for AI applications?</li>
+                    <li>Is there a review process for new AI implementations?</li>
+                    <li>Are equity considerations explicitly addressed in AI adoption?</li>
+                </ul>
+            </div>
                 
-                <div class="framework-item">
-                    <h3>5. Teaching, Learning & Student Support</h3>
-                    <ul>
-                        <li>How is AI currently used in instructional contexts?</li>
-                        <li>Are AI literacy skills incorporated into student learning outcomes?</li>
-                        <li>Are AI tools used to enhance student support services?</li>
-                        <li>How are students being prepared for AI in their future careers?</li>
-                    </ul>
-                </div>
+            <div class="framework-item">
+                <h3>4. Faculty & Staff Readiness</h3>
+                <ul>
+                    <li>What percentage of faculty/staff have received AI training?</li>
+                    <li>Are there professional development opportunities for AI skills?</li>
+                    <li>Is there a support system for AI implementation questions?</li>
+                    <li>Are there faculty champions or early adopters leading innovations?</li>
+                </ul>
+            </div>
+            
+            <div class="framework-item">
+                <h3>5. Teaching, Learning & Student Support</h3>
+                <ul>
+                    <li>How is AI currently used in instructional contexts?</li>
+                    <li>Are AI literacy skills incorporated into student learning outcomes?</li>
+                    <li>Are AI tools used to enhance student support services?</li>
+                    <li>How are students being prepared for AI in their future careers?</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -211,88 +218,82 @@
         <p>A comprehensive framework for developing AI literacy across your institution.</p>
         
         <div class="framework-container">
-            <div class="framework-section">
-                <div class="framework-item">
-                    <h3>1. Foundational Knowledge Components</h3>
-                    <ul>
-                        <li>AI terminology and concepts</li>
-                        <li>Types of AI applications relevant to community colleges</li>
-                        <li>Capabilities and limitations of current AI tools</li>
-                        <li>Ethical considerations and responsible AI use</li>
-                        <li>Data literacy fundamentals</li>
-                    </ul>
-                </div>
-                
-                <div class="framework-item">
-                    <h3>2. Stakeholder-Specific Modules</h3>
-                    
-                    <h4>For Leadership:</h4>
-                    <ul>
-                        <li>Strategic implementation of AI across campus</li>
-                        <li>Resource allocation and ROI considerations</li>
-                        <li>Policy development and governance</li>
-                        <li>Risk management and legal considerations</li>
-                    </ul>
-                    
-                    <h4>For Faculty:</h4>
-                    <ul>
-                        <li>AI tools for enhancing teaching effectiveness</li>
-                        <li>Adapting assessments in an AI-enabled environment</li>
-                        <li>Subject-specific applications of AI</li>
-                        <li>Developing AI literacy among students</li>
-                    </ul>
-                </div>
+            <div class="framework-item">
+                <h3>1. Foundational Knowledge Components</h3>
+                <ul>
+                    <li>AI terminology and concepts</li>
+                    <li>Types of AI applications relevant to community colleges</li>
+                    <li>Capabilities and limitations of current AI tools</li>
+                    <li>Ethical considerations and responsible AI use</li>
+                    <li>Data literacy fundamentals</li>
+                </ul>
             </div>
             
-            <div class="framework-section">
-                <div class="framework-item">
-                    <h4>For Staff:</h4>
-                    <ul>
-                        <li>Operational efficiencies through AI</li>
-                        <li>Department-specific AI applications</li>
-                        <li>AI-augmented student services</li>
-                        <li>Process automation opportunities</li>
-                    </ul>
-                    
-                    <h4>For Students:</h4>
-                    <ul>
-                        <li>AI tools for academic success</li>
-                        <li>Critical evaluation of AI-generated content</li>
-                        <li>Career preparation for an AI-integrated workforce</li>
-                        <li>Digital citizenship in an AI world</li>
-                    </ul>
-                </div>
+            <div class="framework-item">
+                <h3>2. Stakeholder-Specific Modules</h3>
                 
-                <div class="framework-item">
-                    <h3>3. Implementation Approaches</h3>
-                    
-                    <h4>Delivery Methods:</h4>
-                    <ul>
-                        <li>Workshops and seminars</li>
-                        <li>Online self-paced modules</li>
-                        <li>Communities of practice</li>
-                        <li>Certification programs</li>
-                        <li>Embedded in existing courses</li>
-                    </ul>
-                    
-                    <h4>Program Phases:</h4>
-                    <ul>
-                        <li>Phase 1: Awareness building</li>
-                        <li>Phase 2: Skills development</li>
-                        <li>Phase 3: Application & integration</li>
-                        <li>Phase 4: Innovation & leadership</li>
-                    </ul>
-                </div>
+                <h4>For Leadership:</h4>
+                <ul>
+                    <li>Strategic implementation of AI across campus</li>
+                    <li>Resource allocation and ROI considerations</li>
+                    <li>Policy development and governance</li>
+                    <li>Risk management and legal considerations</li>
+                </ul>
                 
-                <div class="framework-item">
-                    <h3>4. Assessment & Continuous Improvement</h3>
-                    <ul>
-                        <li>Measuring literacy acquisition</li>
-                        <li>Tracking implementation success</li>
-                        <li>Gathering feedback for program refinement</li>
-                        <li>Staying current with evolving AI technologies</li>
-                    </ul>
-                </div>
+                <h4>For Faculty:</h4>
+                <ul>
+                    <li>AI tools for enhancing teaching effectiveness</li>
+                    <li>Adapting assessments in an AI-enabled environment</li>
+                    <li>Subject-specific applications of AI</li>
+                    <li>Developing AI literacy among students</li>
+                </ul>
+                
+                <h4>For Staff:</h4>
+                <ul>
+                    <li>Operational efficiencies through AI</li>
+                    <li>Department-specific AI applications</li>
+                    <li>AI-augmented student services</li>
+                    <li>Process automation opportunities</li>
+                </ul>
+                
+                <h4>For Students:</h4>
+                <ul>
+                    <li>AI tools for academic success</li>
+                    <li>Critical evaluation of AI-generated content</li>
+                    <li>Career preparation for an AI-integrated workforce</li>
+                    <li>Digital citizenship in an AI world</li>
+                </ul>
+            </div>
+            
+            <div class="framework-item">
+                <h3>3. Implementation Approaches</h3>
+                
+                <h4>Delivery Methods:</h4>
+                <ul>
+                    <li>Workshops and seminars</li>
+                    <li>Online self-paced modules</li>
+                    <li>Communities of practice</li>
+                    <li>Certification programs</li>
+                    <li>Embedded in existing courses</li>
+                </ul>
+                
+                <h4>Program Phases:</h4>
+                <ul>
+                    <li>Phase 1: Awareness building</li>
+                    <li>Phase 2: Skills development</li>
+                    <li>Phase 3: Application & integration</li>
+                    <li>Phase 4: Innovation & leadership</li>
+                </ul>
+            </div>
+            
+            <div class="framework-item">
+                <h3>4. Assessment & Continuous Improvement</h3>
+                <ul>
+                    <li>Measuring literacy acquisition</li>
+                    <li>Tracking implementation success</li>
+                    <li>Gathering feedback for program refinement</li>
+                    <li>Staying current with evolving AI technologies</li>
+                </ul>
             </div>
         </div>
     </section>
