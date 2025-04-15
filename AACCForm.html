@@ -717,6 +717,14 @@
             ${data.knowledgeSharing}
             
             ==========================
+            ADDITIONAL RESOURCES & CONTACT INFORMATION
+            
+            Thank you for participating in our workshop. If you need any further support in moving your institution towards a state of AI-readiness, please contact Ian Dreilinger (idreilinger@valenciacollege.edu) or Edie Gaythwaite (egaythwaite@valenciacollege.edu). We would be happy to hear from you and answer any questions you may have.
+            
+            Additional Resources:
+            AI-Readiness and AI Literacy Frameworks: https://idrei84.github.io/webtools/AACCsupp.html
+            
+            ==========================
             This plan was generated using the AI Integration Action Planning Tool.
             `;
                 
@@ -1339,6 +1347,30 @@
                 
                 const sharing = document.getElementById('knowledgeSharing').value;
                 yPosition = addText(sharing, 20, yPosition, 170, 6, doc);
+
+                // Add divider
+                doc.setDrawColor(44, 62, 80);
+                doc.line(20, yPosition, 190, yPosition);
+                yPosition += 10;
+                
+                // Add contact information section
+                yPosition = checkPageBreak(yPosition, 40, doc);
+                doc.setFontSize(12);
+                doc.setTextColor(44, 62, 80);
+                doc.text('Additional Resources & Contact Information', 20, yPosition);
+                yPosition += 8;
+                
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                const contactText = "Thank you for participating in our workshop. If you need any further support in moving your institution towards a state of AI-readiness, please contact Ian Dreilinger (idreilinger@valenciacollege.edu) or Edie Gaythwaite (egaythwaite@valenciacollege.edu). We would be happy to hear from you and answer any questions you may have.";
+                yPosition = addText(contactText, 20, yPosition, 170, 5, doc);
+                yPosition += 8;
+                
+                doc.setFontSize(10);
+                doc.text('Additional Resources:', 20, yPosition);
+                yPosition += 5;
+                doc.setTextColor(52, 152, 219); // Blue color for link
+                doc.text('AI-Readiness and AI Literacy Frameworks: https://idrei84.github.io/webtools/AACCsupp.html', 20, yPosition);
                 
                 // Save the PDF
                 const filenameSafe = institution.replace(/[^a-z0-9]/gi, '_').toLowerCase();
