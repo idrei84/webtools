@@ -36,7 +36,7 @@
         nav {
             background-color: var(--primary);
             color: white;
-            padding: 1rem 0;
+            padding: 0.7rem 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -54,17 +54,19 @@
         }
         
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
         }
         
         .nav-links {
             display: flex;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
         
         .nav-links li {
-            margin-left: 2rem;
+            margin-left: 1.5rem;
         }
         
         .nav-links a {
@@ -80,7 +82,7 @@
         
         /* Hero Section */
         .hero {
-            height: 100vh;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -93,35 +95,36 @@
         
         .hero-content {
             max-width: 800px;
-            padding: 2rem;
+            padding: 1.5rem;
             z-index: 1;
         }
         
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 2.6rem;
+            margin-bottom: 0.8rem;
         }
         
         .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
         }
         
         /* Section Styling */
         section {
-            padding: 80px 0;
+            padding: 60px 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 35px;
         }
         
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             position: relative;
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .section-title h2::after {
@@ -170,9 +173,12 @@
         }
         
         .timeline {
-            position: relative;
-            max-width: 800px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
         }
         
         .timeline::after {
@@ -180,29 +186,30 @@
             position: absolute;
             width: 3px;
             background-color: var(--primary);
-            top: 0;
-            bottom: 0;
+            top: 15px;
+            bottom: 15px;
             left: 50%;
             margin-left: -1px;
+            z-index: 0;
         }
         
         .timeline-item {
-            padding: 10px 40px;
+            width: 45%;
+            margin-bottom: 25px;
             position: relative;
-            width: 50%;
-            box-sizing: border-box;
+            z-index: 1;
         }
         
         .timeline-item:nth-child(odd) {
-            left: 0;
+            margin-right: 5%;
         }
         
         .timeline-item:nth-child(even) {
-            left: 50%;
+            margin-left: 5%;
         }
         
         .timeline-content {
-            padding: 20px;
+            padding: 18px;
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -210,6 +217,7 @@
         
         .timeline-content h3 {
             margin-top: 0;
+            margin-bottom: 8px;
             color: var(--primary);
         }
         
@@ -220,13 +228,15 @@
         
         .integration-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
         }
         
         .integration-card {
             text-align: center;
-            padding: 30px;
+            padding: 25px;
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: var(--transition);
@@ -238,8 +248,8 @@
         }
         
         .integration-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: var(--secondary);
         }
         
@@ -271,6 +281,7 @@
             <div class="logo">Ian Dreilinger</div>
             <ul class="nav-links">
                 <li><a href="#mission">Mission</a></li>
+                <li><a href="#family-motivation">Motivation</a></li>
                 <li><a href="#leadership-style">Leadership Style</a></li>
                 <li><a href="#growth-journey">Growth Journey</a></li>
                 <li><a href="#tech-integration">Tech Integration</a></li>
@@ -284,7 +295,24 @@
         <div class="hero-content">
             <h1>Bridging Education & Technology</h1>
             <p>I bridge educational innovation and technology through adaptive leadership that empowers others to embrace change while maintaining focus on meaningful human connections and outcomes.</p>
-            <img src="/api/placeholder/200/200" alt="Ian Dreilinger" style="border-radius: 50%; margin-top: 2rem;">
+            <img src="/api/placeholder/200/200" alt="Ian Dreilinger" style="border-radius: 50%; margin-top: 1.5rem;">
+        </div>
+    </section>
+    
+    <!-- Family Motivation Section -->
+    <section class="family-motivation" id="family-motivation" style="background-color: var(--light); padding-top: 40px; padding-bottom: 40px;">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Core Motivation</h2>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px; max-width: 500px;">
+                    <p style="font-size: 1.1rem;">Behind everything I do professionally is my fundamental motivation: my family. They inspire me to lead with purpose, model continuous growth, and build a better future through education and technology. My leadership journey is deeply intertwined with my role as a husband and father, teaching me patience, adaptability, and the importance of meaningful connections.</p>
+                </div>
+                <div style="flex: 1; min-width: 300px; max-width: 400px; text-align: center;">
+                    <img src="/api/placeholder/350/250" alt="Ian with family" style="border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                </div>
+            </div>
         </div>
     </section>
     
