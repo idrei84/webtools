@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ian Dreilinger - Leadership Snapshot</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2D3E50;
+            --secondary: #3498DB;
+            --accent: #E74C3C;
+            --light: #ECF0F1;
+            --dark: #2C3E50;
+            --transition: all 0.3s ease;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Leadership Style */
+        .leadership-style {
+            background-color: white;
+        }
+        
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .style-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .style-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .style-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        
+        /* Growth Journey */
+        .growth-journey {
+            background-color: var(--light);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-content h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        
+        /* Tech Integration */
+        .tech-integration {
+            background-color: white;
+        }
+        
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .integration-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .integration-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .integration-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        /* Future Vision */
+        .future-vision {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .vision-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Ian Dreilinger</div>
+            <ul class="nav-links">
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#leadership-style">Leadership Style</a></li>
+                <li><a href="#growth-journey">Growth Journey</a></li>
+                <li><a href="#tech-integration">Tech Integration</a></li>
+                <li><a href="#future-vision">Future Vision</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero/Mission Section -->
+    <section class="hero" id="mission">
+        <div class="hero-content">
+            <h1>Bridging Education & Technology</h1>
+            <p>I bridge educational innovation and technology through adaptive leadership that empowers others to embrace change while maintaining focus on meaningful human connections and outcomes.</p>
+            <img src="/api/placeholder/200/200" alt="Ian Dreilinger" style="border-radius: 50%; margin-top: 2rem;">
+        </div>
+    </section>
+    
+    <!-- Leadership Style Section -->
+    <section class="leadership-style" id="leadership-style">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Leadership Style</h2>
+            </div>
+            <div class="style-grid">
+                <div class="style-card">
+                    <h3>Adaptable & Pragmatic</h3>
+                    <p>I balance being task-oriented and people-oriented, adjusting my approach based on the situation and the needs of those I'm working with.</p>
+                </div>
+                <div class="style-card">
+                    <h3>Change-Oriented</h3>
+                    <p>Comfortable in fast-paced environments and evolving situations, I help others navigate transitions with confidence and purpose.</p>
+                </div>
+                <div class="style-card">
+                    <h3>Flexible & Innovative</h3>
+                    <p>Less concerned with rigid structures, I focus on outcomes and finding creative solutions to complex problems in education and technology.</p>
+                </div>
+                <div class="style-card">
+                    <h3>Thoughtfully Independent</h3>
+                    <p>While able to work autonomously, I value meaningful connections and collaborations that drive innovation and growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Growth Journey Section -->
+    <section class="growth-journey" id="growth-journey">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Growth Journey</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>The Educator</h3>
+                        <p>My foundation as an educator taught me the importance of clear communication, empathy, and understanding diverse perspectives.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>The Coordinator</h3>
+                        <p>As I moved into coordination roles, I developed skills in program management, stakeholder engagement, and strategic planning.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>The Innovator</h3>
+                        <p>Leading AI initiatives has pushed me to embrace emerging technologies while ensuring they serve human-centered educational goals.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>The Bridge Builder</h3>
+                        <p>Today, I focus on connecting technological innovation with educational excellence, bringing diverse stakeholders together around shared goals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tech Integration Section -->
+    <section class="tech-integration" id="tech-integration">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tech Integration Leadership</h2>
+            </div>
+            <div class="integration-grid">
+                <div class="integration-card">
+                    <div class="integration-icon">🤖</div>
+                    <h3>AI Commission Leadership</h3>
+                    <p>Co-chaired the Presidential Commission on AI, developing strategic initiatives for educational technology integration.</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">🎓</div>
+                    <h3>Education Innovation</h3>
+                    <p>Pioneered AI-enhanced curriculum development across various modalities, bridging technology and pedagogy.</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">🔄</div>
+                    <h3>Cross-Functional Collaboration</h3>
+                    <p>Led diverse teams of educators, administrators, and IT professionals to implement innovative solutions.</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">📊</div>
+                    <h3>Data-Driven Approaches</h3>
+                    <p>Leveraged analytics to enhance educational effectiveness and measure the impact of technology initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Future Vision Section -->
+    <section class="future-vision" id="future-vision">
+        <div class="container">
+            <div class="section-title">
+                <h2>Future Vision</h2>
+            </div>
+            <div class="vision-content">
+                <p>As I continue my leadership journey, I envision creating more accessible, inclusive educational environments powered by thoughtfully integrated technology. My goal is to develop leadership practices that embrace digital transformation while keeping human connection at the center.</p>
+                <p>I'm committed to building bridges between emerging technologies and educational excellence, ensuring that innovation serves our most important mission: empowering learners and educators to thrive in a rapidly changing world.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ian Dreilinger - Emerging Leaders Program</p>
+        </div>
+    </footer>
+</body>
+</html>
