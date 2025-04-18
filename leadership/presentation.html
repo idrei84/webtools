@@ -345,6 +345,121 @@ on<!DOCTYPE html>
             text-align: center;
             padding: 20px 0;
         }
+
+        /* Media Queries for Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    /* Navigation adjustments */
+    .nav-container {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+    
+    .logo {
+        margin-bottom: 10px;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-links li {
+        margin: 5px 8px;
+    }
+    
+    /* Hero section adjustments */
+    .hero-content {
+        padding: 1rem;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    /* Family motivation section */
+    .family-motivation > div > div {
+        flex-direction: column;
+    }
+    
+    .family-motivation img {
+        margin-top: 20px;
+        max-width: 90%;
+    }
+    
+    /* Leadership style grid */
+    .style-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Timeline adjustments */
+    .timeline::after {
+        left: 31px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+    
+    .timeline-item::before {
+        left: 60px;
+    }
+    
+    /* Tech integration grid */
+    .integration-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Emerging leaders section */
+    .emerging-content,
+    .vision-content {
+        padding: 20px 15px;
+    }
+    
+    /* General section adjustments */
+    section {
+        padding: 40px 0;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 480px) {
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .timeline-item {
+        padding-left: 60px;
+        padding-right: 15px;
+    }
+    
+    .section-title h2 {
+        font-size: 1.6rem;
+    }
+}
     </style>
 </head>
 <body>
