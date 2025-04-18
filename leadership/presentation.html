@@ -51,22 +51,19 @@ on<!DOCTYPE html>
         /* Navigation */
         nav {
             background-color: var(--secondary);
-            max-width: 1000px;
-            color: black;
+            width: 100%;
             padding: 0.7rem 0;
             position: fixed;
-            width: 100%;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin: 0 auto;
         }
         
         .nav-container {
             display: flex;
             justify-content: space-between;
-            align-items: auto;
-            max-width: 1200px;
+            align-items: center;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -74,13 +71,13 @@ on<!DOCTYPE html>
         .logo {
             font-size: 1.3rem;
             font-weight: 700;
+            color: var(--text-on-light);
         }
         
         .nav-links {
             display: flex;
-            color: black;
             list-style: none;
-            margin: 0 auto;
+            margin: 0;
             padding: 0;
         }
         
@@ -89,15 +86,15 @@ on<!DOCTYPE html>
         }
         
         .nav-links a {
-            color: white;
+            color: var(--text-on-light);
             text-decoration: none;
             transition: var(--transition);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 500;
         }
         
         .nav-links a:hover {
-            color: var(--secondary);
+            color: var(--accent);
         }
         
         /* Hero Section */
@@ -310,7 +307,7 @@ on<!DOCTYPE html>
 </head>
 <body>
     <!-- Navigation -->
-    <nav style="background-color: var(--dark);">
+    <nav>
         <div class="nav-container">
             <div class="logo">IAN DREILINGER</div>
             <ul class="nav-links">
