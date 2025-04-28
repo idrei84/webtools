@@ -119,6 +119,32 @@
                 margin-bottom: 1.5rem;
                 opacity: 0.9;
             }
+
+            .hero h1, 
+            .hero h3 {
+                color: white !important; /* Force white text in hero section */
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow for better readability */
+                position: relative;
+                z-index: 3; /* Ensure text is above any background elements */
+            }
+            
+            .hero .display-4 {
+                color: white !important;
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(44, 66, 104, 0.95) 0%, rgba(50, 102, 112, 0.9) 100%);
+                z-index: 1;
+            }
             
             /* Content Sections */
             .section {
@@ -332,7 +358,7 @@
             </div>
             <div>
                 <button id="langToggle" class="lang-btn">
-                    <span id="en-toggle" style="display: inline;">Español</span>
+                    <span id="en-toggle">Español</span>
                     <span id="es-toggle" style="display: none;">English</span>
                 </button>
             </div>
@@ -850,49 +876,62 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Simplified, guaranteed-to-work language toggle script
+        // Fixed and simplified language toggle script
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the toggle button
+            // Get the toggle button and toggle elements
             const langToggle = document.getElementById('langToggle');
-            let currentLang = 'en'; // Start with English
+            const enToggle = document.getElementById('en-toggle');
+            const esToggle = document.getElementById('es-toggle');
             
             // Add click event listener
             langToggle.addEventListener('click', function() {
-                if (currentLang === 'en') {
+                // Get all English and Spanish elements
+                const englishElements = document.querySelectorAll('[lang="en"]');
+                const spanishElements = document.querySelectorAll('[lang="es"]');
+                
+                // Check if English elements are currently visible
+                const isEnglishVisible = englishElements[0].style.display !== 'none';
+                
+                if (isEnglishVisible) {
                     // Switch to Spanish
-                    hideAllByLang('en');
-                    showAllByLang('es');
-                    currentLang = 'es';
+                    englishElements.forEach(el => {
+                        el.style.display = 'none';
+                    });
+                    
+                    spanishElements.forEach(el => {
+                        if (el.tagName === 'SPAN') {
+                            el.style.display = 'inline-block';
+                        } else if (el.tagName === 'A') {
+                            el.style.display = 'inline-block';
+                        } else {
+                            el.style.display = 'block';
+                        }
+                    });
+                    
+                    // Update toggle button text
+                    enToggle.style.display = 'none';
+                    esToggle.style.display = 'inline';
                 } else {
                     // Switch to English
-                    hideAllByLang('es');
-                    showAllByLang('en');
-                    currentLang = 'en';
+                    spanishElements.forEach(el => {
+                        el.style.display = 'none';
+                    });
+                    
+                    englishElements.forEach(el => {
+                        if (el.tagName === 'SPAN') {
+                            el.style.display = 'inline-block';
+                        } else if (el.tagName === 'A') {
+                            el.style.display = 'inline-block';
+                        } else {
+                            el.style.display = 'block';
+                        }
+                    });
+                    
+                    // Update toggle button text
+                    esToggle.style.display = 'none';
+                    enToggle.style.display = 'inline';
                 }
             });
-            
-            // Helper functions
-            function hideAllByLang(lang) {
-                document.querySelectorAll(`[lang="${lang}"]`).forEach(el => {
-                    el.style.display = 'none';
-                });
-            }
-            
-            function showAllByLang(lang) {
-                document.querySelectorAll(`[lang="${lang}"]`).forEach(el => {
-                    if (el.tagName === 'SPAN') {
-                        el.style.display = 'inline-block';
-                    } else if (el.tagName === 'A') {
-                        el.style.display = 'inline-block';
-                    } else {
-                        el.style.display = 'block';
-                    }
-                });
-            }
-            
-            // Initialize - hide Spanish on load
-            hideAllByLang('es');
-            showAllByLang('en');
         });
     </script>
 </body>
