@@ -46,6 +46,7 @@
             /* Header and Navigation */
             .top-bar {
                 background-color: var(--primary-color);
+                max-width: var(--max-width);
                 color: var(--text-on-dark);
                 padding: 0.5rem 0;
                 width: 100%;
@@ -76,9 +77,10 @@
                 position: relative;
             }
             
-            .hero-content {
+            .hero .hero-content {
                 max-width: var(--max-width);
                 margin: 0 auto;
+                padding: 0 20px;
                 position: relative;
                 z-index: 2;
             }
@@ -323,7 +325,30 @@
             span[lang="en"], span[lang="es"] {
                 display: inline-block;
             }
+
+
+            /* Add these CSS rules to make the class-based toggle work */
             
+            /* Default: hide Spanish content */
+            .lang-en [lang="es"] {
+                display: none !important;
+            }
+            
+            /* When Spanish is active: hide English content and show Spanish content */
+            .lang-es [lang="en"] {
+                display: none !important;
+            }
+            
+            .lang-es [lang="es"] {
+                display: block !important;
+            }
+            
+            /* Fix for inline elements */
+            .lang-es span[lang="es"],
+            .lang-es a[lang="es"],
+            .lang-es button[lang="es"] {
+                display: inline-block !important;
+            }
             /* Media queries for responsiveness */
             @media (max-width: 768px) {
                 .hero {
@@ -876,60 +901,35 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Fixed and simplified language toggle script
+        // Super simple class toggle approach
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the toggle button and toggle elements
+            // Add language classes to body
+            document.body.classList.add('lang-en');
+            
+            // Get the toggle button
             const langToggle = document.getElementById('langToggle');
-            const enToggle = document.getElementById('en-toggle');
-            const esToggle = document.getElementById('es-toggle');
             
             // Add click event listener
             langToggle.addEventListener('click', function() {
-                // Get all English and Spanish elements
-                const englishElements = document.querySelectorAll('[lang="en"]');
-                const spanishElements = document.querySelectorAll('[lang="es"]');
+                // Toggle classes on body
+                if (document.body.classList.contains('lang-en')) {
+                    document.body.classList.remove('lang-en');
+                    document.body.classList.add('lang-es');
+                } else {
+                    document.body.classList.remove('lang-es');
+                    document.body.classList.add('lang-en');
+                }
                 
-                // Check if English elements are currently visible
-                const isEnglishVisible = englishElements[0].style.display !== 'none';
+                // Toggle button text
+                const enToggle = document.getElementById('en-toggle');
+                const esToggle = document.getElementById('es-toggle');
                 
-                if (isEnglishVisible) {
-                    // Switch to Spanish
-                    englishElements.forEach(el => {
-                        el.style.display = 'none';
-                    });
-                    
-                    spanishElements.forEach(el => {
-                        if (el.tagName === 'SPAN') {
-                            el.style.display = 'inline-block';
-                        } else if (el.tagName === 'A') {
-                            el.style.display = 'inline-block';
-                        } else {
-                            el.style.display = 'block';
-                        }
-                    });
-                    
-                    // Update toggle button text
+                if (document.body.classList.contains('lang-en')) {
+                    enToggle.style.display = 'inline';
+                    esToggle.style.display = 'none';
+                } else {
                     enToggle.style.display = 'none';
                     esToggle.style.display = 'inline';
-                } else {
-                    // Switch to English
-                    spanishElements.forEach(el => {
-                        el.style.display = 'none';
-                    });
-                    
-                    englishElements.forEach(el => {
-                        if (el.tagName === 'SPAN') {
-                            el.style.display = 'inline-block';
-                        } else if (el.tagName === 'A') {
-                            el.style.display = 'inline-block';
-                        } else {
-                            el.style.display = 'block';
-                        }
-                    });
-                    
-                    // Update toggle button text
-                    esToggle.style.display = 'none';
-                    enToggle.style.display = 'inline';
                 }
             });
         });
