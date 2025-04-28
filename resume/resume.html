@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ian Dreilinger | Educator & Ed Tech Strategist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a3a6d;
+            --secondary-color: #3c6e71;
+            --accent-color: #d9b08c;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5 {
+            color: var(--primary-color);
+        }
+        .top-bar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 0;
+        }
+        .navbar {
+            background-color: var(--primary-color);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+        .profile-img {
+            border-radius: 50%;
+            border: 5px solid white;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .section {
+            padding: 2rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .skill-tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            margin: 0.2rem;
+            display: inline-block;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+        }
+        .institution {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .date {
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+        [lang="es"] {
+            display: none;
+        }
+        .highlight {
+            background-color: rgba(217, 176, 140, 0.2);
+            padding: 1rem;
+            border-left: 4px solid var(--accent-color);
+            margin: 1rem 0;
+        }
+        .pdf-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .pdf-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .achievement {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            background-color: rgba(60, 110, 113, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <span class="me-3"><i class="fas fa-envelope me-1"></i> ian.dreilinger@gmail.com</span>
+                <span><i class="fas fa-phone me-1"></i> (321) 947-1265</span>
+            </div>
+            <div>
+                <button id="langToggle" class="lang-btn">
+                    <span lang="en">Español</span>
+                    <span lang="es">English</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Ian Dreilinger</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <span lang="en">About</span>
+                            <span lang="es">Sobre mí</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">
+                            <span lang="en">Experience</span>
+                            <span lang="es">Experiencia</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#education">
+                            <span lang="en">Education</span>
+                            <span lang="es">Educación</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">
+                            <span lang="en">Skills</span>
+                            <span lang="es">Habilidades</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">
+                            <span lang="en">Projects</span>
+                            <span lang="es">Proyectos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">
+                            <span lang="en">Contact</span>
+                            <span lang="es">Contacto</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container text-center">
+            <img src="profile.jpg" alt="Ian Dreilinger" class="profile-img mb-4">
+            <h1 class="display-4">Ian Dreilinger</h1>
+            <h3 lang="en">Educational Innovation Leader | Digital Transformation Specialist</h3>
+            <h3 lang="es">Líder de Innovación Educativa | Especialista en Transformación Digital</h3>
+            <div class="mt-4">
+                <a href="resume-en.pdf" class="pdf-btn me-2" lang="en">
+                    <i class="fas fa-download me-1"></i> Download Resume
+                </a>
+                <a href="resume-es.pdf" class="pdf-btn" lang="es">
+                    <i class="fas fa-download me-1"></i> Descargar Currículum
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="about" class="section">
+            <h2 lang="en">About Me</h2>
+            <h2 lang="es">Sobre Mí</h2>
+            
+            <div lang="en">
+                <p>Learning and Development strategist with 13 years of experience designing and implementing enterprise-wide technology training programs and digital transformation initiatives. Proven track record of leading multi-stakeholder learning programs, specializing in emerging technology adoption and adult learning.</p>
+                
+                <p>Experience includes developing comprehensive training curricula for complex technical products, managing cross-functional implementation teams, and measuring learning effectiveness through data-driven assessment. Demonstrated success in scaling learning programs across large organizations while ensuring engagement and retention.</p>
+                
+                <div class="highlight">
+                    <p><i class="fas fa-globe-americas me-2"></i> As someone with strong personal ties to Colombia through my wife and family, I'm eager to contribute to Colegio Bolivar's mission of providing world-class bilingual education while helping students develop into global citizens.</p>
+                </div>
+            </div>
+            
+            <div lang="es">
+                <p>Estratega de Aprendizaje y Desarrollo con 13 años de experiencia diseñando e implementando programas de capacitación tecnológica y iniciativas de transformación digital a nivel institucional. Historial comprobado dirigiendo programas de aprendizaje con múltiples partes interesadas, especializado en adopción de tecnologías emergentes y aprendizaje de adultos.</p>
+                
+                <p>Mi experiencia incluye el desarrollo de currículos integrales para productos técnicos complejos, la gestión de equipos de implementación multifuncionales y la medición de la eficacia del aprendizaje mediante evaluaciones basadas en datos. Éxito demostrado en la ampliación de programas de aprendizaje en grandes organizaciones, garantizando el compromiso y la retención.</p>
+                
+                <div class="highlight">
+                    <p><i class="fas fa-globe-americas me-2"></i> Como alguien con fuertes vínculos personales con Colombia a través de mi esposa y familia, estoy entusiasmado por contribuir a la misión de Colegio Bolivar de proporcionar educación bilingüe de clase mundial mientras ayudo a los estudiantes a desarrollarse como ciudadanos globales.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2 lang="en">Professional Experience</h2>
+            <h2 lang="es">Experiencia Profesional</h2>
+            
+            <div class="timeline-item">
+                <h4 lang="en">Professor of EAP & Department Coordinator</h4>
+                <h4 lang="es">Profesor de EAP y Coordinador de Departamento</h4>
+                <p class="institution">Valencia College, Orlando, FL</p>
+                <p class="date">2017 - Present</p>
+                
+                <div lang="en">
+                    <h5>AI Leadership & Innovation</h5>
+                    <ul>
+                        <li>Co-chaired the Presidential Commission on Artificial Intelligence, leading development of strategic initiatives for AI integration across the institution</li>
+                        <li>Managed allocation of institutional AI fund, evaluating and supporting innovative learning technology implementations</li>
+                        <li>Led planning and execution of the college's inaugural AI conference, featuring ~300 attendees across 30+ specialized sessions</li>
+                        <li>Collaborated with cross-functional teams including IT, administration, and faculty to implement AI-driven educational solutions</li>
+                    </ul>
+                    
+                    <h5>Program Leadership & Development</h5>
+                    <ul>
+                        <li>Appointed as Department Coordinator for EAP, overseeing program operations, faculty support, and strategic planning</li>
+                        <li>Led departmental initiatives in curriculum development, technology integration, and professional development</li>
+                        <li>Pioneered development of AI-enhanced curriculum across various modalities (online, face-to-face, and blended)</li>
+                        <li>Led data-driven program optimization as EAP Learning Outcomes Lead, enhancing educational effectiveness through analytics</li>
+                    </ul>
+                </div>
+                
+                <div lang="es">
+                    <h5>Liderazgo e Innovación en IA</h5>
+                    <ul>
+                        <li>Copresidí la Comisión Presidencial sobre Inteligencia Artificial, liderando el desarrollo de iniciativas estratégicas para la integración de IA en toda la institución</li>
+                        <li>Gestioné la asignación del fondo institucional de IA, evaluando y apoyando implementaciones innovadoras de tecnología educativa</li>
+                        <li>Dirigí la planificación y ejecución de la conferencia inaugural de IA del colegio, con ~300 asistentes en más de 30 sesiones especializadas</li>
+                        <li>Colaboré con equipos multifuncionales, incluyendo TI, administración y profesorado para implementar soluciones educativas basadas en IA</li>
+                    </ul>
+                    
+                    <h5>Liderazgo y Desarrollo de Programas</h5>
+                    <ul>
+                        <li>Designado como Coordinador de Departamento para EAP, supervisando operaciones del programa, apoyo a profesores y planificación estratégica</li>
+                        <li>Dirigí iniciativas departamentales en desarrollo curricular, integración tecnológica y desarrollo profesional</li>
+                        <li>Pionero en el desarrollo de currículos mejorados con IA en varias modalidades (en línea, presencial y mixta)</li>
+                        <li>Dirigí la optimización de programas basada en datos como Líder de Resultados de Aprendizaje de EAP, mejorando la eficacia educativa mediante análisis</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <h4 lang="en">ESOL Teacher</h4>
+                <h4 lang="es">Profesor de ESOL</h4>
+                <p class="institution">Seminole County Public Schools, Sanford, FL</p>
+                <p class="date">2015 - 2017</p>
+                
+                <div lang="en">
+                    <ul>
+                        <li>Developed and implemented differentiated curriculum for diverse learners, incorporating data-driven assessment strategies</li>
+                        <li>Led district-wide assessment programs, managing stakeholder requirements across multiple levels</li>
+                        <li>Established effective partnerships with cross-functional teams of educators and administrators</li>
+                        <li>Engaged in continuous professional development in educational technology and innovative teaching methodologies</li>
+                    </ul>
+                </div>
+                
+                <div lang="es">
+                    <ul>
+                        <li>Desarrollé e implementé un currículo diferenciado para estudiantes diversos, incorporando estrategias de evaluación basadas en datos</li>
+                        <li>Dirigí programas de evaluación a nivel de distrito, gestionando requisitos de partes interesadas en múltiples niveles</li>
+                        <li>Establecí asociaciones efectivas con equipos multifuncionales de educadores y administradores</li>
+                        <li>Participé en desarrollo profesional continuo en tecnología educativa y metodologías de enseñanza innovadoras</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <h4 lang="en">Instructor</h4>
+                <h4 lang="es">Instructor</h4>
+                <p class="institution">UCF's English Language Institute, Orlando, FL</p>
+                <p class="date">2011 - 2015</p>
+                
+                <div lang="en">
+                    <ul>
+                        <li>Designed and delivered cross-cultural learning programs across multiple proficiency levels for diverse international adult learners</li>
+                        <li>Led institutional testing operations as Testing Area Coordinator, managing placement assessments and TOEFL examinations</li>
+                        <li>Developed curriculum as a committee member, creating comprehensive course content for multiple skill areas</li>
+                        <li>Spearheaded development of assessment software solutions, implementing data analysis tools to improve learning measurement</li>
+                    </ul>
+                </div>
+                
+                <div lang="es">
+                    <ul>
+                        <li>Diseñé e impartí programas de aprendizaje intercultural en múltiples niveles de competencia para diversos estudiantes adultos internacionales</li>
+                        <li>Dirigí operaciones institucionales de evaluación como Coordinador del Área de Pruebas, gestionando evaluaciones de nivel y exámenes TOEFL</li>
+                        <li>Desarrollé currículos como miembro del comité, creando contenidos integrales para cursos en múltiples áreas de habilidades</li>
+                        <li>Encabecé el desarrollo de soluciones de software para evaluación, implementando herramientas de análisis de datos para mejorar la medición del aprendizaje</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <h2 lang="en">Education</h2>
+            <h2 lang="es">Educación</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 lang="en">Master of Arts in TESOL</h4>
+                            <h4 lang="es">Maestría en Artes en TESOL</h4>
+                            <p class="institution">University of Central Florida</p>
+                            <p class="date">Spring 2013</p>
+                            
+                            <div lang="en">
+                                <p>Relevant Coursework:</p>
+                                <ul>
+                                    <li>Adult Learning Theory & Instructional Design</li>
+                                    <li>Assessment Methodology & Data Analysis</li>
+                                    <li>Cross-Cultural Communication & Diversity</li>
+                                    <li>Research Methods in Education</li>
+                                </ul>
+                            </div>
+                            
+                            <div lang="es">
+                                <p>Cursos Relevantes:</p>
+                                <ul>
+                                    <li>Teoría del Aprendizaje de Adultos y Diseño Instruccional</li>
+                                    <li>Metodología de Evaluación y Análisis de Datos</li>
+                                    <li>Comunicación Intercultural y Diversidad</li>
+                                    <li>Métodos de Investigación en Educación</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 lang="en">Bachelor of Arts in Modern Languages</h4>
+                            <h4 lang="es">Licenciatura en Artes en Lenguas Modernas</h4>
+                            <p class="institution">University of Central Florida</p>
+                            <p class="date">Fall 2010</p>
+                            
+                            <div lang="en">
+                                <p>Relevant Coursework:</p>
+                                <ul>
+                                    <li>Multicultural Communication & Pedagogy</li>
+                                    <li>Advanced Language Composition</li>
+                                    <li>International Studies & Cultural Analysis</li>
+                                    <li>Spanish Civilization and Culture</li>
+                                </ul>
+                            </div>
+                            
+                            <div lang="es">
+                                <p>Cursos Relevantes:</p>
+                                <ul>
+                                    <li>Comunicación Multicultural y Pedagogía</li>
+                                    <li>Composición Avanzada de Idiomas</li>
+                                    <li>Estudios Internacionales y Análisis Cultural</li>
+                                    <li>Civilización y Cultura Española</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div lang="en" class="highlight">
+                <h5><i class="fas fa-certificate me-2"></i> Professional Development</h5>
+                <p>Continuous commitment to professional growth through participation in specialized training, conferences, and workshops focused on educational technology, innovative pedagogy, and AI integration in education.</p>
+            </div>
+            
+            <div lang="es" class="highlight">
+                <h5><i class="fas fa-certificate me-2"></i> Desarrollo Profesional</h5>
+                <p>Compromiso continuo con el crecimiento profesional a través de la participación en capacitaciones especializadas, conferencias y talleres centrados en tecnología educativa, pedagogía innovadora e integración de IA en la educación.</p>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2 lang="en">Skills & Expertise</h2>
+            <h2 lang="es">Habilidades y Experiencia</h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div lang="en">
+                        <h4>Pedagogical Expertise</h4>
+                        <span class="skill-tag">Bilingual Education</span>
+                        <span class="skill-tag">English for Academic Purposes</span>
+                        <span class="skill-tag">Student-Centered Learning</span>
+                        <span class="skill-tag">Project-Based Learning</span>
+                        <span class="skill-tag">Cross-Cultural Education</span>
+                        <span class="skill-tag">Adult Learning Theory</span>
+                    </div>
+                    
+                    <div lang="es">
+                        <h4>Experiencia Pedagógica</h4>
+                        <span class="skill-tag">Educación Bilingüe</span>
+                        <span class="skill-tag">Inglés con Fines Académicos</span>
+                        <span class="skill-tag">Aprendizaje Centrado en el Estudiante</span>
+                        <span class="skill-tag">Aprendizaje Basado en Proyectos</span>
+                        <span class="skill-tag">Educación Intercultural</span>
+                        <span class="skill-tag">Teoría del Aprendizaje de Adultos</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div lang="en">
+                        <h4>Educational Technology</h4>
+                        <span class="skill-tag">AI Integration</span>
+                        <span class="skill-tag">Digital Learning Platforms</span>
+                        <span class="skill-tag">LMS Administration</span>
+                        <span class="skill-tag">Educational Software Implementation</span>
+                        <span class="skill-tag">Adaptive Learning Systems</span>
+                        <span class="skill-tag">Digital Assessment Tools</span>
+                    </div>
+                    
+                    <div lang="es">
+                        <h4>Tecnología Educativa</h4>
+                        <span class="skill-tag">Integración de IA</span>
+                        <span class="skill-tag">Plataformas de Aprendizaje Digital</span>
+                        <span class="skill-tag">Administración de LMS</span>
+                        <span class="skill-tag">Implementación de Software Educativo</span>
+                        <span class="skill-tag">Sistemas de Aprendizaje Adaptativo</span>
+                        <span class="skill-tag">Herramientas de Evaluación Digital</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div lang="en">
+                        <h4>Leadership & Management</h4>
+                        <span class="skill-tag">Program Development</span>
+                        <span class="skill-tag">Curriculum Design</span>
+                        <span class="skill-tag">Faculty Mentoring</span>
+                        <span class="skill-tag">Strategic Planning</span>
+                        <span class="skill-tag">Data-Driven Decision Making</span>
+                        <span class="skill-tag">Cross-Functional Collaboration</span>
+                    </div>
+                    
+                    <div lang="es">
+                        <h4>Liderazgo y Gestión</h4>
+                        <span class="skill-tag">Desarrollo de Programas</span>
+                        <span class="skill-tag">Diseño Curricular</span>
+                        <span class="skill-tag">Mentoría de Profesores</span>
+                        <span class="skill-tag">Planificación Estratégica</span>
+                        <span class="skill-tag">Toma de Decisiones Basada en Datos</span>
+                        <span class="skill-tag">Colaboración Multifuncional</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div lang="en">
+                        <h4>Languages</h4>
+                        <span class="skill-tag">English (Native)</span>
+                        <span class="skill-tag">Spanish (Fluent)</span>
+                    </div>
+                    
+                    <div lang="es">
+                        <h4>Idiomas</h4>
+                        <span class="skill-tag">Inglés (Nativo)</span>
+                        <span class="skill-tag">Español (Fluido)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h2 lang="en">Key Projects & Achievements</h2>
+            <h2 lang="es">Proyectos Clave y Logros</h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="achievement">
+                        <h4 lang="en">AI in Education Conference</h4>
+                        <h4 lang="es">Conferencia de IA en Educación</h4>
+                        
+                        <div lang="en">
+                            <p>Led the planning and execution of the college's inaugural AI conference, bringing together ~300 educators to explore the impact of artificial intelligence on teaching and learning.</p>
+                            <ul>
+                                <li>Coordinated 30+ specialized sessions covering AI integration in teaching methodologies</li>
+                                <li>Facilitated executive panel discussions on AI's impact in education</li>
+                                <li>Established ongoing professional development pathways for faculty</li>
+                            </ul>
+                        </div>
+                        
+                        <div lang="es">
+                            <p>Dirigí la planificación y ejecución de la conferencia inaugural de IA del colegio, reuniendo a ~300 educadores para explorar el impacto de la inteligencia artificial en la enseñanza y el aprendizaje.</p>
+                            <ul>
+                                <li>Coordiné más de 30 sesiones especializadas sobre integración de IA en metodologías de enseñanza</li>
+                                <li>Facilité paneles de discusión ejecutivos sobre el impacto de la IA en la educación</li>
+                                <li>Establecí vías continuas de desarrollo profesional para profesores</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="achievement">
+                        <h4 lang="en">Curriculum Revision Initiative</h4>
+                        <h4 lang="es">Iniciativa de Revisión Curricular</h4>
+                        
+                        <div lang="en">
+                            <p>Led a comprehensive revision of EAP curriculum to integrate technology-enhanced learning approaches and align with evolving educational standards.</p>
+                            <ul>
+                                <li>Modernized learning outcomes to reflect contemporary language acquisition needs</li>
+                                <li>Developed templates for multi-modal course delivery (online, blended, face-to-face)</li>
+                                <li>Implemented data-driven assessment practices to measure effectiveness</li>
+                            </ul>
+                        </div>
+                        
+                        <div lang="es">
+                            <p>Dirigí una revisión integral del currículo de EAP para integrar enfoques de aprendizaje mejorados con tecnología y alinearlos con estándares educativos en evolución.</p>
+                            <ul>
+                                <li>Modernización de los resultados de aprendizaje para reflejar las necesidades contemporáneas de adquisición de idiomas</li>
+                                <li>Desarrollo de plantillas para entrega de cursos multimodales (en línea, mixtos, presenciales)</li>
+                                <li>Implementación de prácticas de evaluación basadas en datos para medir la eficacia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="achievement">
+                        <h4 lang="en">AI-Enhanced Learning Platform</h4>
+                        <h4 lang="es">Plataforma de Aprendizaje Mejorada con IA</h4>
+                        
+                        <div lang="en">
+                            <p>Developed and implemented an AI-enhanced learning system that provides personalized support for language learners across proficiency levels.</p>
+                            <ul>
+                                <li>Created adaptive learning pathways that respond to individual student progress</li>
+                                <li>Integrated AI-powered writing feedback tools to enhance composition skills</li>
+                                <li>Established data collection protocols to continuously improve the system</li>
+                            </ul>
+                        </div>
+                        
+                        <div lang="es">
+                            <p>Desarrollé e implementé un sistema de aprendizaje mejorado con IA que proporciona apoyo personalizado para estudiantes de idiomas en todos los niveles de competencia.</p>
+                            <ul>
+                                <li>Creación de rutas de aprendizaje adaptativas que responden al progreso individual del estudiante</li>
+                                <li>Integración de herramientas de retroalimentación de escritura potenciadas por IA para mejorar las habilidades de composición</li>
+                                <li>Establecimiento de protocolos de recopilación de datos para mejorar continuamente el sistema</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="achievement">
+                        <h4 lang="en">Cross-Cultural Communication Program</h4>
+                        <h4 lang="es">Programa de Comunicación Intercultural</h4>
+                        
+                        <div lang="en">
+                            <p>Designed and implemented a comprehensive cross-cultural communication program that prepares students for success in international academic environments.</p>
+                            <ul>
+                                <li>Created curriculum that addresses cultural nuances in academic and professional settings</li>
+                                <li>Developed interactive scenarios to build practical communication skills</li>
+                                <li>Established assessment metrics that measure cultural competency alongside language proficiency</li>
+                            </ul>
+                        </div>
+                        
+                        <div lang="es">
+                            <p>Diseñé e implementé un programa integral de comunicación intercultural que prepara a los estudiantes para el éxito en entornos académicos internacionales.</p>
+                            <ul>
+                                <li>Creación de un currículo que aborda matices culturales en entornos académicos y profesionales</li>
+                                <li>Desarrollo de escenarios interactivos para construir habilidades prácticas de comunicación</li>
+                                <li>Establecimiento de métricas de evaluación que miden la competencia cultural junto con el dominio del idioma</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2 lang="en">Contact Me</h2>
+            <h2 lang="es">Contáctame</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div lang="en">
+                        <p><i class="fas fa-envelope me-2"></i> Email: ian.dreilinger@gmail.com</p>
+                        <p><i class="fas fa-phone me-2"></i> Phone: (321) 947-1265</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Location: Orlando, Florida</p>
+                    </div>
+                    
+                    <div lang="es">
+                        <p><i class="fas fa-envelope me-2"></i> Correo: ian.dreilinger@gmail.com</p>
+                        <p><i class="fas fa-phone me-2"></i> Teléfono: (321) 947-1265</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Ubicación: Orlando, Florida</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div lang="en" class="highlight">
+                        <h5>Ready to Relocate</h5>
+                        <p>I am enthusiastic about the opportunity to relocate to Cali, Colombia and contribute to Colegio Bolivar's mission of educational excellence. With family connections to Colombia and a passion for cross-cultural education, I'm eager to bring my expertise to your team.</p>
+                    </div>
+                    
+                    <div lang="es" class="highlight">
+                        <h5>Listo para Trasladarme</h5>
+                        <p>Estoy entusiasmado con la oportunidad de trasladarme a Cali, Colombia y contribuir a la misión de excelencia educativa de Colegio Bolivar. Con conexiones familiares en Colombia y una pasión por la educación intercultural, estoy ansioso por aportar mi experiencia a su equipo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <div class="social-icons mb-3">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p lang="en">&copy; 2025 Ian Dreilinger | Educational Innovation Leader</p>
+            <p lang="es">&copy; 2025 Ian Dreilinger | Líder de Innovación Educativa</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('langToggle').addEventListener('click', function() {
+            // Toggle language display
+            const englishElements = document.querySelectorAll('[lang="en"]');
+            const spanishElements = document.querySelectorAll('[lang="es"]');
+            
+            englishElements.forEach(el => {
+                el.style.display = el.style.display === 'none' ? 'inline-block' : 'none';
+            });
+            
+            spanishElements.forEach(el => {
+                el.style.display = el.style.display === 'none' ? 'inline-block' : 'none';
+            });
+        });
+        
+        // On page load, show English by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const spanishElements = document.querySelectorAll('[lang="es"]');
+            spanishElements.forEach(el => {
+                el.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
