@@ -6,152 +6,321 @@
     <title>Ian Dreilinger | Educator & Ed Tech Strategist</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #1a3a6d;
-            --secondary-color: #3c6e71;
-            --accent-color: #d9b08c;
-            --light-color: #f5f5f5;
-            --dark-color: #333;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--dark-color);
-            background-color: var(--light-color);
-            line-height: 1.6;
-        }
-        h1, h2, h3, h4, h5 {
-            color: var(--primary-color);
-        }
-        .top-bar {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.5rem 0;
-        }
-        .navbar {
-            background-color: var(--primary-color);
-        }
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
-        .nav-link:hover {
-            color: var(--accent-color) !important;
-        }
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 4rem 0;
-            margin-bottom: 2rem;
-        }
-        .profile-img {
-            border-radius: 50%;
-            border: 5px solid white;
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
-        .section {
-            padding: 2rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        .section:last-child {
-            border-bottom: none;
-        }
-        .skill-tag {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 0.3rem 0.7rem;
-            border-radius: 20px;
-            margin: 0.2rem;
-            display: inline-block;
-        }
-        .timeline-item {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 2rem;
-        }
-        .timeline-item:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1px;
-            height: 100%;
-            background-color: var(--secondary-color);
-        }
-        .timeline-item:after {
-            content: '';
-            position: absolute;
-            left: -6px;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--secondary-color);
-        }
-        .institution {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        .date {
-            color: var(--secondary-color);
-            font-style: italic;
-        }
-        .lang-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background-color: var(--accent-color);
-            color: var(--dark-color);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .lang-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 2rem;
-        }
-        .social-icons a {
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            transition: color 0.3s;
-        }
-        .social-icons a:hover {
-            color: var(--accent-color);
-        }
-        [lang="es"] {
-            display: none;
-        }
-        .highlight {
-            background-color: rgba(217, 176, 140, 0.2);
-            padding: 1rem;
-            border-left: 4px solid var(--accent-color);
-            margin: 1rem 0;
-        }
-        .pdf-btn {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        .pdf-btn:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-        .achievement {
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-            background-color: rgba(60, 110, 113, 0.1);
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>/* Complete CSS with improved accessibility and constrained width */
+            :root {
+                --primary-color: #2c4268;      /* Darker blue for better contrast */
+                --secondary-color: #326670;    /* Darker teal for better contrast */
+                --accent-color: #e9c496;       /* Slightly lighter for better visibility */
+                --light-color: #f7f7f7;        /* Off-white background */
+                --dark-color: #333;            /* Text color */
+                --text-on-dark: #ffffff;       /* Text on dark backgrounds */
+                --shadow-color: rgba(0, 0, 0, 0.1);  /* Shadow color */
+                --max-width: 1000px;           /* Constrained width */
+            }
+            
+            body {
+                font-family: 'Open Sans', Arial, sans-serif;
+                color: var(--dark-color);
+                background-color: #f0f0f0;  /* Light gray background */
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+            }
+            
+            h1, h2, h3, h4, h5 {
+                font-family: 'Montserrat', Arial, sans-serif;
+                color: var(--primary-color);
+                font-weight: 600;
+                margin-top: 0;
+            }
+            
+            .container {
+                max-width: var(--max-width);
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            /* Header and Navigation */
+            .top-bar {
+                background-color: var(--primary-color);
+                color: var(--text-on-dark);
+                padding: 0.5rem 0;
+                width: 100%;
+            }
+            
+            .navbar {
+                background-color: var(--primary-color);
+                box-shadow: 0 2px 8px var(--shadow-color);
+                width: 100%;
+            }
+            
+            .navbar-brand, .nav-link {
+                color: var(--text-on-dark) !important;
+                font-weight: 500;
+            }
+            
+            .nav-link:hover {
+                color: var(--accent-color) !important;
+            }
+            
+            /* Hero Section */
+            .hero {
+                background: var(--primary-color);
+                color: var(--text-on-dark);
+                padding: 4rem 0;
+                margin-bottom: 2rem;
+                width: 100%;
+                position: relative;
+            }
+            
+            .hero-content {
+                max-width: var(--max-width);
+                margin: 0 auto;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .hero::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(44, 66, 104, 0.9) 0%, rgba(50, 102, 112, 0.85) 100%);
+                z-index: 1;
+            }
+            
+            .profile-img {
+                border-radius: 50%;
+                border: 4px solid white;
+                width: 180px;
+                height: 180px;
+                object-fit: cover;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                position: relative;
+                z-index: 2;
+            }
+            
+            .display-4 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            }
+            
+            .hero h3 {
+                color: var(--text-on-dark);
+                font-size: 1.4rem;
+                font-weight: 400;
+                margin-bottom: 1.5rem;
+                opacity: 0.9;
+            }
+            
+            /* Content Sections */
+            .section {
+                padding: 2.5rem;
+                margin-bottom: 2rem;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px var(--shadow-color);
+            }
+            
+            .section h2 {
+                border-bottom: 2px solid var(--accent-color);
+                padding-bottom: 0.5rem;
+                margin-bottom: 1.5rem;
+                display: inline-block;
+            }
+            
+            /* Timeline items */
+            .timeline-item {
+                position: relative;
+                padding-left: 2rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .timeline-item:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 2px;
+                height: 100%;
+                background-color: var(--secondary-color);
+            }
+            
+            .timeline-item:after {
+                content: '';
+                position: absolute;
+                left: -5px;
+                top: 0;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: var(--secondary-color);
+            }
+            
+            .timeline-item h4 {
+                color: var(--primary-color);
+                margin-bottom: 0.25rem;
+            }
+            
+            .institution {
+                font-weight: 600;
+                color: var(--secondary-color);
+            }
+            
+            .date {
+                color: #666;
+                font-style: italic;
+                display: block;
+                margin-bottom: 1rem;
+            }
+            
+            /* Skills section */
+            .skill-tag {
+                background-color: var(--secondary-color);
+                color: var(--text-on-dark);
+                padding: 0.4rem 0.8rem;
+                border-radius: 20px;
+                margin: 0.3rem;
+                display: inline-block;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+            
+            /* Projects section */
+            .achievement {
+                background-color: rgba(50, 102, 112, 0.08);
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+                border-radius: 6px;
+                border-left: 3px solid var(--secondary-color);
+            }
+            
+            .achievement h4 {
+                color: var(--secondary-color);
+                margin-bottom: 0.75rem;
+            }
+            
+            /* Contact section highlight */
+            .highlight {
+                background-color: rgba(233, 196, 150, 0.2);
+                padding: 1.25rem;
+                border-left: 4px solid var(--accent-color);
+                margin: 1.5rem 0;
+                border-radius: 0 6px 6px 0;
+            }
+            
+            /* Buttons */
+            .lang-btn {
+                padding: 0.5rem 1.25rem;
+                border-radius: 20px;
+                background-color: var(--accent-color);
+                color: var(--dark-color);
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .lang-btn:hover {
+                background-color: #ddb77f;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+            
+            .pdf-btn {
+                background-color: var(--secondary-color);
+                color: var(--text-on-dark);
+                padding: 0.6rem 1.25rem;
+                border-radius: 4px;
+                text-decoration: none;
+                transition: all 0.3s;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: inline-block;
+                font-weight: 500;
+            }
+            
+            .pdf-btn:hover {
+                background-color: #285761;
+                color: white;
+                text-decoration: none;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+            
+            /* Footer */
+            footer {
+                background-color: var(--primary-color);
+                color: var(--text-on-dark);
+                padding: 2rem 0;
+                margin-top: 2rem;
+                width: 100%;
+            }
+            
+            .social-icons a {
+                color: var(--text-on-dark);
+                font-size: 1.5rem;
+                margin: 0 0.5rem;
+                transition: all 0.3s;
+            }
+            
+            .social-icons a:hover {
+                color: var(--accent-color);
+                transform: translateY(-3px);
+            }
+            
+            /* Card styling */
+            .card {
+                border: none;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px var(--shadow-color);
+                height: 100%;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            /* Language display fix */
+            [lang="en"], [lang="es"] {
+                transition: opacity 0.3s ease;
+            }
+            
+            /* Fix for spans */
+            span[lang="en"], span[lang="es"] {
+                display: inline-block;
+            }
+            
+            /* Media queries for responsiveness */
+            @media (max-width: 768px) {
+                .hero {
+                    padding: 2.5rem 0;
+                }
+                
+                .profile-img {
+                    width: 150px;
+                    height: 150px;
+                }
+                
+                .display-4 {
+                    font-size: 2rem;
+                }
+                
+                .section {
+                    padding: 1.5rem;
+                }
+                
+                .timeline-item {
+                    padding-left: 1.5rem;
+                }
+            }
     </style>
 </head>
 <body>
@@ -163,8 +332,8 @@
             </div>
             <div>
                 <button id="langToggle" class="lang-btn">
-                    <span lang="en">Español</span>
-                    <span lang="es">English</span>
+                    <span id="en-toggle" style="display: inline;">Español</span>
+                    <span id="es-toggle" style="display: none;">English</span>
                 </button>
             </div>
         </div>
@@ -181,37 +350,37 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#about">
                             <span lang="en">About</span>
-                            <span lang="es">Sobre mí</span>
+                            <span lang="es" style="display: none;">Sobre mí</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#experience">
                             <span lang="en">Experience</span>
-                            <span lang="es">Experiencia</span>
+                            <span lang="es" style="display: none;">Experiencia</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#education">
                             <span lang="en">Education</span>
-                            <span lang="es">Educación</span>
+                            <span lang="es" style="display: none;">Educación</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#skills">
                             <span lang="en">Skills</span>
-                            <span lang="es">Habilidades</span>
+                            <span lang="es" style="display: none;">Habilidades</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#projects">
                             <span lang="en">Projects</span>
-                            <span lang="es">Proyectos</span>
+                            <span lang="es" style="display: none;">Proyectos</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">
                             <span lang="en">Contact</span>
-                            <span lang="es">Contacto</span>
+                            <span lang="es" style="display: none;">Contacto</span>
                         </a>
                     </li>
                 </ul>
@@ -220,16 +389,16 @@
     </nav>
 
     <section class="hero">
-        <div class="container text-center">
+        <div class="container text-center hero-content">
             <img src="profile.jpg" alt="Ian Dreilinger" class="profile-img mb-4">
             <h1 class="display-4">Ian Dreilinger</h1>
             <h3 lang="en">Educational Innovation Leader | Digital Transformation Specialist</h3>
-            <h3 lang="es">Líder de Innovación Educativa | Especialista en Transformación Digital</h3>
+            <h3 lang="es" style="display: none;">Líder de Innovación Educativa | Especialista en Transformación Digital</h3>
             <div class="mt-4">
                 <a href="resume-en.pdf" class="pdf-btn me-2" lang="en">
                     <i class="fas fa-download me-1"></i> Download Resume
                 </a>
-                <a href="resume-es.pdf" class="pdf-btn" lang="es">
+                <a href="resume-es.pdf" class="pdf-btn" lang="es" style="display: none;">
                     <i class="fas fa-download me-1"></i> Descargar Currículum
                 </a>
             </div>
@@ -239,7 +408,7 @@
     <div class="container">
         <section id="about" class="section">
             <h2 lang="en">About Me</h2>
-            <h2 lang="es">Sobre Mí</h2>
+            <h2 lang="es" style="display: none;">Sobre Mí</h2>
             
             <div lang="en">
                 <p>Learning and Development strategist with 13 years of experience designing and implementing enterprise-wide technology training programs and digital transformation initiatives. Proven track record of leading multi-stakeholder learning programs, specializing in emerging technology adoption and adult learning.</p>
@@ -251,7 +420,7 @@
                 </div>
             </div>
             
-            <div lang="es">
+            <div lang="es" style="display: none;">
                 <p>Estratega de Aprendizaje y Desarrollo con 13 años de experiencia diseñando e implementando programas de capacitación tecnológica y iniciativas de transformación digital a nivel institucional. Historial comprobado dirigiendo programas de aprendizaje con múltiples partes interesadas, especializado en adopción de tecnologías emergentes y aprendizaje de adultos.</p>
                 
                 <p>Mi experiencia incluye el desarrollo de currículos integrales para productos técnicos complejos, la gestión de equipos de implementación multifuncionales y la medición de la eficacia del aprendizaje mediante evaluaciones basadas en datos. Éxito demostrado en la ampliación de programas de aprendizaje en grandes organizaciones, garantizando el compromiso y la retención.</p>
@@ -264,11 +433,11 @@
 
         <section id="experience" class="section">
             <h2 lang="en">Professional Experience</h2>
-            <h2 lang="es">Experiencia Profesional</h2>
+            <h2 lang="es" style="display: none;">Experiencia Profesional</h2>
             
             <div class="timeline-item">
                 <h4 lang="en">Professor of EAP & Department Coordinator</h4>
-                <h4 lang="es">Profesor de EAP y Coordinador de Departamento</h4>
+                <h4 lang="es" style="display: none;">Profesor de EAP y Coordinador de Departamento</h4>
                 <p class="institution">Valencia College, Orlando, FL</p>
                 <p class="date">2017 - Present</p>
                 
@@ -290,7 +459,7 @@
                     </ul>
                 </div>
                 
-                <div lang="es">
+                <div lang="es" style="display: none;">
                     <h5>Liderazgo e Innovación en IA</h5>
                     <ul>
                         <li>Copresidí la Comisión Presidencial sobre Inteligencia Artificial, liderando el desarrollo de iniciativas estratégicas para la integración de IA en toda la institución</li>
@@ -311,7 +480,7 @@
             
             <div class="timeline-item">
                 <h4 lang="en">ESOL Teacher</h4>
-                <h4 lang="es">Profesor de ESOL</h4>
+                <h4 lang="es" style="display: none;">Profesor de ESOL</h4>
                 <p class="institution">Seminole County Public Schools, Sanford, FL</p>
                 <p class="date">2015 - 2017</p>
                 
@@ -324,7 +493,7 @@
                     </ul>
                 </div>
                 
-                <div lang="es">
+                <div lang="es" style="display: none;">
                     <ul>
                         <li>Desarrollé e implementé un currículo diferenciado para estudiantes diversos, incorporando estrategias de evaluación basadas en datos</li>
                         <li>Dirigí programas de evaluación a nivel de distrito, gestionando requisitos de partes interesadas en múltiples niveles</li>
@@ -336,7 +505,7 @@
             
             <div class="timeline-item">
                 <h4 lang="en">Instructor</h4>
-                <h4 lang="es">Instructor</h4>
+                <h4 lang="es" style="display: none;">Instructor</h4>
                 <p class="institution">UCF's English Language Institute, Orlando, FL</p>
                 <p class="date">2011 - 2015</p>
                 
@@ -349,7 +518,7 @@
                     </ul>
                 </div>
                 
-                <div lang="es">
+                <div lang="es" style="display: none;">
                     <ul>
                         <li>Diseñé e impartí programas de aprendizaje intercultural en múltiples niveles de competencia para diversos estudiantes adultos internacionales</li>
                         <li>Dirigí operaciones institucionales de evaluación como Coordinador del Área de Pruebas, gestionando evaluaciones de nivel y exámenes TOEFL</li>
@@ -362,14 +531,14 @@
 
         <section id="education" class="section">
             <h2 lang="en">Education</h2>
-            <h2 lang="es">Educación</h2>
+            <h2 lang="es" style="display: none;">Educación</h2>
             
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
                             <h4 lang="en">Master of Arts in TESOL</h4>
-                            <h4 lang="es">Maestría en Artes en TESOL</h4>
+                            <h4 lang="es" style="display: none;">Maestría en Artes en TESOL</h4>
                             <p class="institution">University of Central Florida</p>
                             <p class="date">Spring 2013</p>
                             
@@ -383,7 +552,7 @@
                                 </ul>
                             </div>
                             
-                            <div lang="es">
+                            <div lang="es" style="display: none;">
                                 <p>Cursos Relevantes:</p>
                                 <ul>
                                     <li>Teoría del Aprendizaje de Adultos y Diseño Instruccional</li>
@@ -400,7 +569,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h4 lang="en">Bachelor of Arts in Modern Languages</h4>
-                            <h4 lang="es">Licenciatura en Artes en Lenguas Modernas</h4>
+                            <h4 lang="es" style="display: none;">Licenciatura en Artes en Lenguas Modernas</h4>
                             <p class="institution">University of Central Florida</p>
                             <p class="date">Fall 2010</p>
                             
@@ -414,7 +583,7 @@
                                 </ul>
                             </div>
                             
-                            <div lang="es">
+                            <div lang="es" style="display: none;">
                                 <p>Cursos Relevantes:</p>
                                 <ul>
                                     <li>Comunicación Multicultural y Pedagogía</li>
@@ -433,7 +602,7 @@
                 <p>Continuous commitment to professional growth through participation in specialized training, conferences, and workshops focused on educational technology, innovative pedagogy, and AI integration in education.</p>
             </div>
             
-            <div lang="es" class="highlight">
+            <div lang="es" class="highlight" style="display: none;">
                 <h5><i class="fas fa-certificate me-2"></i> Desarrollo Profesional</h5>
                 <p>Compromiso continuo con el crecimiento profesional a través de la participación en capacitaciones especializadas, conferencias y talleres centrados en tecnología educativa, pedagogía innovadora e integración de IA en la educación.</p>
             </div>
@@ -441,7 +610,7 @@
 
         <section id="skills" class="section">
             <h2 lang="en">Skills & Expertise</h2>
-            <h2 lang="es">Habilidades y Experiencia</h2>
+            <h2 lang="es" style="display: none;">Habilidades y Experiencia</h2>
             
             <div class="row">
                 <div class="col-md-6 mb-4">
@@ -455,7 +624,7 @@
                         <span class="skill-tag">Adult Learning Theory</span>
                     </div>
                     
-                    <div lang="es">
+                    <div lang="es" style="display: none;">
                         <h4>Experiencia Pedagógica</h4>
                         <span class="skill-tag">Educación Bilingüe</span>
                         <span class="skill-tag">Inglés con Fines Académicos</span>
@@ -477,7 +646,7 @@
                         <span class="skill-tag">Digital Assessment Tools</span>
                     </div>
                     
-                    <div lang="es">
+                    <div lang="es" style="display: none;">
                         <h4>Tecnología Educativa</h4>
                         <span class="skill-tag">Integración de IA</span>
                         <span class="skill-tag">Plataformas de Aprendizaje Digital</span>
@@ -499,7 +668,7 @@
                         <span class="skill-tag">Cross-Functional Collaboration</span>
                     </div>
                     
-                    <div lang="es">
+                    <div lang="es" style="display: none;">
                         <h4>Liderazgo y Gestión</h4>
                         <span class="skill-tag">Desarrollo de Programas</span>
                         <span class="skill-tag">Diseño Curricular</span>
@@ -517,7 +686,7 @@
                         <span class="skill-tag">Spanish (Fluent)</span>
                     </div>
                     
-                    <div lang="es">
+                    <div lang="es" style="display: none;">
                         <h4>Idiomas</h4>
                         <span class="skill-tag">Inglés (Nativo)</span>
                         <span class="skill-tag">Español (Fluido)</span>
@@ -528,13 +697,13 @@
 
         <section id="projects" class="section">
             <h2 lang="en">Key Projects & Achievements</h2>
-            <h2 lang="es">Proyectos Clave y Logros</h2>
+            <h2 lang="es" style="display: none;">Proyectos Clave y Logros</h2>
             
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div class="achievement">
                         <h4 lang="en">AI in Education Conference</h4>
-                        <h4 lang="es">Conferencia de IA en Educación</h4>
+                        <h4 lang="es" style="display: none;">Conferencia de IA en Educación</h4>
                         
                         <div lang="en">
                             <p>Led the planning and execution of the college's inaugural AI conference, bringing together ~300 educators to explore the impact of artificial intelligence on teaching and learning.</p>
@@ -545,7 +714,7 @@
                             </ul>
                         </div>
                         
-                        <div lang="es">
+                        <div lang="es" style="display: none;">
                             <p>Dirigí la planificación y ejecución de la conferencia inaugural de IA del colegio, reuniendo a ~300 educadores para explorar el impacto de la inteligencia artificial en la enseñanza y el aprendizaje.</p>
                             <ul>
                                 <li>Coordiné más de 30 sesiones especializadas sobre integración de IA en metodologías de enseñanza</li>
@@ -559,7 +728,7 @@
                 <div class="col-md-6 mb-4">
                     <div class="achievement">
                         <h4 lang="en">Curriculum Revision Initiative</h4>
-                        <h4 lang="es">Iniciativa de Revisión Curricular</h4>
+                        <h4 lang="es" style="display: none;">Iniciativa de Revisión Curricular</h4>
                         
                         <div lang="en">
                             <p>Led a comprehensive revision of EAP curriculum to integrate technology-enhanced learning approaches and align with evolving educational standards.</p>
@@ -570,7 +739,7 @@
                             </ul>
                         </div>
                         
-                        <div lang="es">
+                        <div lang="es" style="display: none;">
                             <p>Dirigí una revisión integral del currículo de EAP para integrar enfoques de aprendizaje mejorados con tecnología y alinearlos con estándares educativos en evolución.</p>
                             <ul>
                                 <li>Modernización de los resultados de aprendizaje para reflejar las necesidades contemporáneas de adquisición de idiomas</li>
@@ -584,7 +753,7 @@
                 <div class="col-md-6 mb-4">
                     <div class="achievement">
                         <h4 lang="en">AI-Enhanced Learning Platform</h4>
-                        <h4 lang="es">Plataforma de Aprendizaje Mejorada con IA</h4>
+                        <h4 lang="es" style="display: none;">Plataforma de Aprendizaje Mejorada con IA</h4>
                         
                         <div lang="en">
                             <p>Developed and implemented an AI-enhanced learning system that provides personalized support for language learners across proficiency levels.</p>
@@ -595,7 +764,7 @@
                             </ul>
                         </div>
                         
-                        <div lang="es">
+                        <div lang="es" style="display: none;">
                             <p>Desarrollé e implementé un sistema de aprendizaje mejorado con IA que proporciona apoyo personalizado para estudiantes de idiomas en todos los niveles de competencia.</p>
                             <ul>
                                 <li>Creación de rutas de aprendizaje adaptativas que responden al progreso individual del estudiante</li>
@@ -609,7 +778,7 @@
                 <div class="col-md-6">
                     <div class="achievement">
                         <h4 lang="en">Cross-Cultural Communication Program</h4>
-                        <h4 lang="es">Programa de Comunicación Intercultural</h4>
+                        <h4 lang="es" style="display: none;">Programa de Comunicación Intercultural</h4>
                         
                         <div lang="en">
                             <p>Designed and implemented a comprehensive cross-cultural communication program that prepares students for success in international academic environments.</p>
@@ -620,7 +789,7 @@
                             </ul>
                         </div>
                         
-                        <div lang="es">
+                        <div lang="es" style="display: none;">
                             <p>Diseñé e implementé un programa integral de comunicación intercultural que prepara a los estudiantes para el éxito en entornos académicos internacionales.</p>
                             <ul>
                                 <li>Creación de un currículo que aborda matices culturales en entornos académicos y profesionales</li>
@@ -635,7 +804,7 @@
 
         <section id="contact" class="section">
             <h2 lang="en">Contact Me</h2>
-            <h2 lang="es">Contáctame</h2>
+            <h2 lang="es" style="display: none;">Contáctame</h2>
             
             <div class="row">
                 <div class="col-md-6">
@@ -645,7 +814,7 @@
                         <p><i class="fas fa-map-marker-alt me-2"></i> Location: Orlando, Florida</p>
                     </div>
                     
-                    <div lang="es">
+                    <div lang="es" style="display: none;">
                         <p><i class="fas fa-envelope me-2"></i> Correo: ian.dreilinger@gmail.com</p>
                         <p><i class="fas fa-phone me-2"></i> Teléfono: (321) 947-1265</p>
                         <p><i class="fas fa-map-marker-alt me-2"></i> Ubicación: Orlando, Florida</p>
@@ -658,7 +827,7 @@
                         <p>I am enthusiastic about the opportunity to relocate to Cali, Colombia and contribute to Colegio Bolivar's mission of educational excellence. With family connections to Colombia and a passion for cross-cultural education, I'm eager to bring my expertise to your team.</p>
                     </div>
                     
-                    <div lang="es" class="highlight">
+                    <div lang="es" class="highlight" style="display: none;">
                         <h5>Listo para Trasladarme</h5>
                         <p>Estoy entusiasmado con la oportunidad de trasladarme a Cali, Colombia y contribuir a la misión de excelencia educativa de Colegio Bolivar. Con conexiones familiares en Colombia y una pasión por la educación intercultural, estoy ansioso por aportar mi experiencia a su equipo.</p>
                     </div>
@@ -675,62 +844,55 @@
                 <a href="#"><i class="fab fa-twitter"></i></a>
             </div>
             <p lang="en">&copy; 2025 Ian Dreilinger | Educational Innovation Leader</p>
-            <p lang="es">&copy; 2025 Ian Dreilinger | Líder de Innovación Educativa</p>
+            <p lang="es" style="display: none;">&copy; 2025 Ian Dreilinger | Líder de Innovación Educativa</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        //JavaScript for language toggle
+        // Simplified, guaranteed-to-work language toggle script
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize - hide Spanish content on load
-            document.querySelectorAll('[lang="es"]').forEach(el => {
-                el.style.display = 'none';
-            });
+            // Get the toggle button
+            const langToggle = document.getElementById('langToggle');
+            let currentLang = 'en'; // Start with English
             
-            // Set display property for all English elements to ensure they show correctly
-            document.querySelectorAll('[lang="en"]').forEach(el => {
-                if (el.tagName === 'SPAN') {
-                    el.style.display = 'inline';
+            // Add click event listener
+            langToggle.addEventListener('click', function() {
+                if (currentLang === 'en') {
+                    // Switch to Spanish
+                    hideAllByLang('en');
+                    showAllByLang('es');
+                    currentLang = 'es';
                 } else {
-                    el.style.display = 'block';
+                    // Switch to English
+                    hideAllByLang('es');
+                    showAllByLang('en');
+                    currentLang = 'en';
                 }
             });
-        
-            // Set up toggle button
-            document.getElementById('langToggle').addEventListener('click', function() {
-                const currentLang = this.getAttribute('data-current-lang') || 'en';
-                const newLang = currentLang === 'en' ? 'es' : 'en';
-                
-                // Toggle display for English elements
-                document.querySelectorAll('[lang="en"]').forEach(el => {
-                    if (newLang === 'en') {
-                        if (el.tagName === 'SPAN') {
-                            el.style.display = 'inline';
-                        } else {
-                            el.style.display = 'block';
-                        }
+            
+            // Helper functions
+            function hideAllByLang(lang) {
+                document.querySelectorAll(`[lang="${lang}"]`).forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+            
+            function showAllByLang(lang) {
+                document.querySelectorAll(`[lang="${lang}"]`).forEach(el => {
+                    if (el.tagName === 'SPAN') {
+                        el.style.display = 'inline-block';
+                    } else if (el.tagName === 'A') {
+                        el.style.display = 'inline-block';
                     } else {
-                        el.style.display = 'none';
+                        el.style.display = 'block';
                     }
                 });
-                
-                // Toggle display for Spanish elements
-                document.querySelectorAll('[lang="es"]').forEach(el => {
-                    if (newLang === 'es') {
-                        if (el.tagName === 'SPAN') {
-                            el.style.display = 'inline';
-                        } else {
-                            el.style.display = 'block';
-                        }
-                    } else {
-                        el.style.display = 'none';
-                    }
-                });
-                
-                // Update the current language attribute
-                this.setAttribute('data-current-lang', newLang);
-            });
+            }
+            
+            // Initialize - hide Spanish on load
+            hideAllByLang('es');
+            showAllByLang('en');
         });
     </script>
 </body>
