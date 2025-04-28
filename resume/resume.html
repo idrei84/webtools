@@ -681,25 +681,55 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('langToggle').addEventListener('click', function() {
-            // Toggle language display
-            const englishElements = document.querySelectorAll('[lang="en"]');
-            const spanishElements = document.querySelectorAll('[lang="es"]');
-            
-            englishElements.forEach(el => {
-                el.style.display = el.style.display === 'none' ? 'inline-block' : 'none';
-            });
-            
-            spanishElements.forEach(el => {
-                el.style.display = el.style.display === 'none' ? 'inline-block' : 'none';
-            });
-        });
-        
-        // On page load, show English by default
+        //JavaScript for language toggle
         document.addEventListener('DOMContentLoaded', function() {
-            const spanishElements = document.querySelectorAll('[lang="es"]');
-            spanishElements.forEach(el => {
+            // Initialize - hide Spanish content on load
+            document.querySelectorAll('[lang="es"]').forEach(el => {
                 el.style.display = 'none';
+            });
+            
+            // Set display property for all English elements to ensure they show correctly
+            document.querySelectorAll('[lang="en"]').forEach(el => {
+                if (el.tagName === 'SPAN') {
+                    el.style.display = 'inline';
+                } else {
+                    el.style.display = 'block';
+                }
+            });
+        
+            // Set up toggle button
+            document.getElementById('langToggle').addEventListener('click', function() {
+                const currentLang = this.getAttribute('data-current-lang') || 'en';
+                const newLang = currentLang === 'en' ? 'es' : 'en';
+                
+                // Toggle display for English elements
+                document.querySelectorAll('[lang="en"]').forEach(el => {
+                    if (newLang === 'en') {
+                        if (el.tagName === 'SPAN') {
+                            el.style.display = 'inline';
+                        } else {
+                            el.style.display = 'block';
+                        }
+                    } else {
+                        el.style.display = 'none';
+                    }
+                });
+                
+                // Toggle display for Spanish elements
+                document.querySelectorAll('[lang="es"]').forEach(el => {
+                    if (newLang === 'es') {
+                        if (el.tagName === 'SPAN') {
+                            el.style.display = 'inline';
+                        } else {
+                            el.style.display = 'block';
+                        }
+                    } else {
+                        el.style.display = 'none';
+                    }
+                });
+                
+                // Update the current language attribute
+                this.setAttribute('data-current-lang', newLang);
             });
         });
     </script>
