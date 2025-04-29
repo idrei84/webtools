@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ian Dreilinger | Educator & Ed Tech Strategist</title>
+    <title>Ian Dreilinger | Educational Innovation Leader</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>/* Complete CSS with improved accessibility and constrained width */
+    <style>/* Base Variables */
             :root {
                 --primary-color: #4a86e8;      /* Brighter blue */
                 --secondary-color: #00a896;    /* Teal green */
@@ -19,46 +19,19 @@
                 --dark-color: #2d3748;         /* Dark slate for text */
                 --text-on-dark: #ffffff;       /* White text for dark backgrounds */
                 --shadow-color: rgba(0, 0, 0, 0.05);  /* Lighter shadow */
-                --max-width: 1000px;           /* Keeping your constrained width */
+                --max-width: 1000px;           /* Content width constraint */
+                --side-padding: 20px;          /* Consistent horizontal padding */
+                --border-radius: 8px;          /* Rounded corners */
             }
             
+            /* Base Styles */
             body {
                 font-family: 'Open Sans', Arial, sans-serif;
                 color: var(--dark-color);
-                background-color: #f0f0f0;  /* Light gray background */
+                background-color: #f0f0f0;
                 line-height: 1.6;
                 margin: 0;
                 padding: 0;
-            }
-        
-            /* Make sure ALL sections use the same width constraint approach */
-                .top-bar, .navbar, .hero, footer {
-                    max-width: var(--max-width);
-                    margin: 0 auto;
-                    width: 100%;
-                    box-sizing: border-box; /* Important - ensures padding is included in width */
-                }
-                
-                /* Ensure consistent padding across all sections */
-                .container, .navbar-container, .hero-content, .footer-content {
-                    max-width: var(--max-width);
-                    margin: 0 auto;
-                    padding: 0 20px;
-                    width: 100%;
-                    box-sizing: border-box;
-                }
-                
-                /* Body container should match hero width */
-                .container .section {
-                    width: 100%;
-                    box-sizing: border-box;
-                }
-        
-            /* Wrapper for consistent max-width */
-            .wrapper {
-                max-width: var(--max-width);
-                margin: 0 auto;
-                width: 100%;
             }
             
             h1, h2, h3, h4, h5 {
@@ -68,66 +41,122 @@
                 margin-top: 0;
             }
             
-            .container {
-                max-width: var(--max-width);
-                margin: 0 auto;
-                padding: 0 20px;
+            ul {
+                padding-left: 1.5rem;
             }
             
-            /* Header and Navigation */
+            /* Shared Layout Components */
+            .top-bar,
+            .main-nav,
+            .hero,
+            .main-content,
+            footer {
+                width: 100%;
+                max-width: var(--max-width);
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+            
+            .top-bar-content,
+            .nav-content,
+            .hero-content,
+            .footer-content {
+                padding-left: var(--side-padding);
+                padding-right: var(--side-padding);
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .content-section {
+                background-color: var(--light-color);
+                border-radius: var(--border-radius);
+                box-shadow: 0 3px 10px var(--shadow-color);
+                padding: 2.5rem var(--side-padding);
+                margin-bottom: 2rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            /* Top Bar */
             .top-bar {
                 background-color: var(--primary-color);
-                max-width: var(--max-width);
-                margin: 0 auto;
                 color: var(--text-on-dark);
                 padding: 0.5rem 0;
-                width: 100%;
             }
-
-            .navbar-container {
-                max-width: var(--max-width);
-                margin: 0 auto;
-                padding: 0 20px;
-                width: 100%;
+            
+            .top-bar-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
-        
-            .navbar {
+            
+            .contact-info {
+                margin-right: 1.5rem;
+            }
+            
+            .contact-info i {
+                margin-right: 0.5rem;
+            }
+            
+            /* Navigation */
+            .main-nav {
                 background-color: var(--primary-color);
-                max-width: var(--max-width);
-                margin: 0 auto;
                 box-shadow: 0 2px 8px var(--shadow-color);
-                width: 100%;
+            }
+            
+            .nav-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+            
+            .site-title {
+                color: var(--text-on-dark);
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 1.2rem;
+                font-family: 'Montserrat', Arial, sans-serif;
+            }
+            
+            .mobile-toggle {
+                display: none;
+                background-color: transparent;
+                border: none;
+                color: var(--text-on-dark);
+                cursor: pointer;
+            }
+            
+            .nav-links {
+                display: flex;
+                list-style: none;
+                margin: 0;
                 padding: 0;
             }
             
-            .navbar-brand, .nav-link {
-                color: var(--text-on-dark) !important;
+            .nav-item {
+                margin-left: 1.5rem;
+            }
+            
+            .nav-link {
+                color: var(--text-on-dark);
+                text-decoration: none;
                 font-weight: 500;
+                transition: color 0.3s;
             }
             
             .nav-link:hover {
-                color: var(--accent-color) !important;
+                color: var(--accent-color);
             }
             
             /* Hero Section */
             .hero {
                 background-color: var(--light-gray);
-                color: var(--dark-color);
-                max-width: var(--max-width);
-                margin: 0 auto;
-                color: var(--text-on-dark);
                 padding: 4rem 0;
                 margin-bottom: 2rem;
-                width: 100%;
                 position: relative;
-            }
-            
-            .hero-content {
-                max-width: var(--max-width);
-                margin: 0 auto;
-                padding: 0 20px;
-                position: relative;
-                z-index: 2;
+                text-align: center;
             }
             
             .hero::after {
@@ -141,6 +170,11 @@
                 z-index: 1;
             }
             
+            .hero-content {
+                position: relative;
+                z-index: 2;
+            }
+            
             .profile-img {
                 border-radius: 50%;
                 border: 4px solid white;
@@ -148,57 +182,41 @@
                 height: 180px;
                 object-fit: cover;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                position: relative;
-                z-index: 2;
+                margin-bottom: 1.5rem;
             }
             
-            .display-4 {
+            .hero h1 {
                 font-size: 2.5rem;
                 font-weight: 700;
                 margin-bottom: 0.5rem;
-                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                color: var(--dark-color);
             }
             
             .hero h3 {
-                color: var(--text-on-dark);
                 font-size: 1.4rem;
                 font-weight: 400;
                 margin-bottom: 1.5rem;
+                color: var(--dark-color);
                 opacity: 0.9;
             }
-
-            .hero h1, 
-            .hero h3 {
-                color: var(--dark-color) !important;
-                text-shadow: none;
-                position: relative;
-                z-index: 3; /* Ensure text is above any background elements */
+            
+            .cta-buttons {
+                margin-top: 1.5rem;
             }
             
-            .hero .display-4 {
-                color: var(--dark-color);
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-bottom: 0.5rem;
+            /* Main Content */
+            .main-content {
+                padding: 0 var(--side-padding);
             }
             
-            /* Content Sections */
-            .section {
-                padding: 2.5rem;
-                margin-bottom: 2rem;
-                background-color: white;
-                border-radius: 8px;
-                box-shadow: 0 3px 10px var(--shadow-color);
-            }
-            
-            .section h2 {
+            .content-section h2 {
                 border-bottom: 2px solid var(--accent-color);
                 padding-bottom: 0.5rem;
                 margin-bottom: 1.5rem;
                 display: inline-block;
             }
             
-            /* Timeline items */
+            /* Timeline Items */
             .timeline-item {
                 position: relative;
                 padding-left: 2rem;
@@ -243,24 +261,64 @@
                 margin-bottom: 1rem;
             }
             
-            /* Skills section */
+            /* Education Cards */
+            .education-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .education-card {
+                background-color: var(--light-color);
+                border-radius: var(--border-radius);
+                box-shadow: 0 3px 10px var(--shadow-color);
+                height: 100%;
+            }
+            
+            .card-content {
+                padding: 1.5rem;
+            }
+            
+            /* Skills Grid */
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .skill-category {
+                margin-bottom: 1.5rem;
+            }
+            
+            .skill-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
             .skill-tag {
                 background-color: var(--secondary-color);
                 color: var(--text-on-dark);
                 padding: 0.4rem 0.8rem;
                 border-radius: 20px;
-                margin: 0.3rem;
                 display: inline-block;
                 font-size: 0.9rem;
                 font-weight: 500;
             }
             
-            /* Projects section */
+            /* Projects Grid */
+            .projects-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+            
             .achievement {
                 background-color: rgba(50, 102, 112, 0.08);
                 padding: 1.25rem;
                 margin-bottom: 1.5rem;
-                border-radius: 6px;
+                border-radius: var(--border-radius);
                 border-left: 3px solid var(--secondary-color);
             }
             
@@ -269,13 +327,33 @@
                 margin-bottom: 0.75rem;
             }
             
-            /* Contact section highlight */
+            /* Contact Grid */
+            .contact-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .contact-info i {
+                margin-right: 0.5rem;
+                color: var(--secondary-color);
+            }
+            
+            /* Highlight Box */
             .highlight {
                 background-color: rgba(233, 196, 150, 0.2);
                 padding: 1.25rem;
                 border-left: 4px solid var(--accent-color);
                 margin: 1.5rem 0;
-                border-radius: 0 6px 6px 0;
+                border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            }
+            
+            .highlight h5 {
+                margin-top: 0;
+            }
+            
+            .highlight i {
+                margin-right: 0.5rem;
             }
             
             /* Buttons */
@@ -292,7 +370,7 @@
             }
             
             .lang-btn:hover {
-                background-color: #ddb77f;
+                background-color: #e0b53e;
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             }
@@ -307,31 +385,33 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 display: inline-block;
                 font-weight: 500;
+                margin: 0 0.5rem;
             }
             
             .pdf-btn:hover {
-                background-color: #285761;
-                color: white;
-                text-decoration: none;
+                background-color: #008577;
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+            
+            .pdf-btn i {
+                margin-right: 0.5rem;
             }
             
             /* Footer */
             footer {
                 background-color: var(--primary-color);
-                max-width: var(--max-width);
-                margin: 0 auto;
                 color: var(--text-on-dark);
                 padding: 2rem 0;
                 margin-top: 2rem;
-                width: 100%;
             }
             
             .footer-content {
-                max-width: var(--max-width);
-                margin: 0 auto;
-                padding: 0 20px;
+                text-align: center;
+            }
+            
+            .social-icons {
+                margin-bottom: 1rem;
             }
             
             .social-icons a {
@@ -346,52 +426,33 @@
                 transform: translateY(-3px);
             }
             
-            /* Card styling */
-            .card {
-                border: none;
-                border-radius: 8px;
-                box-shadow: 0 3px 10px var(--shadow-color);
-                height: 100%;
-            }
-            
-            .card-body {
-                padding: 1.5rem;
-            }
-            
-            /* Language display fix */
+            /* Language Toggle */
             [lang="en"], [lang="es"] {
                 transition: opacity 0.3s ease;
             }
             
-            /* Fix for spans */
-            span[lang="en"], span[lang="es"] {
-                display: inline-block;
-            }
-
-
-            /* Add these CSS rules to make the class-based toggle work */
-            
             /* Default: hide Spanish content */
-            .lang-en [lang="es"] {
+            body:not(.lang-es) [lang="es"] {
                 display: none !important;
             }
             
             /* When Spanish is active: hide English content and show Spanish content */
-            .lang-es [lang="en"] {
+            body.lang-es [lang="en"] {
                 display: none !important;
             }
             
-            .lang-es [lang="es"] {
+            body.lang-es [lang="es"] {
                 display: block !important;
             }
             
             /* Fix for inline elements */
-            .lang-es span[lang="es"],
-            .lang-es a[lang="es"],
-            .lang-es button[lang="es"] {
+            body.lang-es span[lang="es"],
+            body.lang-es a[lang="es"],
+            body.lang-es button[lang="es"] {
                 display: inline-block !important;
             }
-            /* Media queries for responsiveness */
+            
+            /* Responsive Design */
             @media (max-width: 768px) {
                 .hero {
                     padding: 2.5rem 0;
@@ -402,23 +463,52 @@
                     height: 150px;
                 }
                 
-                .display-4 {
+                .hero h1 {
                     font-size: 2rem;
                 }
                 
-                .section {
-                    padding: 1.5rem;
+                .content-section {
+                    padding: 1.5rem var(--side-padding);
                 }
                 
                 .timeline-item {
                     padding-left: 1.5rem;
+                }
+                
+                .education-cards,
+                .skills-grid,
+                .projects-grid,
+                .contact-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .mobile-toggle {
+                    display: block;
+                }
+                
+                .navbar-collapse:not(.show) {
+                    display: none;
+                }
+                
+                .navbar-collapse.show {
+                    display: block;
+                    width: 100%;
+                }
+                
+                .nav-links {
+                    flex-direction: column;
+                    width: 100%;
+                }
+                
+                .nav-item {
+                    margin: 0.5rem 0;
                 }
             }
     </style>
 </head>
 <body>
     <div class="top-bar">
-        <div class="container d-flex justify-content-between align-items-center wrapper">
+        <div class="d-flex justify-content-between align-items-center" style="padding: 0 20px;">
             <div>
                 <span class="me-3"><i class="fas fa-envelope me-1"></i> ian.dreilinger@gmail.com</span>
                 <span><i class="fas fa-phone me-1"></i> (321) 947-1265</span>
@@ -481,25 +571,26 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container text-center hero-content">
-            <img src="idreilinger.png" alt="Ian Dreilinger" class="profile-img mb-4">
-            <h1 class="display-4">Ian Dreilinger</h1>
+        <div class="hero-content">
+            <img src="idreilinger.png" alt="Ian Dreilinger" class="profile-img">
+            <h1>Ian Dreilinger</h1>
             <h3 lang="en">Educational Innovation Leader | Digital Transformation Specialist</h3>
             <h3 lang="es" style="display: none;">Líder de Innovación Educativa | Especialista en Transformación Digital</h3>
-            <div class="mt-4">
-                <a href="resume-en.pdf" class="pdf-btn me-2" lang="en">
-                    <i class="fas fa-download me-1"></i> Download Resume
+            <div class="cta-buttons">
+                <a href="resume-en.pdf" class="pdf-btn" lang="en">
+                    <i class="fas fa-download"></i> Download Resume
                 </a>
                 <a href="resume-es.pdf" class="pdf-btn" lang="es" style="display: none;">
-                    <i class="fas fa-download me-1"></i> Descargar Currículum
+                    <i class="fas fa-download"></i> Descargar Currículum
                 </a>
             </div>
         </div>
     </section>
 
-    <div class="container">
-        <section id="about" class="section">
+    <div class="main-content">
+        <section id="about" class="content-section">
             <h2 lang="en">About Me</h2>
             <h2 lang="es" style="display: none;">Sobre Mí</h2>
             
@@ -524,7 +615,8 @@
             </div>
         </section>
 
-        <section id="experience" class="section">
+        <!-- Experience Section -->
+        <section id="experience" class="content-section">
             <h2 lang="en">Professional Experience</h2>
             <h2 lang="es" style="display: none;">Experiencia Profesional</h2>
             
@@ -621,74 +713,82 @@
                 </div>
             </div>
         </section>
-
-        <section id="education" class="section">
+        
+        <!-- Education Section -->
+        <section id="education" class="content-section">
             <h2 lang="en">Education</h2>
             <h2 lang="es" style="display: none;">Educación</h2>
             
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h4 lang="en">Master of Arts in TESOL</h4>
-                            <h4 lang="es" style="display: none;">Maestría en Artes en TESOL</h4>
-                            <p class="institution">University of Central Florida</p>
-                            <p class="date">Spring 2013</p>
-                            
-                            <div lang="en">
-                                <p>Relevant Coursework:</p>
-                                <ul>
-                                    <li>Adult Learning Theory & Instructional Design</li>
-                                    <li>Assessment Methodology & Data Analysis</li>
-                                    <li>Cross-Cultural Communication & Diversity</li>
-                                    <li>Research Methods in Education</li>
-                                </ul>
-                            </div>
-                            
-                            <div lang="es" style="display: none;">
-                                <p>Cursos Relevantes:</p>
-                                <ul>
-                                    <li>Teoría del Aprendizaje de Adultos y Diseño Instruccional</li>
-                                    <li>Metodología de Evaluación y Análisis de Datos</li>
-                                    <li>Comunicación Intercultural y Diversidad</li>
-                                    <li>Métodos de Investigación en Educación</li>
-                                </ul>
-                            </div>
+            <div class="education-cards">
+                <div class="education-card">
+                    <div class="card-content">
+                        <h4 lang="en">Master of Arts in TESOL</h4>
+                        <h4 lang="es" style="display: none;">Maestría en Artes en TESOL</h4>
+                        <p class="institution">University of Central Florida</p>
+                        <p class="date">Spring 2013</p>
+                        
+                        <div lang="en">
+                            <p>Relevant Coursework:</p>
+                            <ul>
+                                <li>Adult Learning Theory & Instructional Design</li>
+                                <li>Assessment Methodology & Data Analysis</li>
+                                <li>Cross-Cultural Communication & Diversity</li>
+                                <li>Research Methods in Education</li>
+                            </ul>
+                        </div>
+                        
+                        <div lang="es" style="display: none;">
+                            <p>Cursos Relevantes:</p>
+                            <ul>
+                                <li>Teoría del Aprendizaje de Adultos y Diseño Instruccional</li>
+                                <li>Metodología de Evaluación y Análisis de Datos</li>
+                                <li>Comunicación Intercultural y Diversidad</li>
+                                <li>Métodos de Investigación en Educación</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h4 lang="en">Bachelor of Arts in Modern Languages</h4>
-                            <h4 lang="es" style="display: none;">Licenciatura en Artes en Lenguas Modernas</h4>
-                            <p class="institution">University of Central Florida</p>
-                            <p class="date">Fall 2010</p>
-                            
-                            <div lang="en">
-                                <p>Relevant Coursework:</p>
-                                <ul>
-                                    <li>Multicultural Communication & Pedagogy</li>
-                                    <li>Advanced Language Composition</li>
-                                    <li>International Studies & Cultural Analysis</li>
-                                    <li>Spanish Civilization and Culture</li>
-                                </ul>
-                            </div>
-                            
-                            <div lang="es" style="display: none;">
-                                <p>Cursos Relevantes:</p>
-                                <ul>
-                                    <li>Comunicación Multicultural y Pedagogía</li>
-                                    <li>Composición Avanzada de Idiomas</li>
-                                    <li>Estudios Internacionales y Análisis Cultural</li>
-                                    <li>Civilización y Cultura Española</li>
-                                </ul>
-                            </div>
+                <div class="education-card">
+                    <div class="card-content">
+                        <h4 lang="en">Bachelor of Arts in Modern Languages</h4>
+                        <h4 lang="es" style="display: none;">Licenciatura en Artes en Lenguas Modernas</h4>
+                        <p class="institution">University of Central Florida</p>
+                        <p class="date">Fall 2010</p>
+                        
+                        <div lang="en">
+                            <p>Relevant Coursework:</p>
+                            <ul>
+                                <li>Multicultural Communication & Pedagogy</li>
+                                <li>Advanced Language Composition</li>
+                                <li>International Studies & Cultural Analysis</li>
+                                <li>Spanish Civilization and Culture</li>
+                            </ul>
+                        </div>
+                        
+                        <div lang="es" style="display: none;">
+                            <p>Cursos Relevantes:</p>
+                            <ul>
+                                <li>Comunicación Multicultural y Pedagogía</li>
+                                <li>Composición Avanzada de Idiomas</li>
+                                <li>Estudios Internacionales y Análisis Cultural</li>
+                                <li>Civilización y Cultura Española</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <div lang="en" class="highlight">
+                <h5><i class="fas fa-certificate"></i> Professional Development</h5>
+                <p>Continuous commitment to professional growth through participation in specialized training, conferences, and workshops focused on educational technology, innovative pedagogy, and AI integration in education.</p>
+            </div>
+            
+            <div lang="es" class="highlight" style="display: none;">
+                <h5><i class="fas fa-certificate"></i> Desarrollo Profesional</h5>
+                <p>Compromiso continuo con el crecimiento profesional a través de la participación en capacitaciones especializadas, conferencias y talleres centrados en tecnología educativa, pedagogía innovadora e integración de IA en la educación.</p>
+            </div>
+        </section>
             
             <div lang="en" class="highlight">
                 <h5><i class="fas fa-certificate me-2"></i> Professional Development</h5>
@@ -701,34 +801,39 @@
             </div>
         </section>
 
-        <section id="skills" class="section">
+        <!-- Skills Section -->
+        <section id="skills" class="content-section">
             <h2 lang="en">Skills & Expertise</h2>
             <h2 lang="es" style="display: none;">Habilidades y Experiencia</h2>
             
-            <div class="row">
-                <div class="col-md-6 mb-4">
+            <div class="skills-grid">
+                <div class="skill-category">
                     <div lang="en">
                         <h4>Pedagogical Expertise</h4>
-                        <span class="skill-tag">Bilingual Education</span>
-                        <span class="skill-tag">English for Academic Purposes</span>
-                        <span class="skill-tag">Student-Centered Learning</span>
-                        <span class="skill-tag">Project-Based Learning</span>
-                        <span class="skill-tag">Cross-Cultural Education</span>
-                        <span class="skill-tag">Adult Learning Theory</span>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Bilingual Education</span>
+                            <span class="skill-tag">English for Academic Purposes</span>
+                            <span class="skill-tag">Student-Centered Learning</span>
+                            <span class="skill-tag">Project-Based Learning</span>
+                            <span class="skill-tag">Cross-Cultural Education</span>
+                            <span class="skill-tag">Adult Learning Theory</span>
+                        </div>
                     </div>
                     
                     <div lang="es" style="display: none;">
                         <h4>Experiencia Pedagógica</h4>
-                        <span class="skill-tag">Educación Bilingüe</span>
-                        <span class="skill-tag">Inglés con Fines Académicos</span>
-                        <span class="skill-tag">Aprendizaje Centrado en el Estudiante</span>
-                        <span class="skill-tag">Aprendizaje Basado en Proyectos</span>
-                        <span class="skill-tag">Educación Intercultural</span>
-                        <span class="skill-tag">Teoría del Aprendizaje de Adultos</span>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Educación Bilingüe</span>
+                            <span class="skill-tag">Inglés con Fines Académicos</span>
+                            <span class="skill-tag">Aprendizaje Centrado en el Estudiante</span>
+                            <span class="skill-tag">Aprendizaje Basado en Proyectos</span>
+                            <span class="skill-tag">Educación Intercultural</span>
+                            <span class="skill-tag">Teoría del Aprendizaje de Adultos</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6 mb-4">
+                <div class="skill-category">
                     <div lang="en">
                         <h4>Educational Technology</h4>
                         <span class="skill-tag">AI Integration</span>
@@ -750,7 +855,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6 mb-4">
+                <div class="skill-category">
                     <div lang="en">
                         <h4>Leadership & Management</h4>
                         <span class="skill-tag">Program Development</span>
@@ -772,7 +877,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="skill-category">
                     <div lang="en">
                         <h4>Languages</h4>
                         <span class="skill-tag">English (Native)</span>
@@ -788,24 +893,25 @@
             </div>
         </section>
 
-        <section id="projects" class="section">
+        <!-- Projects Section -->
+        <section id="projects" class="content-section">
             <h2 lang="en">Key Projects & Achievements</h2>
             <h2 lang="es" style="display: none;">Proyectos Clave y Logros</h2>
             
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="achievement">
-                        <h4 lang="en">AI in Education Conference</h4>
-                        <h4 lang="es" style="display: none;">Conferencia de IA en Educación</h4>
-                        
-                        <div lang="en">
-                            <p>Led the planning and execution of the college's inaugural AI conference, bringing together ~300 educators to explore the impact of artificial intelligence on teaching and learning.</p>
-                            <ul>
-                                <li>Coordinated 30+ specialized sessions covering AI integration in teaching methodologies</li>
-                                <li>Facilitated executive panel discussions on AI's impact in education</li>
-                                <li>Established ongoing professional development pathways for faculty</li>
-                            </ul>
-                        </div>
+            <div class="projects-grid">
+                <!-- Project items -->
+                <div class="achievement">
+                    <h4 lang="en">AI in Education Conference</h4>
+                    <h4 lang="es" style="display: none;">Conferencia de IA en Educación</h4>
+                    
+                    <div lang="en">
+                        <p>Led the planning and execution of the college's inaugural AI conference, bringing together ~300 educators to explore the impact of artificial intelligence on teaching and learning.</p>
+                        <ul>
+                            <li>Coordinated 30+ specialized sessions covering AI integration in teaching methodologies</li>
+                            <li>Facilitated executive panel discussions on AI's impact in education</li>
+                            <li>Established ongoing professional development pathways for faculty</li>
+                        </ul>
+                    </div>
                         
                         <div lang="es" style="display: none;">
                             <p>Dirigí la planificación y ejecución de la conferencia inaugural de IA del colegio, reuniendo a ~300 educadores para explorar el impacto de la inteligencia artificial en la enseñanza y el aprendizaje.</p>
@@ -895,43 +1001,42 @@
             </div>
         </section>
 
-        <section id="contact" class="section">
+        <!-- Contact Section -->
+        <section id="contact" class="content-section">
             <h2 lang="en">Contact Me</h2>
             <h2 lang="es" style="display: none;">Contáctame</h2>
             
-            <div class="row">
-                <div class="col-md-6">
+            <div class="contact-grid">
+                <div class="contact-info">
                     <div lang="en">
-                        <p><i class="fas fa-envelope me-2"></i> Email: ian.dreilinger@gmail.com</p>
-                        <p><i class="fas fa-phone me-2"></i> Phone: (321) 947-1265</p>
-                        <p><i class="fas fa-map-marker-alt me-2"></i> Location: Orlando, Florida</p>
+                        <p><i class="fas fa-envelope"></i> Email: ian.dreilinger@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> Phone: (321) 947-1265</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Location: Orlando, Florida</p>
                     </div>
                     
                     <div lang="es" style="display: none;">
-                        <p><i class="fas fa-envelope me-2"></i> Correo: ian.dreilinger@gmail.com</p>
-                        <p><i class="fas fa-phone me-2"></i> Teléfono: (321) 947-1265</p>
-                        <p><i class="fas fa-map-marker-alt me-2"></i> Ubicación: Orlando, Florida</p>
+                        <!-- Spanish version -->
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="contact-highlight">
                     <div lang="en" class="highlight">
                         <h5>Ready to Relocate</h5>
                         <p>I am enthusiastic about the opportunity to relocate to Cali, Colombia and contribute to Colegio Bolivar's mission of educational excellence. With family connections to Colombia and a passion for cross-cultural education, I'm eager to bring my expertise to your team.</p>
                     </div>
                     
                     <div lang="es" class="highlight" style="display: none;">
-                        <h5>Listo para Trasladarme</h5>
-                        <p>Estoy entusiasmado con la oportunidad de trasladarme a Cali, Colombia y contribuir a la misión de excelencia educativa de Colegio Bolivar. Con conexiones familiares en Colombia y una pasión por la educación intercultural, estoy ansioso por aportar mi experiencia a su equipo.</p>
+                        <!-- Spanish version -->
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <div class="footer-content text-center">
-            <div class="social-icons mb-3">
+        <div class="footer-content">
+            <div class="social-icons">
                 <a href="#"><i class="fab fa-linkedin"></i></a>
                 <a href="#"><i class="fab fa-github"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
