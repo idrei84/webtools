@@ -30,7 +30,30 @@
                 margin: 0;
                 padding: 0;
             }
-
+        
+            /* Make sure ALL sections use the same width constraint approach */
+                .top-bar, .navbar, .hero, footer {
+                    max-width: var(--max-width);
+                    margin: 0 auto;
+                    width: 100%;
+                    box-sizing: border-box; /* Important - ensures padding is included in width */
+                }
+                
+                /* Ensure consistent padding across all sections */
+                .container, .navbar-container, .hero-content, .footer-content {
+                    max-width: var(--max-width);
+                    margin: 0 auto;
+                    padding: 0 20px;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                
+                /* Body container should match hero width */
+                .container .section {
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+        
             /* Wrapper for consistent max-width */
             .wrapper {
                 max-width: var(--max-width);
