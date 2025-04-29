@@ -88,7 +88,8 @@
             
             /* Hero Section */
             .hero {
-                background-color: var(--primary-color);
+                background-color: var(--light-gray);
+                color: var(--dark-color);
                 max-width: var(--max-width);
                 margin: 0 auto;
                 color: var(--text-on-dark);
@@ -113,7 +114,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(135deg, rgba(44, 66, 104, 0.9) 0%, rgba(50, 102, 112, 0.85) 100%);
+                background: linear-gradient(135deg, rgba(74, 134, 232, 0.08) 0%, rgba(0, 168, 150, 0.05) 100%);
                 z-index: 1;
             }
             
@@ -145,8 +146,8 @@
 
             .hero h1, 
             .hero h3 {
-                color: white !important; /* Force white text in hero section */
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow for better readability */
+                color: var(--dark-color) !important;
+                text-shadow: none;
                 position: relative;
                 z-index: 3; /* Ensure text is above any background elements */
             }
