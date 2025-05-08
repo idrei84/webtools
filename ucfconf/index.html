@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Teaching Agent Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI as the Democratic Tutor</h1>
+            <p>Design structured AI tutoring dialogues to democratize access to personalized learning</p>
+        </header>
+
+        <div class="intro-section">
+            <h2>The 2 Sigma Problem &amp; AI Tutoring</h2>
+            <p>In 1984, educational researcher Benjamin Bloom demonstrated that one-on-one tutoring improved student performance by two standard deviations (the "2 Sigma Problem") compared to conventional instruction. However, providing human tutors for every student has been economically unfeasible—until now.</p>
+            <p>AI tutors can democratize access to personalized learning by providing 24/7 guidance, adapted to individual needs, across all disciplines. This tool helps you design structured AI tutoring dialogues that scaffold student learning while developing their skills in effectively engaging with AI.</p>
+            <p class="tool-explanation">This form will generate a prompt that you can input into ChatGPT, Claude, or other AI assistants to create custom instructions. These instructions will then be used to configure a specialized agent in Blackbox.ai for your specific teaching needs.</p>
+        </div>
+
+        <form id="agentForm">
+            <!-- Course Context Section -->
+            <section class="form-section">
+                <h2>Course Context</h2>
+                
+                <div class="form-group">
+                    <label for="discipline">Discipline:</label>
+                    <select id="discipline" name="discipline" required>
+                        <option value="" disabled selected>Select your discipline</option>
+                        <option value="sciences">Sciences</option>
+                        <option value="humanities">Humanities</option>
+                        <option value="socialSciences">Social Sciences</option>
+                        <option value="business">Business</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="healthSciences">Health Sciences</option>
+                        <option value="arts">Arts</option>
+                        <option value="education">Education</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div id="otherDisciplineContainer" class="hidden">
+                        <label for="otherDiscipline">Please specify:</label>
+                        <input type="text" id="otherDiscipline" name="otherDiscipline">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="courseLevel">Course Level:</label>
+                    <select id="courseLevel" name="courseLevel" required>
+                        <option value="" disabled selected>Select course level</option>
+                        <option value="introductory">Introductory (100-200)</option>
+                        <option value="intermediate">Intermediate (300-400)</option>
+                        <option value="advanced">Advanced Undergraduate</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div id="otherLevelContainer" class="hidden">
+                        <label for="otherLevel">Please specify:</label>
+                        <input type="text" id="otherLevel" name="otherLevel">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="courseName">Course Name/Title:</label>
+                    <input type="text" id="courseName" name="courseName" placeholder="e.g., Introduction to Biology" required>
+                </div>
+            </section>
+
+            <!-- Agent Purpose Section -->
+            <section class="form-section">
+                <h2>Agent Purpose</h2>
+                
+                <div class="form-group">
+                    <label for="primaryFunction">Primary Function:</label>
+                    <select id="primaryFunction" name="primaryFunction" required>
+                        <option value="" disabled selected>Select primary function</option>
+                        <option value="generalSupport">General Course Support</option>
+                        <option value="assignmentGuidance">Assignment Guidance</option>
+                        <option value="conceptExplanation">Concept Explanation</option>
+                        <option value="practiceFeedback">Practice Partner/Feedback</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div id="otherFunctionContainer" class="hidden">
+                        <label for="otherFunction">Please specify:</label>
+                        <input type="text" id="otherFunction" name="otherFunction">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="learningOutcomes">Key Learning Outcomes:</label>
+                    <textarea id="learningOutcomes" name="learningOutcomes" placeholder="What are the main learning outcomes this agent should support?" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentNeeds">Main Student Needs:</label>
+                    <textarea id="studentNeeds" name="studentNeeds" placeholder="What specific student needs should this agent address?" rows="3" required></textarea>
+                </div>
+            </section>
+
+            <!-- Learning Guidelines Section -->
+            <section class="form-section">
+                <h2>Learning Guidelines</h2>
+                
+                <div class="form-group">
+                    <label for="alwaysDo">Agent Should ALWAYS:</label>
+                    <textarea id="alwaysDo" name="alwaysDo" placeholder="What should the agent always do to support learning? (e.g., ask clarifying questions, provide examples)" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="neverDo">Agent Should NEVER:</label>
+                    <textarea id="neverDo" name="neverDo" placeholder="What should the agent never do? (e.g., complete assignments for students, provide answers without explanation)" rows="3" required></textarea>
+                </div>
+            </section>
+
+            <!-- Example Interactions Section -->
+            <section class="form-section">
+                <h2>Example Interactions</h2>
+                
+                <div class="form-group">
+                    <label for="sampleRequest">Sample Student Request:</label>
+                    <textarea id="sampleRequest" name="sampleRequest" placeholder="Provide an example of a question or request a student might make" rows="2" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="responseApproach">Preferred Response Approach:</label>
+                    <textarea id="responseApproach" name="responseApproach" placeholder="Describe how you'd like the agent to respond (approach, not exact text)" rows="3" required></textarea>
+                </div>
+            </section>
+
+            <!-- Agent Persona Section -->
+            <section class="form-section">
+                <h2>Agent Persona</h2>
+                
+                <div class="form-group">
+                    <label for="tone">Tone/Approach:</label>
+                    <select id="tone" name="tone" required>
+                        <option value="" disabled selected>Select tone approach</option>
+                        <option value="socratic">Socratic (question-based)</option>
+                        <option value="coach">Supportive Coach</option>
+                        <option value="expert">Expert Guide</option>
+                        <option value="peer">Peer Collaborator</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <div id="customToneContainer" class="hidden">
+                        <label for="customTone">Please describe:</label>
+                        <input type="text" id="customTone" name="customTone">
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>Flexibility Options:</label>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="adjustDetail" name="flexibility" value="adjustDetail" checked>
+                        <label for="adjustDetail">Adjust detail based on question complexity</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="simplerExplanations" name="flexibility" value="simplerExplanations" checked>
+                        <label for="simplerExplanations">Provide simpler explanations when requested</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="includeExamples" name="flexibility" value="includeExamples" checked>
+                        <label for="includeExamples">Include relevant examples</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="askClarifying" name="flexibility" value="askClarifying" checked>
+                        <label for="askClarifying">Ask clarifying questions when needed</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Knowledge Scope Section -->
+            <section class="form-section">
+                <h2>Knowledge Scope</h2>
+                
+                <div class="form-group">
+                    <label for="keyConcepts">Key Concepts/Topics:</label>
+                    <textarea id="keyConcepts" name="keyConcepts" placeholder="What key concepts should the agent be knowledgeable about?" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="referToInstructor">Topics to Refer to Instructor:</label>
+                    <textarea id="referToInstructor" name="referToInstructor" placeholder="What topics or questions should be referred back to you?" rows="3" required></textarea>
+                </div>
+            </section>
+
+            <!-- Output Preferences Section -->
+            <section class="form-section">
+                <h2>Output Preferences</h2>
+                
+                <div class="form-group checkbox-group">
+                    <label>Preferred Formatting:</label>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="useBullets" name="formatting" value="useBullets" checked>
+                        <label for="useBullets">Use bullet points for steps/lists</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="useAnalogies" name="formatting" value="useAnalogies" checked>
+                        <label for="useAnalogies">Provide analogies for complex concepts</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="useExamples" name="formatting" value="useExamples" checked>
+                        <label for="useExamples">Include examples in explanations</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="citationApproach">Citation Approach:</label>
+                    <select id="citationApproach" name="citationApproach" required>
+                        <option value="alwaysCite">Always cite sources</option>
+                        <option value="quoteOnly">Only cite when directly quoting</option>
+                        <option value="focusExplanation" selected>Focus on explanation over citation</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Contact Information (Optional) -->
+            <section class="form-section">
+                <h2>Contact Information (Optional)</h2>
+                <p class="optional-text">If you'd like to receive your prompt by email</p>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Your email address">
+                </div>
+            </section>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button type="button" id="previewButton" class="primary-button">Preview Prompt</button>
+                <button type="submit" id="generateButton" class="primary-button">Generate & Download</button>
+                <button type="button" id="emailButton" class="secondary-button">Email to Me</button>
+                <button type="reset" id="resetButton" class="secondary-button">Reset Form</button>
+            </div>
+        </form>
+
+        <!-- Preview Modal -->
+        <div id="previewModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Your AI Agent Prompt</h2>
+                <div id="promptPreview" class="prompt-preview"></div>
+                <div class="button-group">
+                    <button id="copyPrompt" class="primary-button">Copy to Clipboard</button>
+                    <button id="downloadPrompt" class="primary-button">Download</button>
+                    <button id="closePreview" class="secondary-button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
