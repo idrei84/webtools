@@ -11,6 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const closePreviewButton = document.getElementById('closePreview');
     const copyPromptButton = document.getElementById('copyPrompt');
     const downloadPromptButton = document.getElementById('downloadPrompt');
+    
+    // Store dropdown elements as global variables for use in multiple functions
+    const disciplineSelect = document.getElementById('discipline');
+    const otherDisciplineContainer = document.getElementById('otherDisciplineContainer');
+    const courseLevelSelect = document.getElementById('courseLevel');
+    const otherLevelContainer = document.getElementById('otherLevelContainer');
+    const primaryFunctionSelect = document.getElementById('primaryFunction');
+    const otherFunctionContainer = document.getElementById('otherFunctionContainer');
+    const toneSelect = document.getElementById('tone');
+    const customToneContainer = document.getElementById('customToneContainer');
 
     // "Other" option handlers
     setupOtherOptionHandlers();
@@ -27,9 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle "Other" option dropdowns
     function setupOtherOptionHandlers() {
         // Discipline dropdown
-        const disciplineSelect = document.getElementById('discipline');
-        const otherDisciplineContainer = document.getElementById('otherDisciplineContainer');
-        
         disciplineSelect.addEventListener('change', function() {
             if (this.value === 'other') {
                 otherDisciplineContainer.classList.remove('hidden');
@@ -39,9 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Course level dropdown
-        const courseLevelSelect = document.getElementById('courseLevel');
-        const otherLevelContainer = document.getElementById('otherLevelContainer');
-        
         courseLevelSelect.addEventListener('change', function() {
             if (this.value === 'other') {
                 otherLevelContainer.classList.remove('hidden');
@@ -51,9 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Primary function dropdown
-        const primaryFunctionSelect = document.getElementById('primaryFunction');
-        const otherFunctionContainer = document.getElementById('otherFunctionContainer');
-        
         primaryFunctionSelect.addEventListener('change', function() {
             if (this.value === 'other') {
                 otherFunctionContainer.classList.remove('hidden');
@@ -63,9 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Tone dropdown
-        const toneSelect = document.getElementById('tone');
-        const customToneContainer = document.getElementById('customToneContainer');
-        
         toneSelect.addEventListener('change', function() {
             if (this.value === 'custom') {
                 customToneContainer.classList.remove('hidden');
@@ -168,16 +166,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 const labelFor = document.querySelector(`label[for="${input.id}"]`);
                 const labelText = labelFor ? labelFor.textContent : input.name;
                 
-                // Show error near the input
-                if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
-                    const errorMsg = document.createElement('div');
-                    errorMsg.className = 'error-message';
-                    errorMsg.textContent = `Please fill out ${labelText.replace(':', '')}.`;
-                    errorMsg.style.color = 'red';
-                    errorMsg.style.fontSize = '0.8rem';
-                    errorMsg.style.marginTop = '5px';
-                    input.parentNode.insertBefore(errorMsg, input.nextSibling);
+                // Remove any existing error messages first
+                if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
+                    input.parentNode.removeChild(input.nextElementSibling);
                 }
+                
+                // Add error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = `Please fill out ${labelText.replace(':', '')}.`;
+                errorMsg.style.color = 'red';
+                errorMsg.style.fontSize = '0.8rem';
+                errorMsg.style.marginTop = '5px';
+                input.parentNode.insertBefore(errorMsg, input.nextSibling);
             } else {
                 input.classList.remove('invalid');
                 // Remove error message if it exists
@@ -190,21 +191,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Handle "other" options validation
         if (disciplineSelect.value === 'other' && !document.getElementById('otherDiscipline').value.trim()) {
             isValid = false;
+            document.getElementById('otherDiscipline').classList.add('invalid');
             alert('Please specify your discipline in the "Other" field.');
         }
         
         if (courseLevelSelect.value === 'other' && !document.getElementById('otherLevel').value.trim()) {
             isValid = false;
+            document.getElementById('otherLevel').classList.add('invalid');
             alert('Please specify your course level in the "Other" field.');
         }
         
         if (primaryFunctionSelect.value === 'other' && !document.getElementById('otherFunction').value.trim()) {
             isValid = false;
+            document.getElementById('otherFunction').classList.add('invalid');
             alert('Please specify the primary function in the "Other" field.');
         }
         
         if (toneSelect.value === 'custom' && !document.getElementById('customTone').value.trim()) {
             isValid = false;
+            document.getElementById('customTone').classList.add('invalid');
             alert('Please describe your custom tone in the "Other" field.');
         }
 
@@ -278,7 +283,6 @@ Please create detailed, ready-to-use custom instructions for my Blackbox AI agen
     
     // Helper functions to get form values
     function getDisciplineValue() {
-        const disciplineSelect = document.getElementById('discipline');
         if (disciplineSelect.value === 'other') {
             return document.getElementById('otherDiscipline').value;
         }
@@ -286,7 +290,6 @@ Please create detailed, ready-to-use custom instructions for my Blackbox AI agen
     }
     
     function getCourseLevelValue() {
-        const courseLevelSelect = document.getElementById('courseLevel');
         if (courseLevelSelect.value === 'other') {
             return document.getElementById('otherLevel').value;
         }
@@ -294,7 +297,6 @@ Please create detailed, ready-to-use custom instructions for my Blackbox AI agen
     }
     
     function getPrimaryFunctionValue() {
-        const primaryFunctionSelect = document.getElementById('primaryFunction');
         if (primaryFunctionSelect.value === 'other') {
             return document.getElementById('otherFunction').value;
         }
@@ -321,7 +323,6 @@ Please create detailed, ready-to-use custom instructions for my Blackbox AI agen
     }
     
     function getToneValue() {
-        const toneSelect = document.getElementById('tone');
         if (toneSelect.value === 'custom') {
             return document.getElementById('customTone').value;
         }
@@ -418,4 +419,19 @@ Please create detailed, ready-to-use custom instructions for my Blackbox AI agen
             closeModal();
         }
     };
+    
+    // Add CSS for validation feedback
+    const style = document.createElement('style');
+    style.textContent = `
+        .invalid {
+            border: 2px solid #dc3545 !important;
+            background-color: #fff8f8 !important;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+    `;
+    document.head.appendChild(style);
 });
