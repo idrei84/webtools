@@ -34,6 +34,23 @@ document.addEventListener('DOMContentLoaded', function() {
     copyPromptButton.addEventListener('click', copyToClipboard);
     downloadPromptButton.addEventListener('click', downloadPrompt);
     
+    // Handle syllabus toggle
+    const includeSyllabusYes = document.getElementById('includeSyllabusYes');
+    const includeSyllabusNo = document.getElementById('includeSyllabusNo');
+    const syllabusSection = document.getElementById('syllabusSection');
+
+    includeSyllabusYes.addEventListener('change', function() {
+        if (this.checked) {
+            syllabusSection.classList.remove('hidden');
+        }
+    });
+
+    includeSyllabusNo.addEventListener('change', function() {
+        if (this.checked) {
+            syllabusSection.classList.add('hidden');
+        }
+    });
+    
     // Handle "Other" option dropdowns
     function setupOtherOptionHandlers() {
         // Discipline dropdown
@@ -217,123 +234,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Process the syllabus input (either uploaded or pasted)
-function processSyllabusInput() {
-    const syllabusPaste = document.getElementById('syllabusPaste').value.trim();
-    const syllabusFile = document.getElementById('syllabusUpload').files[0];
-    const useForLearningOutcomes = document.getElementById('useForLearningOutcomes').checked;
-    const useForSchedule = document.getElementById('useForSchedule').checked;
-    const useForPolicies = document.getElementById('useForPolicies').checked;
-    
-    let syllabusInfo = {
-        text: syllabusPaste,
-        options: {
-            useForLearningOutcomes,
-            useForSchedule,
-            useForPolicies
-        }
-    };
-    
-    // If there's a file uploaded, we'd need to process it
-    // In this simplified version, we'll just acknowledge that a file was uploaded
-    if (syllabusFile) {
-        syllabusInfo.fileUploaded = true;
-        syllabusInfo.fileName = syllabusFile.name;
-    }
-    
-    return syllabusInfo;
-}
-
-// Get syllabus usage description based on selected options
-function getSyllabusUsageDescription(syllabusInfo) {
-    if (!syllabusInfo.text && !syllabusInfo.fileUploaded) {
-        return '';
-    }
-    
-    const options = [];
-    if (syllabusInfo.options.useForLearningOutcomes) {
-        options.push('reference the learning outcomes');
-    }
-    if (syllabusInfo.options.useForSchedule) {
-        options.push('consider the course schedule and topics');
-    }
-    if (syllabusInfo.options.useForPolicies) {
-        options.push('be aware of course policies');
-    }
-    
-    if (options.length === 0) {
-        return '';
-    }
-    
-    return 'The agent should ' + options.join(', ') + ' from the syllabus.';
-}
-
-        // Update the generatePromptText function to include syllabus information
-        // Add this code inside your existing generatePromptText function, before the final return statement
-        function generatePromptText() {
-            // ... existing code ...
+    function processSyllabusInput() {
+        const syllabusPaste = document.getElementById('syllabusPaste').value.trim();
+        const syllabusFile = document.getElementById('syllabusUpload').files[0];
+        const useForLearningOutcomes = document.getElementById('useForLearningOutcomes').checked;
+        const useForSchedule = document.getElementById('useForSchedule').checked;
+        const useForPolicies = document.getElementById('useForPolicies').checked;
         
-            // Add this code before constructing the prompt:
-            const syllabusInfo = processSyllabusInput();
-            const syllabusUsageDescription = getSyllabusUsageDescription(syllabusInfo);
-            
-            // Then, when constructing the prompt, add a section for the syllabus:
-            let prompt = `I need your help creating custom instructions for a specialized Blackbox AI agent that will serve as a tutoring assistant for my course. Please provide thorough, detailed instructions that I can directly input into Blackbox.ai when creating my agent.
-        
-        The agent will be used in a ${discipline} course (${courseName}) at the ${courseLevel} level. Its primary function will be to ${primaryFunction}.
-        
-        === Course Learning Objectives ===
-        The agent should support the following learning outcomes:
-        ${formatTextAsLines(learningOutcomes)}
-        
-        === Student Needs ===
-        The agent should address these specific student needs:
-        ${formatTextAsLines(studentNeeds)}
-        
-        === Learning Guidelines ===
-        The agent should ALWAYS:
-        ${formatTextAsLines(alwaysDo)}
-        
-        The agent should NEVER:
-        ${formatTextAsLines(neverDo)}
-        
-        === Example Interaction ===
-        Here's a sample student request: "${sampleRequest}"
-        
-        The agent should respond in this manner: ${responseApproach}
-        
-        === Agent Persona and Style ===
-        The agent should adopt a ${tone} tone in its interactions.
-        ${flexibilityOptions}
-        
-        === Knowledge Scope ===
-        The agent should be knowledgeable about:
-        ${formatTextAsLines(keyConcepts)}
-        
-        The agent should refer these topics to me (the instructor):
-        ${formatTextAsLines(referToInstructor)}`;
-        
-            // Add syllabus section if syllabus content is provided
-            if (syllabusInfo.text || syllabusInfo.fileUploaded) {
-                prompt += `\n\n=== Course Syllabus Integration ===
-        ${syllabusUsageDescription}`;
-        
-                if (syllabusInfo.text) {
-                    prompt += `\n\nHere is the syllabus content that should be incorporated:\n"""
-        ${syllabusInfo.text}
-        """`;
-                } else if (syllabusInfo.fileUploaded) {
-                    prompt += `\n\nNote: A syllabus file (${syllabusInfo.fileName}) has been provided and should be referenced by the agent.`;
-                }
+        let syllabusInfo = {
+            text: syllabusPaste,
+            options: {
+                useForLearningOutcomes,
+                useForSchedule,
+                useForPolicies
             }
+        };
         
-            prompt += `\n\n=== Output Preferences ===
-        ${formattingPreferences}
-        For citations, the agent should ${getCitationDescription(citationApproach)}.
-        
-        Please create detailed, ready-to-use custom instructions for my Blackbox AI agent based on these parameters. The instructions should be comprehensive, specific to my discipline, and designed to create an effective AI tutor that scaffolds learning rather than simply providing answers.`;
-        
-            return prompt;
+        // If there's a file uploaded, we'd need to process it
+        // In this simplified version, we'll just acknowledge that a file was uploaded
+        if (syllabusFile) {
+            syllabusInfo.fileUploaded = true;
+            syllabusInfo.fileName = syllabusFile.name;
         }
+        
+        return syllabusInfo;
+    }
+
+    // Get syllabus usage description based on selected options
+    function getSyllabusUsageDescription(syllabusInfo) {
+        if (!syllabusInfo.text && !syllabusInfo.fileUploaded) {
+            return '';
+        }
+        
+        const options = [];
+        if (syllabusInfo.options.useForLearningOutcomes) {
+            options.push('reference the learning outcomes');
+        }
+        if (syllabusInfo.options.useForSchedule) {
+            options.push('consider the course schedule and topics');
+        }
+        if (syllabusInfo.options.useForPolicies) {
+            options.push('be aware of course policies');
+        }
+        
+        if (options.length === 0) {
+            return '';
+        }
+        
+        return 'The agent should ' + options.join(', ') + ' from the syllabus.';
+    }
     
     // Generate the prompt text based on form inputs
     function generatePromptText() {
@@ -354,6 +303,10 @@ function getSyllabusUsageDescription(syllabusInfo) {
         const referToInstructor = document.getElementById('referToInstructor').value;
         const formattingPreferences = getFormattingPreferences();
         const citationApproach = document.getElementById('citationApproach').value;
+        
+        // Process syllabus information
+        const syllabusInfo = processSyllabusInput();
+        const syllabusUsageDescription = getSyllabusUsageDescription(syllabusInfo);
         
         // Begin constructing the prompt
         let prompt = `I need your help creating custom instructions for a specialized Blackbox AI agent that will serve as a tutoring assistant for my course. Please provide thorough, detailed instructions that I can directly input into Blackbox.ai when creating my agent.
@@ -389,9 +342,23 @@ The agent should be knowledgeable about:
 ${formatTextAsLines(keyConcepts)}
 
 The agent should refer these topics to me (the instructor):
-${formatTextAsLines(referToInstructor)}
+${formatTextAsLines(referToInstructor)}`;
 
-=== Output Preferences ===
+        // Add syllabus section if syllabus content is provided
+        if (syllabusInfo.text || syllabusInfo.fileUploaded) {
+            prompt += `\n\n=== Course Syllabus Integration ===
+${syllabusUsageDescription}`;
+
+            if (syllabusInfo.text) {
+                prompt += `\n\nHere is the syllabus content that should be incorporated:\n"""
+${syllabusInfo.text}
+"""`;
+            } else if (syllabusInfo.fileUploaded) {
+                prompt += `\n\nNote: A syllabus file (${syllabusInfo.fileName}) has been provided and should be referenced by the agent.`;
+            }
+        }
+
+        prompt += `\n\n=== Output Preferences ===
 ${formattingPreferences}
 For citations, the agent should ${getCitationDescription(citationApproach)}.
 
