@@ -214,6 +214,38 @@
                 </div>
             </section>
 
+            <section class="form-section">
+                <h2>Course Syllabus</h2>
+                <p class="section-description">Include your syllabus to help the AI agent understand course structure, policies, and content.</p>
+                
+                <div class="form-group">
+                    <label for="syllabusUpload">Upload Syllabus (Optional):</label>
+                    <input type="file" id="syllabusUpload" name="syllabusUpload" accept=".pdf,.doc,.docx,.txt">
+                    <p class="help-text">The file will be processed locally in your browser.</p>
+                </div>
+            
+                <div class="form-group">
+                    <label for="syllabusPaste">Or Paste Syllabus Text:</label>
+                    <textarea id="syllabusPaste" name="syllabusPaste" placeholder="Paste your syllabus content here. The AI will use this to better understand your course structure, objectives, and content to provide more relevant support." rows="8"></textarea>
+                </div>
+            
+                <div class="form-group checkbox-group">
+                    <label>Syllabus Usage Options:</label>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="useForLearningOutcomes" name="syllabusOptions" value="useForLearningOutcomes" checked>
+                        <label for="useForLearningOutcomes">Extract learning outcomes</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="useForSchedule" name="syllabusOptions" value="useForSchedule" checked>
+                        <label for="useForSchedule">Consider course schedule/topics</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="useForPolicies" name="syllabusOptions" value="useForPolicies" checked>
+                        <label for="useForPolicies">Include awareness of course policies</label>
+                    </div>
+                </div>
+            </section>
+            
             <!-- Contact Information (Optional) -->
             <section class="form-section">
                 <h2>Contact Information (Optional)</h2>
