@@ -407,19 +407,35 @@ input:focus, select:focus, textarea:focus {
     outline: none;
 }
 
-/* Syllabus section enhancements */
+/* Toggle container styles - New Addition for Syllabus Toggle */
+.toggle-question {
+    margin-bottom: 20px;
+}
+
+.toggle-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.toggle-container input[type="radio"] {
+    margin-right: 5px;
+}
+
+.toggle-container label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+/* Syllabus section styles - New Addition */
 .section-description {
     margin-bottom: 15px;
     color: var(--secondary-color);
 }
 
-.help-text {
-    font-size: 0.8rem;
-    color: var(--secondary-color);
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
+/* File upload styling - New Addition */
 input[type="file"] {
     padding: 10px;
     border: 1px dashed var(--input-border);
@@ -429,9 +445,11 @@ input[type="file"] {
     background-color: #f8f9fa;
 }
 
-input[type="file"]:hover {
-    border-color: var(--primary-color);
-    background-color: #e9f2fb;
+.help-text {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 /* Style for the file upload button */
@@ -479,7 +497,6 @@ input[type="file"]::file-selector-button:hover {
         padding: 20px;
     }
 
-    @media (max-width: 768px) {
     input[type="file"] {
         padding: 8px;
     }
