@@ -214,8 +214,23 @@
                 </div>
             </section>
 
-            <section class="form-section">
-                <h2>Course Syllabus</h2>
+           <!-- Add this toggle question before the Contact Information section -->
+            <div class="form-section">
+                <h2>Course Syllabus Integration</h2>
+                <div class="form-group toggle-question">
+                    <label>Would you like to include syllabus information for your AI agent?</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="includeSyllabusYes" name="includeSyllabus" value="yes">
+                        <label for="includeSyllabusYes">Yes</label>
+                        <input type="radio" id="includeSyllabusNo" name="includeSyllabus" value="no" checked>
+                        <label for="includeSyllabusNo">No</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Syllabus section that appears when "Yes" is selected -->
+            <section id="syllabusSection" class="form-section hidden">
+                <h2>Course Syllabus Details</h2>
                 <p class="section-description">Include your syllabus to help the AI agent understand course structure, policies, and content.</p>
                 
                 <div class="form-group">
