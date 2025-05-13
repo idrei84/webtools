@@ -413,13 +413,16 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* Updated toggle container styles to ensure horizontal display */
+.toggle-question label {
+    display: block;
+    margin-bottom: 8px;
+}
+
 .toggle-container {
     display: flex;
-    flex-direction: row; /* Explicitly set horizontal direction */
-    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-direction: row;
     gap: 20px;
     margin-top: 10px;
-    align-items: center;
 }
 
 .toggle-container input[type="radio"] {
@@ -432,6 +435,22 @@ input:focus, select:focus, textarea:focus {
     cursor: pointer;
     font-weight: normal;
     white-space: nowrap; /* Prevent label text from wrapping */
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-option label {
+    margin-bottom: 0;
+    display: inline;
+    font-weight: normal;
+    cursor: pointer;
 }
 
 /* Syllabus section styles - New Addition */
