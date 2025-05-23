@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize EmailJS - ADD THIS LINE
+    emailjs.init('5nilv_95RamRdxRq_');
+    
     // DOM Elements
     const form = document.getElementById('agentForm');
     const previewButton = document.getElementById('previewButton');
@@ -114,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle email
-        async function handleEmail(e) {
+    async function handleEmail(e) {
         e.preventDefault();
         
         if (!validateForm()) {
@@ -134,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const courseLevel = getCourseLevelValue();
             
             await emailjs.send('service_kqxfaew', 'template_7aq11hk', {
+                to_email: email,        // ADD THIS LINE
                 course_name: courseName,
                 discipline: discipline,
                 course_level: courseLevel,
