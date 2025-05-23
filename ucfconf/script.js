@@ -113,9 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
         downloadTextAsFile(promptText, 'ai-tutor-prompt.txt');
     }
 
-    // Handle email button click
-    function handleEmail(e) {
+    // Handle email
+        async function handleEmail(e) {
         e.preventDefault();
+        
         if (!validateForm()) {
             return;
         }
@@ -126,8 +127,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // In a real implementation, this would send the email
-        alert('Email functionality would be implemented with EmailJS or a similar service. For now, please use the download option.');
+        try {
+            const promptText = generatePromptText();
+            const courseName = document.getElementById('courseName').value;
+            const discipline = getDisciplineValue();
+            const courseLevel = getCourseLevelValue();
+            
+            await emailjs.send('service_kqxfaew', 'template_7aq11hk', {
+                course_name: courseName,
+                discipline: discipline,
+                course_level: courseLevel,
+                prompt_content: promptText
+            }, '5nilv_95RamRdxRq_');
+            
+            alert('Email sent successfully! Check your inbox.');
+        } catch (error) {
+            console.error('Email sending failed:', error);
+            alert('Failed to send email: ' + (error.text || error.message));
+        }
     }
 
     // Close the modal
