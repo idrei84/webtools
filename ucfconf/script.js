@@ -117,14 +117,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle email
-    async function handleEmail(e) {
+        async function handleEmail(e) {
         e.preventDefault();
         
         if (!validateForm()) {
             return;
         }
         
-        const email = document.getElementById('email').value;
+        const email = document.getElementById('email').value.trim();
+        console.log('Email value:', email); // Debug line
+        
         if (!email) {
             alert('Please provide an email address to receive your prompt.');
             return;
@@ -136,21 +138,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const discipline = getDisciplineValue();
             const courseLevel = getCourseLevelValue();
             
-            await emailjs.send('service_kqxfaew', 'template_7aq11hk', {
-                to_email: email,        // ADD THIS LINE
+            const templateParams = {
+                to_email: email,
                 course_name: courseName,
                 discipline: discipline,
                 course_level: courseLevel,
                 prompt_content: promptText
-            }, '5nilv_95RamRdxRq_');
+            };
             
+            console.log('Template params:', templateParams); // Debug line
+            
+            const result = await emailjs.send('service_kqxfaew', 'template_7aq11hk', templateParams);
+            
+            console.log('EmailJS result:', result); // Debug line
             alert('Email sent successfully! Check your inbox.');
+            
         } catch (error) {
             console.error('Email sending failed:', error);
-            alert('Failed to send email: ' + (error.text || error.message));
+            alert('Failed to send email: ' + (error.text || error.message || JSON.stringify(error)));
         }
     }
-
     // Close the modal
     function closeModal() {
         previewModal.style.display = 'none';
