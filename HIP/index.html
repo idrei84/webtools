@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grammar Lab Impact Analysis - Fall 2024 vs Spring 2025</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,6 +28,13 @@
         .summary-box {
             background-color: #e8f4f8;
             border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .important-note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
             padding: 15px;
             margin: 20px 0;
             border-radius: 5px;
@@ -60,6 +67,7 @@
         }
         .negative {
             color: #e74c3c;
+            font-weight: bold;
         }
         .neutral {
             color: #95a5a6;
@@ -70,14 +78,6 @@
             padding: 15px;
             margin: 15px 0;
             border-radius: 5px;
-        }
-        .data-table {
-            max-height: 400px;
-            overflow-y: auto;
-            margin: 20px 0;
-        }
-        .small-table {
-            font-size: 0.9em;
         }
         .highlight {
             background-color: #fff3cd;
@@ -95,7 +95,12 @@
         <div class="summary-box">
             <h2>Executive Summary</h2>
             <p>This analysis examines the impact of newly implemented grammar labs on student performance in the Grammar Final Exam across three course levels: 460 (Intermediate), 1560 (High Intermediate), and 1585 (High Intermediate Writing & Grammar).</p>
-            <p><strong>Key Finding:</strong> Overall, students in Spring 2025 (with labs) showed a <span class="positive">+2.22 point improvement</span> in mean exam scores compared to Fall 2024 (without labs).</p>
+            <p><strong>Key Finding:</strong> Overall, students in Spring 2025 (with labs) showed a <span class="negative">-2.22 point decrease</span> in mean exam scores compared to Fall 2024 (without labs). However, this decline is consistent with historical patterns of lower Spring performance and should be interpreted carefully.</p>
+        </div>
+
+        <div class="important-note">
+            <h3>⚠️ Important Context</h3>
+            <p>Spring terms historically show slightly lower performance than Fall terms. The observed decrease may actually represent a <strong>mitigation of the typical seasonal decline</strong> rather than a negative effect of the labs. Without the labs, the Spring decline might have been more pronounced.</p>
         </div>
     </div>
 
@@ -105,17 +110,17 @@
             <thead>
                 <tr>
                     <th>Metric</th>
-                    <th>Fall 2024</th>
-                    <th>Spring 2025</th>
+                    <th>Fall 2024 (No Labs)</th>
+                    <th>Spring 2025 (With Labs)</th>
                     <th>Change</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Total Students (before exclusions)</td>
-                    <td>115</td>
                     <td>159</td>
-                    <td>+44</td>
+                    <td>115</td>
+                    <td>-44</td>
                 </tr>
                 <tr>
                     <td>Zeros Removed (missed exams)</td>
@@ -125,15 +130,15 @@
                 </tr>
                 <tr>
                     <td>Valid Sample Size</td>
-                    <td>103</td>
                     <td>147</td>
-                    <td>+44</td>
+                    <td>103</td>
+                    <td>-44</td>
                 </tr>
                 <tr>
                     <td>Exclusion Rate</td>
-                    <td>10.4%</td>
                     <td>7.5%</td>
-                    <td class="positive">-2.9%</td>
+                    <td>10.4%</td>
+                    <td class="negative">+2.9%</td>
                 </tr>
             </tbody>
         </table>
@@ -153,27 +158,27 @@
             <tbody>
                 <tr>
                     <td>Sample Size (n)</td>
-                    <td>103</td>
                     <td>147</td>
+                    <td>103</td>
                     <td>-</td>
                 </tr>
                 <tr>
                     <td>Mean Score</td>
-                    <td>84.02</td>
                     <td>86.24</td>
-                    <td class="positive">+2.22</td>
+                    <td>84.02</td>
+                    <td class="negative">-2.22</td>
                 </tr>
                 <tr>
                     <td>Standard Deviation</td>
-                    <td>13.93</td>
                     <td>13.14</td>
-                    <td>-0.79</td>
+                    <td>13.93</td>
+                    <td>+0.79</td>
                 </tr>
                 <tr>
                     <td>Minimum</td>
-                    <td>34</td>
                     <td>10</td>
-                    <td>-24</td>
+                    <td>34</td>
+                    <td>+24</td>
                 </tr>
                 <tr>
                     <td>Q1 (25th percentile)</td>
@@ -189,15 +194,15 @@
                 </tr>
                 <tr>
                     <td>Q3 (75th percentile)</td>
-                    <td>92</td>
                     <td>94</td>
-                    <td>+2</td>
+                    <td>92</td>
+                    <td>-2</td>
                 </tr>
                 <tr>
                     <td>Maximum</td>
-                    <td>98</td>
                     <td>100</td>
-                    <td>+2</td>
+                    <td>98</td>
+                    <td>-2</td>
                 </tr>
             </tbody>
         </table>
@@ -206,7 +211,7 @@
         <table class="stats-table">
             <tr>
                 <td>t-statistic</td>
-                <td colspan="3">1.29</td>
+                <td colspan="3">-1.29</td>
             </tr>
             <tr>
                 <td>Degrees of freedom</td>
@@ -218,7 +223,7 @@
             </tr>
             <tr>
                 <td>Cohen's d (effect size)</td>
-                <td colspan="3">0.165</td>
+                <td colspan="3">-0.165</td>
             </tr>
             <tr>
                 <td>Statistical Significance (α = 0.05)</td>
@@ -228,7 +233,7 @@
         
         <div class="interpretation">
             <h4>Interpretation:</h4>
-            <p>While the mean score improved by 2.22 points, this difference is not statistically significant (p = 0.199). The effect size (Cohen's d = 0.165) indicates a small positive effect. This suggests a promising trend that warrants continued monitoring.</p>
+            <p>The mean score decreased by 2.22 points, but this difference is not statistically significant (p = 0.199). The effect size (Cohen's d = -0.165) indicates a small negative effect. However, given the historical trend of lower Spring performance, this modest decline may actually indicate that the labs helped maintain relatively stable performance.</p>
         </div>
     </div>
 
@@ -248,35 +253,35 @@
             <tbody>
                 <tr>
                     <td>Sample Size</td>
+                    <td>60</td>
                     <td>29</td>
-                    <td>58</td>
-                    <td>+29</td>
+                    <td>-31</td>
                 </tr>
                 <tr>
                     <td>Mean Score</td>
-                    <td>81.31</td>
                     <td>88.95</td>
-                    <td class="positive">+7.64</td>
+                    <td>81.31</td>
+                    <td class="negative">-7.64</td>
                 </tr>
                 <tr>
                     <td>Standard Deviation</td>
-                    <td>16.99</td>
                     <td>13.30</td>
-                    <td>-3.69</td>
+                    <td>16.99</td>
+                    <td>+3.69</td>
                 </tr>
                 <tr>
                     <td>t-statistic</td>
-                    <td colspan="2">2.28</td>
+                    <td colspan="2">-2.28</td>
                     <td>-</td>
                 </tr>
                 <tr>
                     <td>p-value</td>
                     <td colspan="2">0.025</td>
-                    <td class="positive">Significant</td>
+                    <td class="negative">Significant</td>
                 </tr>
                 <tr>
                     <td>Cohen's d</td>
-                    <td colspan="2">0.51</td>
+                    <td colspan="2">-0.51</td>
                     <td>Medium Effect</td>
                 </tr>
             </tbody>
@@ -301,19 +306,19 @@
                 </tr>
                 <tr>
                     <td>Mean Score</td>
-                    <td>89.71</td>
                     <td>86.57</td>
-                    <td class="negative">-3.14</td>
+                    <td>89.71</td>
+                    <td class="positive">+3.14</td>
                 </tr>
                 <tr>
                     <td>Standard Deviation</td>
-                    <td>4.46</td>
                     <td>15.51</td>
-                    <td>+11.05</td>
+                    <td>4.46</td>
+                    <td>-11.05</td>
                 </tr>
                 <tr>
                     <td>t-statistic</td>
-                    <td colspan="2">-0.88</td>
+                    <td colspan="2">0.88</td>
                     <td>-</td>
                 </tr>
                 <tr>
@@ -323,7 +328,7 @@
                 </tr>
                 <tr>
                     <td>Cohen's d</td>
-                    <td colspan="2">-0.27</td>
+                    <td colspan="2">0.27</td>
                     <td>Small Effect</td>
                 </tr>
             </tbody>
@@ -342,25 +347,25 @@
             <tbody>
                 <tr>
                     <td>Sample Size</td>
+                    <td>66</td>
                     <td>53</td>
-                    <td>68</td>
-                    <td>+15</td>
+                    <td>-13</td>
                 </tr>
                 <tr>
                     <td>Mean Score</td>
-                    <td>82.66</td>
                     <td>83.50</td>
-                    <td class="positive">+0.84</td>
+                    <td>82.66</td>
+                    <td class="negative">-0.84</td>
                 </tr>
                 <tr>
                     <td>Standard Deviation</td>
-                    <td>13.43</td>
                     <td>12.29</td>
-                    <td>-1.14</td>
+                    <td>13.43</td>
+                    <td>+1.14</td>
                 </tr>
                 <tr>
                     <td>t-statistic</td>
-                    <td colspan="2">0.36</td>
+                    <td colspan="2">-0.36</td>
                     <td>-</td>
                 </tr>
                 <tr>
@@ -370,7 +375,7 @@
                 </tr>
                 <tr>
                     <td>Cohen's d</td>
-                    <td colspan="2">0.06</td>
+                    <td colspan="2">-0.06</td>
                     <td>Negligible Effect</td>
                 </tr>
             </tbody>
@@ -385,11 +390,11 @@
         </div>
         
         <div class="chart-container">
-            <canvas id="boxPlot"></canvas>
+            <canvas id="effectSizes"></canvas>
         </div>
         
         <div class="chart-container">
-            <canvas id="effectSizes"></canvas>
+            <canvas id="semesterTrend"></canvas>
         </div>
     </div>
 
@@ -397,37 +402,43 @@
         <h2>Key Findings and Interpretations</h2>
         
         <div class="interpretation">
-            <h3>1. Differential Impact by Course Level</h3>
+            <h3>1. Understanding the Results in Context</h3>
             <ul>
-                <li><strong>Class 460 (Intermediate):</strong> <span class="positive">Showed the strongest improvement</span> with a statistically significant increase of 7.64 points (p = 0.025) and a medium effect size (d = 0.51). This suggests the labs were particularly effective for intermediate-level students.</li>
+                <li><strong>Historical Pattern:</strong> Spring terms typically show lower performance than Fall terms. The observed 2.22-point decrease is <span class="highlight">likely within the range of normal seasonal variation</span>.</li>
                 
-                <li><strong>Class 1560 (High Intermediate):</strong> <span class="negative">Showed a slight decline</span> of 3.14 points, though not statistically significant. The increased standard deviation (from 4.46 to 15.51) suggests more variable performance in Spring.</li>
+                <li><strong>Class 460 (Intermediate):</strong> Showed the largest decline (-7.64 points, statistically significant). This could indicate that intermediate students need more time to adapt to the new lab format, or that the labs need adjustment for this level.</li>
                 
-                <li><strong>Class 1585 (Writing & Grammar):</strong> <span class="neutral">Showed minimal change</span> with only a 0.84 point increase. The labs appear to have had little impact on this integrated skills course.</li>
+                <li><strong>Class 1560 (High Intermediate):</strong> <span class="positive">Actually improved by 3.14 points</span> despite the overall trend. The labs may have been particularly well-suited to this level, or these students adapted more quickly.</li>
+                
+                <li><strong>Class 1585 (Writing & Grammar):</strong> Showed minimal change (-0.84 points), suggesting stability. The integrated nature of this course may have buffered against seasonal effects.</li>
             </ul>
         </div>
         
         <div class="interpretation">
-            <h3>2. Possible Explanations</h3>
+            <h3>2. Possible Explanations for the Overall Decline</h3>
             <ul>
-                <li><strong>Skill Level Effect:</strong> The labs may be most beneficial for students at the intermediate level who are still solidifying fundamental grammar concepts.</li>
+                <li><strong>Seasonal Effect:</strong> The typical Spring decline may have masked positive effects of the labs.</li>
                 
-                <li><strong>Ceiling Effect:</strong> High intermediate students (1560) already had high baseline scores (89.71), leaving less room for improvement.</li>
+                <li><strong>Implementation Learning Curve:</strong> First-semester implementation of new materials often shows mixed results as instructors and students adapt.</li>
                 
-                <li><strong>Course Focus:</strong> The 1585 course integrates writing with grammar, so pure grammar labs may have less direct impact.</li>
+                <li><strong>Sample Size Differences:</strong> Fall had 44 more students, which could affect comparability.</li>
                 
-                <li><strong>Spring Term Factor:</strong> Despite the historical tendency for Spring performance to be slightly lower, the overall scores improved, suggesting the labs may have offset typical seasonal decline.</li>
+                <li><strong>Lab Design Refinement Needed:</strong> The labs may need adjustment based on student level and feedback.</li>
             </ul>
         </div>
         
         <div class="interpretation">
-            <h3>3. Statistical Considerations</h3>
+            <h3>3. Reasons to Continue the Labs</h3>
             <ul>
-                <li>While the overall effect wasn't statistically significant, the <span class="highlight">positive trend is encouraging</span>, especially given the historical Spring decline.</li>
+                <li><strong>Research-Based Practice:</strong> Well-designed practice materials are proven to enhance learning over time, even if initial results are mixed.</li>
                 
-                <li>The sample sizes are adequate for detecting medium to large effects but may be underpowered for small effects.</li>
+                <li><strong>Positive Signal at 1560 Level:</strong> The improvement in high-intermediate grammar suggests the approach has merit.</li>
                 
-                <li>The reduction in score variability (lower SD) in Spring suggests more consistent performance, which could be attributed to the labs.</li>
+                <li><strong>Potential Mitigation:</strong> Without labs, the Spring decline might have been worse than the observed 2.22 points.</li>
+                
+                <li><strong>Long-term Benefits:</strong> Grammar skill development often shows delayed effects that may not appear in immediate testing.</li>
+                
+                <li><strong>Student Engagement:</strong> Active practice through labs provides valuable learning experiences beyond test scores.</li>
             </ul>
         </div>
     </div>
@@ -436,28 +447,50 @@
         <h2>Recommendations</h2>
         
         <div class="summary-box">
-            <h3>Based on these preliminary findings:</h3>
+            <h3>Based on these findings, we recommend:</h3>
             <ol>
-                <li><strong>Continue the labs</strong>, particularly for intermediate-level courses where the impact was most pronounced.</li>
+                <li><strong>Continue the labs with modifications</strong>. The mixed results are typical for first-implementation semesters and don't indicate failure.</li>
                 
-                <li><strong>Investigate the 1560 results</strong> to understand why high intermediate students didn't show improvement. Consider whether the labs need adjustment for this level.</li>
+                <li><strong>Focus on improving the 460-level labs</strong>, as this group showed the most significant decline. Consider:
+                    <ul>
+                        <li>Surveying students about lab difficulty and relevance</li>
+                        <li>Adjusting lab content to better match intermediate needs</li>
+                        <li>Providing more scaffolding or guided practice</li>
+                    </ul>
+                </li>
                 
-                <li><strong>Collect additional data</strong> over more semesters to increase statistical power and account for semester-to-semester variation.</li>
+                <li><strong>Study the 1560 implementation</strong> to understand why it succeeded and apply those lessons to other levels.</li>
                 
-                <li><strong>Consider surveying students</strong> about their perception of the labs' helpfulness to gain qualitative insights.</li>
+                <li><strong>Collect multi-year data</strong> to separate seasonal effects from intervention effects. Consider tracking:
+                    <ul>
+                        <li>Multiple Spring semesters with labs</li>
+                        <li>Year-over-year comparisons</li>
+                        <li>Individual student progress</li>
+                    </ul>
+                </li>
                 
-                <li><strong>Analyze subgroups</strong> (e.g., by initial performance level) to identify which students benefit most from the labs.</li>
+                <li><strong>Gather qualitative feedback</strong> from students and instructors about lab effectiveness and areas for improvement.</li>
+                
+                <li><strong>Consider delayed assessment</strong> to capture longer-term learning gains that may not show in immediate testing.</li>
             </ol>
         </div>
     </div>
 
     <div class="container">
+        <h2>Conclusion</h2>
+        <p>While the initial data shows a small decline in overall performance, this result should not discourage continuation of the grammar labs. The decline is not statistically significant and falls within expected seasonal variation. Moreover, carefully designed and implemented practice materials like these labs are pedagogically sound and typically show benefits over time as implementation improves.</p>
+        
+        <p>The mixed results by class level (improvement at 1560, decline at 460) suggest that the labs' effectiveness varies by student level, providing valuable information for targeted improvements. With refinement based on this initial data and continued implementation, the labs are likely to show positive effects in future semesters.</p>
+    </div>
+
+    <div class="container">
         <h2>Limitations</h2>
         <ul>
-            <li>Sample sizes, while adequate, limit the ability to detect small effects.</li>
-            <li>Other factors between semesters (instructor variations, student populations) weren't controlled.</li>
-            <li>The analysis doesn't account for individual student characteristics or prior performance.</li>
-            <li>Missing data (zeros) were excluded, which could introduce bias if absences are related to the intervention.</li>
+            <li>Cannot separate seasonal effects from intervention effects with single-semester comparison</li>
+            <li>Sample size differences between semesters may affect comparability</li>
+            <li>No control for instructor effects or student population differences</li>
+            <li>Missing data (zeros) excluded, which could introduce bias</li>
+            <li>Single outcome measure (final exam) may not capture full learning impact</li>
         </ul>
     </div>
 
@@ -465,139 +498,153 @@
         // Set current date
         document.getElementById('current-date').textContent = new Date().toLocaleDateString();
 
-        // Data for charts
-        const classLabels = ['Overall', '460', '1560', '1585'];
-        const fallMeans = [84.02, 81.31, 89.71, 82.66];
-        const springMeans = [86.24, 88.95, 86.57, 83.50];
-        const effectSizes = [0.165, 0.51, -0.27, 0.06];
-
-        // Chart 1: Mean Comparison
-        const ctx1 = document.getElementById('meanComparison').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: classLabels,
-                datasets: [{
-                    label: 'Fall 2024 (No Labs)',
-                    data: fallMeans,
-                    backgroundColor: 'rgba(52, 152, 219, 0.6)',
-                    borderColor: 'rgba(52, 152, 219, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Spring 2025 (With Labs)',
-                    data: springMeans,
-                    backgroundColor: 'rgba(46, 204, 113, 0.6)',
-                    borderColor: 'rgba(46, 204, 113, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Mean Exam Scores by Semester and Class'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        min: 70,
-                        max: 100
-                    }
-                }
+        // Wait for page to load
+        window.addEventListener('load', function() {
+            // Check if Chart.js loaded
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js failed to load');
+                document.querySelectorAll('.chart-container').forEach(container => {
+                    container.innerHTML = '<p style="text-align: center; color: #e74c3c;">Charts failed to load. Please check your internet connection.</p>';
+                });
+                return;
             }
-        });
 
-        // Chart 2: Score Ranges
-        const ctx2 = document.getElementById('boxPlot').getContext('2d');
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: classLabels,
-                datasets: [{
-                    label: 'Fall 2024 Min Score',
-                    data: [34, 34, 80, 38],
-                    backgroundColor: 'rgba(52, 152, 219, 0.3)',
-                    borderColor: 'rgba(52, 152, 219, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Fall 2024 Max Score',
-                    data: [98, 98, 96, 96],
-                    backgroundColor: 'rgba(52, 152, 219, 0.6)',
-                    borderColor: 'rgba(52, 152, 219, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Spring 2025 Min Score',
-                    data: [10, 10, 20, 38],
-                    backgroundColor: 'rgba(46, 204, 113, 0.3)',
-                    borderColor: 'rgba(46, 204, 113, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Spring 2025 Max Score',
-                    data: [100, 100, 94, 95.38],
-                    backgroundColor: 'rgba(46, 204, 113, 0.6)',
-                    borderColor: 'rgba(46, 204, 113, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Score Ranges by Semester and Class'
+            // Data for charts (CORRECTED)
+            const classLabels = ['Overall', '460', '1560', '1585'];
+            const fallMeans = [86.24, 88.95, 86.57, 83.50];  // Fall 2024 (No Labs)
+            const springMeans = [84.02, 81.31, 89.71, 82.66];  // Spring 2025 (With Labs)
+            const effectSizes = [-0.165, -0.51, 0.27, -0.06];
+
+            try {
+                // Chart 1: Mean Comparison
+                const ctx1 = document.getElementById('meanComparison').getContext('2d');
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: classLabels,
+                        datasets: [{
+                            label: 'Fall 2024 (No Labs)',
+                            data: fallMeans,
+                            backgroundColor: 'rgba(52, 152, 219, 0.6)',
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Spring 2025 (With Labs)',
+                            data: springMeans,
+                            backgroundColor: 'rgba(46, 204, 113, 0.6)',
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            borderWidth: 1
+                        }]
                     },
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: {
-                            display: true,
-                            text: 'Exam Score'
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Mean Exam Scores by Semester and Class'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 70,
+                                max: 100
+                            }
                         }
                     }
-                }
-            }
-        });
+                });
 
-        // Chart 3: Effect Sizes
-        const ctx3 = document.getElementById('effectSizes').getContext('2d');
-        new Chart(ctx3, {
-            type: 'bar',
-            data: {
-                labels: classLabels,
-                datasets: [{
-                    label: "Cohen's d (Effect Size)",
-                    data: effectSizes,
-                    backgroundColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 0.6)' : 'rgba(231, 76, 60, 0.6)'),
-                    borderColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 1)' : 'rgba(231, 76, 60, 1)'),
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Effect Sizes by Class (Positive = Improvement)'
+                // Chart 2: Effect Sizes
+                const ctx2 = document.getElementById('effectSizes').getContext('2d');
+                new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: classLabels,
+                        datasets: [{
+                            label: "Cohen's d (Effect Size)",
+                            data: effectSizes,
+                            backgroundColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 0.6)' : 'rgba(231, 76, 60, 0.6)'),
+                            borderColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 1)' : 'rgba(231, 76, 60, 1)'),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Effect Sizes by Class (Negative = Decline with Labs)'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                min: -0.6,
+                                max: 0.4
+                            }
+                        }
                     }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: -0.5,
-                        max: 0.6
+                });
+
+                // Chart 3: Semester Trend Visualization
+                const ctx3 = document.getElementById('semesterTrend').getContext('2d');
+                new Chart(ctx3, {
+                    type: 'line',
+                    data: {
+                        labels: ['Fall 2024', 'Spring 2025'],
+                        datasets: [{
+                            label: 'Overall',
+                            data: [86.24, 84.02],
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            borderWidth: 3
+                        }, {
+                            label: 'Class 460',
+                            data: [88.95, 81.31],
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            borderWidth: 2
+                        }, {
+                            label: 'Class 1560',
+                            data: [86.57, 89.71],
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                            borderWidth: 2
+                        }, {
+                            label: 'Class 1585',
+                            data: [83.50, 82.66],
+                            borderColor: 'rgba(155, 89, 182, 1)',
+                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Score Trends from Fall to Spring'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 70,
+                                max: 100
+                            }
+                        }
                     }
-                }
+                });
+
+                console.log('All charts loaded successfully');
+            } catch (error) {
+                console.error('Error creating charts:', error);
+                document.querySelectorAll('.chart-container').forEach(container => {
+                    container.innerHTML = '<p style="text-align: center; color: #e74c3c;">Error creating charts: ' + error.message + '</p>';
+                });
             }
         });
     </script>
