@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            position: relative;
+            background: #000;
+        }
+
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-image {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .image-placeholder {
+            width: 100vw;
+            height: 100vh;
+            background: #1a1a1a;
+            border: 3px dashed #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #ccc;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .mentimeter-slide {
+            background: #000 !important;
+        }
+
+        .mentimeter-container {
+            width: 100vw;
+            height: 100vh;
+            background: #fff;
+        }
+
+        .mentimeter-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .mentimeter-placeholder {
+            width: 100vw;
+            height: 100vh;
+            background: #1a1a1a;
+            border: 3px dashed #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .navigation-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 100;
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Progress indicator */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #fff;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 2rem;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="presentation-container" id="presentationContainer">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Title Slide Image Placeholder<br>
+                    Replace with: &lt;img src="slide1.png" class="slide-image" alt="Title slide"&gt;
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Mentimeter Interactive Slide (Hook/Attention Grabber) -->
+        <div class="slide mentimeter-slide">
+            <div class="slide-content">
+                <div class="mentimeter-container">
+                    <iframe sandbox='allow-scripts allow-same-origin allow-presentation' 
+                            allowfullscreen='true' 
+                            allowtransparency='true' 
+                            frameborder='0' 
+                            src='https://www.mentimeter.com/app/presentation/alr4uc6w29rm5earr98paazqjefjbrxe/embed' 
+                            class="mentimeter-iframe">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slides 3-7: Content Slides -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 3 Image Placeholder<br>
+                    Replace with: &lt;img src="slide3.png" class="slide-image" alt="Slide 3"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 4 Image Placeholder<br>
+                    Replace with: &lt;img src="slide4.png" class="slide-image" alt="Slide 4"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 5 Image Placeholder<br>
+                    Replace with: &lt;img src="slide5.png" class="slide-image" alt="Slide 5"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 6 Image Placeholder<br>
+                    Replace with: &lt;img src="slide6.png" class="slide-image" alt="Slide 6"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 7 Image Placeholder<br>
+                    Replace with: &lt;img src="slide7.png" class="slide-image" alt="Slide 7"&gt;
+                </div>
+            </div>
+        </div>
+
+        <!-- Slides 8-13: Remaining Content Slides -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 8 Image Placeholder<br>
+                    Replace with: &lt;img src="slide8.png" class="slide-image" alt="Slide 8"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 9 Image Placeholder<br>
+                    Replace with: &lt;img src="slide9.png" class="slide-image" alt="Slide 9"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 10 Image Placeholder<br>
+                    Replace with: &lt;img src="slide10.png" class="slide-image" alt="Slide 10"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 11 Image Placeholder<br>
+                    Replace with: &lt;img src="slide11.png" class="slide-image" alt="Slide 11"&gt;
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Slide 12 Image Placeholder<br>
+                    Replace with: &lt;img src="slide12.png" class="slide-image" alt="Slide 12"&gt;
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Slide -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="image-placeholder">
+                    Final Slide Image Placeholder<br>
+                    Replace with: &lt;img src="slide13.png" class="slide-image" alt="Final slide"&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-hint">
+        Use ↓↑ arrow keys, scroll wheel, or swipe to navigate
+    </div>
+
+    <script>
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const slides = document.querySelectorAll('.slide');
+            const currentSlide = getCurrentSlideIndex();
+            
+            if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                slides[0].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                slides[slides.length - 1].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Progress bar update
+        function updateProgressBar() {
+            const container = document.getElementById('presentationContainer');
+            const progressBar = document.getElementById('progressBar');
+            const scrollPercent = (container.scrollTop / (container.scrollHeight - container.clientHeight)) * 100;
+            progressBar.style.width = scrollPercent + '%';
+        }
+
+        // Get current slide index
+        function getCurrentSlideIndex() {
+            const slides = document.querySelectorAll('.slide');
+            const container = document.getElementById('presentationContainer');
+            const scrollTop = container.scrollTop;
+            
+            for (let i = 0; i < slides.length; i++) {
+                const slideTop = slides[i].offsetTop;
+                const slideBottom = slideTop + slides[i].offsetHeight;
+                
+                if (scrollTop >= slideTop - 100 && scrollTop < slideBottom - 100) {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        // Update progress bar on scroll
+        document.getElementById('presentationContainer').addEventListener('scroll', updateProgressBar);
+
+        // Hide navigation hint after 5 seconds
+        setTimeout(() => {
+            const hint = document.querySelector('.navigation-hint');
+            if (hint) {
+                hint.style.opacity = '0';
+                hint.style.transition = 'opacity 1s ease';
+            }
+        }, 5000);
+
+        // Fullscreen toggle (F11 or F key)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
