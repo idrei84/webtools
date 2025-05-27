@@ -73,12 +73,55 @@
             width: 100vw;
             height: 100vh;
             background: #fff;
+            position: relative;
         }
 
         .mentimeter-iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .qr-overlay {
+            position: absolute;
+            top: 50%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #333;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .qr-placeholder {
+            width: 120px;
+            height: 120px;
+            background: #f0f0f0;
+            border: 2px dashed #666;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .qr-text {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
         }
 
         .mentimeter-placeholder {
@@ -162,6 +205,12 @@
                             src='https://www.mentimeter.com/app/presentation/alr4uc6w29rm5earr98paazqjefjbrxe/embed' 
                             class="mentimeter-iframe">
                     </iframe>
+                    
+                    <!-- QR Code Overlay -->
+                    <div class="qr-overlay">
+                        <img src="ucfconf/presentation/qr_code.png" alt="QR Code" style="width: 120px; height: 120px; border-radius: 8px;">
+                        <div class="qr-text">Scan to Join!</div>
+                    </div>
                 </div>
             </div>
         </div>
