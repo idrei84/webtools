@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS - ADD THIS LINE
+    // Initialize EmailJS
     emailjs.init('5nilv_95RamRdxRq_');
     
     // DOM Elements
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle email
-        async function handleEmail(e) {
+    async function handleEmail(e) {
         e.preventDefault();
         
         if (!validateForm()) {
@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Failed to send email: ' + (error.text || error.message || JSON.stringify(error)));
         }
     }
+    
     // Close the modal
     function closeModal() {
         previewModal.style.display = 'none';
@@ -195,11 +196,15 @@ document.addEventListener('DOMContentLoaded', function() {
         URL.revokeObjectURL(url);
     }
 
-    // Validate form inputs
+    // Validate form inputs - FIXED: Remove email from required validation
     function validateForm() {
-        // Get all required inputs
-        const requiredInputs = form.querySelectorAll('[required]');
+        // Get all required inputs EXCEPT email
+        const requiredInputs = form.querySelectorAll('[required]:not(#email)');
         let isValid = true;
+
+        // Clear all previous error messages
+        document.querySelectorAll('.error-message').forEach(msg => msg.remove());
+        document.querySelectorAll('.invalid').forEach(input => input.classList.remove('invalid'));
 
         // Check each required input
         requiredInputs.forEach(input => {
@@ -211,11 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const labelFor = document.querySelector(`label[for="${input.id}"]`);
                 const labelText = labelFor ? labelFor.textContent : input.name;
                 
-                // Remove any existing error messages first
-                if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
-                    input.parentNode.removeChild(input.nextElementSibling);
-                }
-                
                 // Add error message
                 const errorMsg = document.createElement('div');
                 errorMsg.className = 'error-message';
@@ -224,12 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMsg.style.fontSize = '0.8rem';
                 errorMsg.style.marginTop = '5px';
                 input.parentNode.insertBefore(errorMsg, input.nextSibling);
-            } else {
-                input.classList.remove('invalid');
-                // Remove error message if it exists
-                if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
-                    input.parentNode.removeChild(input.nextElementSibling);
-                }
             }
         });
 
@@ -263,8 +257,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Process the syllabus input (either uploaded or pasted)
     function processSyllabusInput() {
+        const includeSyllabusYes = document.getElementById('includeSyllabusYes');
+        
+        // Only process syllabus if "Yes" is selected
+        if (!includeSyllabusYes.checked) {
+            return {
+                text: '',
+                options: {
+                    useForLearningOutcomes: false,
+                    useForSchedule: false,
+                    useForPolicies: false
+                }
+            };
+        }
+        
         const syllabusPaste = document.getElementById('syllabusPaste').value.trim();
-        const syllabusFile = document.getElementById('syllabusUpload').files[0];
         const useForLearningOutcomes = document.getElementById('useForLearningOutcomes').checked;
         const useForSchedule = document.getElementById('useForSchedule').checked;
         const useForPolicies = document.getElementById('useForPolicies').checked;
@@ -277,13 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 useForPolicies
             }
         };
-        
-        // If there's a file uploaded, we'd need to process it
-        // In this simplified version, we'll just acknowledge that a file was uploaded
-        if (syllabusFile) {
-            syllabusInfo.fileUploaded = true;
-            syllabusInfo.fileName = syllabusFile.name;
-        }
         
         return syllabusInfo;
     }
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return 'The agent should ' + options.join(', ') + ' from the syllabus.';
     }
     
-    // Generate the prompt text based on form inputs
+    // Generate the prompt text based on form inputs - FIXED function calls
     function generatePromptText() {
         // Get all form values
         const discipline = getDisciplineValue();
