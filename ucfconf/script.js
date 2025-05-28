@@ -378,7 +378,7 @@ ${formatTextAsLines(referToInstructor)}`;
 ${syllabusUsageDescription}`;
 
             if (syllabusInfo.text) {
-                prompt += `\n\nHere is the syllabus content that should be incorporated:\n"""
+                prompt += `\n\nHere is the syllabus content that should be incorporated (in full):\n"""
 ${syllabusInfo.text}
 """`;
             } else if (syllabusInfo.fileUploaded) {
@@ -390,7 +390,7 @@ ${syllabusInfo.text}
 ${formattingPreferences}
 For citations, the agent should ${getCitationDescription(citationApproach)}.
 
-Please create detailed, ready-to-use custom instructions for my Blackbox AI agent based on these parameters. The instructions should be comprehensive, specific to my discipline, and designed to create an effective AI tutor that scaffolds learning rather than simply providing answers.`;
+Please create detailed, ready-to-use custom instructions for my Blackbox AI agent based on these parameters. The instructions should be comprehensive, specific to my discipline, and designed to create an effective AI tutor that scaffolds learning and promotes critical thinking rather than simply providing answers.`;
 
         return prompt;
     }
