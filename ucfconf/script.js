@@ -25,8 +25,130 @@ document.addEventListener('DOMContentLoaded', function() {
     const toneSelect = document.getElementById('tone');
     const customToneContainer = document.getElementById('customToneContainer');
 
+    // Data persistence functions
+    const STORAGE_KEY = 'aiTutorFormData';
+    
+    function saveFormData() {
+        const formData = {};
+        
+        // Save all input, select, and textarea values
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                formData[input.id] = input.checked;
+            } else if (input.type === 'radio') {
+                if (input.checked) {
+                    formData[input.name] = input.value;
+                }
+            } else {
+                formData[input.id] = input.value;
+            }
+        });
+        
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+        showSaveIndicator();
+    }
+    
+    function loadFormData() {
+        try {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (!savedData) return;
+            
+            const formData = JSON.parse(savedData);
+            
+            // Restore all form values
+            Object.keys(formData).forEach(key => {
+                const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (!element) return;
+                
+                if (element.type === 'checkbox') {
+                    element.checked = formData[key];
+                } else if (element.type === 'radio') {
+                    if (element.value === formData[key]) {
+                        element.checked = true;
+                    }
+                } else {
+                    element.value = formData[key];
+                }
+            });
+            
+            // Trigger change events to show/hide conditional fields
+            disciplineSelect.dispatchEvent(new Event('change'));
+            courseLevelSelect.dispatchEvent(new Event('change'));
+            primaryFunctionSelect.dispatchEvent(new Event('change'));
+            toneSelect.dispatchEvent(new Event('change'));
+            
+            // Handle syllabus toggle
+            if (formData.includeSyllabus === 'yes') {
+                syllabusSection.classList.remove('hidden');
+            }
+            
+        } catch (error) {
+            console.error('Error loading saved form data:', error);
+        }
+    }
+    
+    function clearFormData() {
+        localStorage.removeItem(STORAGE_KEY);
+        hideSaveIndicator();
+    }
+    
+    function showSaveIndicator() {
+        let indicator = document.getElementById('saveIndicator');
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.id = 'saveIndicator';
+            indicator.innerHTML = '💾 Form data saved automatically';
+            indicator.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                font-size: 0.9rem;
+                z-index: 1001;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            document.body.appendChild(indicator);
+        }
+        
+        indicator.style.opacity = '1';
+        
+        // Auto-hide after 2 seconds
+        setTimeout(() => {
+            if (indicator) {
+                indicator.style.opacity = '0';
+            }
+        }, 2000);
+    }
+    
+    function hideSaveIndicator() {
+        const indicator = document.getElementById('saveIndicator');
+        if (indicator) {
+            indicator.style.opacity = '0';
+        }
+    }
+    
+    // Auto-save form data on input changes
+    function setupAutoSave() {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', saveFormData);
+            input.addEventListener('change', saveFormData);
+        });
+    }
+    
+    // Load saved data when page loads
+    loadFormData();
+    
     // "Other" option handlers
     setupOtherOptionHandlers();
+    
+    // Setup auto-save
+    setupAutoSave();
 
     // Button event listeners
     previewButton.addEventListener('click', handlePreview);
@@ -36,6 +158,20 @@ document.addEventListener('DOMContentLoaded', function() {
     closePreviewButton.addEventListener('click', closeModal);
     copyPromptButton.addEventListener('click', copyToClipboard);
     downloadPromptButton.addEventListener('click', downloadPrompt);
+    
+    // Add clear data button functionality (if you want to add a button for this)
+    resetButton.addEventListener('click', function() {
+        if (confirm('This will clear all form data and any saved progress. Are you sure?')) {
+            clearFormData();
+            form.reset();
+            // Hide any conditional sections
+            otherDisciplineContainer.classList.add('hidden');
+            otherLevelContainer.classList.add('hidden');
+            otherFunctionContainer.classList.add('hidden');
+            customToneContainer.classList.add('hidden');
+            syllabusSection.classList.add('hidden');
+        }
+    });
     
     // Handle syllabus toggle
     const includeSyllabusYes = document.getElementById('includeSyllabusYes');
@@ -114,6 +250,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const promptText = generatePromptText();
         downloadTextAsFile(promptText, 'ai-tutor-prompt.txt');
+        
+        // Optionally clear saved data after successful generation
+        // clearFormData();
     }
 
     // Handle email
@@ -152,6 +291,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log('EmailJS result:', result); // Debug line
             alert('Email sent successfully! Check your inbox.');
+            
+            // Optionally clear saved data after successful email
+            // clearFormData();
             
         } catch (error) {
             console.error('Email sending failed:', error);
