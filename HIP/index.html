@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grammar Lab Impact Analysis - Fall 2024 vs Spring 2025</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,6 +60,10 @@
             position: relative;
             height: 400px;
             margin: 30px 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
         }
         .positive {
             color: #27ae60;
@@ -88,6 +92,12 @@
             font-size: 0.9em;
             color: #666;
             font-style: italic;
+        }
+        .chart-loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
         }
     </style>
 </head>
@@ -386,15 +396,18 @@
         <h2>Visual Analysis</h2>
         
         <div class="chart-container">
-            <canvas id="meanComparison"></canvas>
+            <div class="chart-loading">Loading chart...</div>
+            <canvas id="meanComparison" style="display: none;"></canvas>
         </div>
         
         <div class="chart-container">
-            <canvas id="effectSizes"></canvas>
+            <div class="chart-loading">Loading chart...</div>
+            <canvas id="effectSizes" style="display: none;"></canvas>
         </div>
         
         <div class="chart-container">
-            <canvas id="semesterTrend"></canvas>
+            <div class="chart-loading">Loading chart...</div>
+            <canvas id="semesterTrend" style="display: none;"></canvas>
         </div>
     </div>
 
@@ -500,24 +513,49 @@
     </div>
 
     <script>
-        // Set current date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString();
+        // Function to show loading state
+        function showLoading(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const loading = canvas.parentElement.querySelector('.chart-loading');
+            if (loading) loading.style.display = 'block';
+            canvas.style.display = 'none';
+        }
 
-        // Wait for page to load
-        window.addEventListener('load', function() {
+        // Function to hide loading state
+        function hideLoading(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const loading = canvas.parentElement.querySelector('.chart-loading');
+            if (loading) loading.style.display = 'none';
+            canvas.style.display = 'block';
+        }
+
+        // Function to show error state
+        function showError(canvasId, message) {
+            const canvas = document.getElementById(canvasId);
+            const container = canvas.parentElement;
+            container.innerHTML = `<p style="text-align: center; color: #e74c3c; padding: 20px;">Error loading chart: ${message}</p>`;
+        }
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show initial loading state
+            showLoading('meanComparison');
+            showLoading('effectSizes');
+            showLoading('semesterTrend');
+
             // Check if Chart.js loaded
             if (typeof Chart === 'undefined') {
                 console.error('Chart.js failed to load');
-                document.querySelectorAll('.chart-container').forEach(container => {
-                    container.innerHTML = '<p style="text-align: center; color: #e74c3c;">Charts failed to load. Please check your internet connection.</p>';
-                });
+                showError('meanComparison', 'Chart.js library failed to load');
+                showError('effectSizes', 'Chart.js library failed to load');
+                showError('semesterTrend', 'Chart.js library failed to load');
                 return;
             }
 
-            // Data for charts (CORRECTED)
+            // Data for charts
             const classLabels = ['Overall', '460', '1560', '1585'];
-            const fallMeans = [86.24, 88.95, 86.57, 83.50];  // Fall 2024 (No Labs)
-            const springMeans = [84.02, 81.31, 89.71, 82.66];  // Spring 2025 (With Labs)
+            const fallMeans = [86.24, 88.95, 86.57, 83.50];
+            const springMeans = [84.02, 81.31, 89.71, 82.66];
             const effectSizes = [-0.165, -0.51, 0.27, -0.06];
 
             try {
@@ -530,15 +568,15 @@
                         datasets: [{
                             label: 'Fall 2024 (No Labs)',
                             data: fallMeans,
-                            backgroundColor: 'rgba(52, 152, 219, 0.6)',
+                            backgroundColor: 'rgba(52, 152, 219, 0.7)',
                             borderColor: 'rgba(52, 152, 219, 1)',
-                            borderWidth: 1
+                            borderWidth: 2
                         }, {
                             label: 'Spring 2025 (With Labs)',
                             data: springMeans,
-                            backgroundColor: 'rgba(46, 204, 113, 0.6)',
+                            backgroundColor: 'rgba(46, 204, 113, 0.7)',
                             borderColor: 'rgba(46, 204, 113, 1)',
-                            borderWidth: 1
+                            borderWidth: 2
                         }]
                     },
                     options: {
@@ -547,18 +585,36 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Mean Exam Scores by Semester and Class'
+                                text: 'Mean Exam Scores by Semester and Class',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            legend: {
+                                position: 'top'
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: false,
                                 min: 70,
-                                max: 100
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Mean Score'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Class Level'
+                                }
                             }
                         }
                     }
                 });
+                hideLoading('meanComparison');
 
                 // Chart 2: Effect Sizes
                 const ctx2 = document.getElementById('effectSizes').getContext('2d');
@@ -569,9 +625,9 @@
                         datasets: [{
                             label: "Cohen's d (Effect Size)",
                             data: effectSizes,
-                            backgroundColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 0.6)' : 'rgba(231, 76, 60, 0.6)'),
+                            backgroundColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 0.7)' : 'rgba(231, 76, 60, 0.7)'),
                             borderColor: effectSizes.map(d => d > 0 ? 'rgba(46, 204, 113, 1)' : 'rgba(231, 76, 60, 1)'),
-                            borderWidth: 1
+                            borderWidth: 2
                         }]
                     },
                     options: {
@@ -580,18 +636,36 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Effect Sizes by Class'
+                                text: 'Effect Sizes by Class (Positive = Improvement with Labs)',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            legend: {
+                                position: 'top'
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
                                 min: -0.6,
-                                max: 0.4
+                                max: 0.4,
+                                title: {
+                                    display: true,
+                                    text: "Cohen's d"
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Class Level'
+                                }
                             }
                         }
                     }
                 });
+                hideLoading('effectSizes');
 
                 // Chart 3: Semester Trend Visualization
                 const ctx3 = document.getElementById('semesterTrend').getContext('2d');
@@ -604,25 +678,33 @@
                             data: [86.24, 84.02],
                             borderColor: 'rgba(52, 152, 219, 1)',
                             backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                            borderWidth: 3
+                            borderWidth: 3,
+                            pointRadius: 6,
+                            pointHoverRadius: 8
                         }, {
                             label: 'Class 460',
                             data: [88.95, 81.31],
                             borderColor: 'rgba(231, 76, 60, 1)',
                             backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            borderWidth: 2
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7
                         }, {
                             label: 'Class 1560',
                             data: [86.57, 89.71],
                             borderColor: 'rgba(46, 204, 113, 1)',
                             backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                            borderWidth: 2
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7
                         }, {
                             label: 'Class 1585',
                             data: [83.50, 82.66],
                             borderColor: 'rgba(155, 89, 182, 1)',
                             backgroundColor: 'rgba(155, 89, 182, 0.1)',
-                            borderWidth: 2
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7
                         }]
                     },
                     options: {
@@ -631,25 +713,43 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Score Trends from Fall to Spring'
+                                text: 'Score Trends from Fall 2024 to Spring 2025',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            legend: {
+                                position: 'top'
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: false,
                                 min: 70,
-                                max: 100
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Mean Score'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Semester'
+                                }
                             }
                         }
                     }
                 });
+                hideLoading('semesterTrend');
 
                 console.log('All charts loaded successfully');
             } catch (error) {
                 console.error('Error creating charts:', error);
-                document.querySelectorAll('.chart-container').forEach(container => {
-                    container.innerHTML = '<p style="text-align: center; color: #e74c3c;">Error creating charts: ' + error.message + '</p>';
-                });
+                showError('meanComparison', error.message);
+                showError('effectSizes', error.message);
+                showError('semesterTrend', error.message);
             }
         });
     </script>
