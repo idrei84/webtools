@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passive Voice Review and Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start;
+            padding: 60px;
+            text-align: center;
+        }
+        
+        .slide:nth-child(odd) {
+            background: linear-gradient(135deg, #f0f9f0, #e6f2e6);
+        }
+        
+        .slide:nth-child(even) {
+            background: linear-gradient(135deg, #e6f2e6, #f0f9f0);
+        }
+        
+        h1 {
+            color: #855030;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #855030;
+            padding-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #855030;
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #855030;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #855030;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .exercise-box {
+            background: #f9f9f9;
+            border: 3px solid #855030;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .highlight {
+            background: #e6f2e6;
+            border-left: 6px solid #855030;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding: 5px 0;
+        }
+        
+        .example {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        
+        .answer {
+            color: #d9534f;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            color: #855030;
+            background: rgba(255,255,255,0.8);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: #855030;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+        
+        p {
+            font-size: 1.4em;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        
+        .big-text {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #855030;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 2em; }
+            h3 { font-size: 1.8em; }
+            p { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide">
+    <div class="slide-number">1/24</div>
+    <div class="content">
+        <h1>Passive Voice</h1>
+        <p class="big-text">Review and Practice</p>
+        <p>EAP 1560 Grammar</p>
+    </div>
+</div>
+
+<!-- Slide 2: Quick Review - Transitive vs Intransitive -->
+<div class="slide">
+    <div class="slide-number">2/24</div>
+    <div class="content">
+        <h2>Quick Review: Transitive vs. Intransitive Verbs</h2>
+        <div class="highlight">
+            <p><strong>Transitive:</strong> Takes a direct object</p>
+            <p class="example">The chef <em>prepared</em> the meal.</p>
+        </div>
+        <div class="highlight">
+            <p><strong>Intransitive:</strong> Does not take a direct object</p>
+            <p class="example">The students <em>arrived</em> early.</p>
+        </div>
+        <p class="big-text">Only transitive verbs can be made passive!</p>
+    </div>
+</div>
+
+<!-- Slide 3: Active vs Passive Review -->
+<div class="slide">
+    <div class="slide-number">3/24</div>
+    <div class="content">
+        <h2>Active vs. Passive Voice</h2>
+        <div class="highlight">
+            <p><strong>Active:</strong> Subject performs the action</p>
+            <p class="example">The researcher <em>conducted</em> the study.</p>
+        </div>
+        <div class="highlight">
+            <p><strong>Passive:</strong> Subject receives the action</p>
+            <p class="example">The study <em>was conducted</em> by the researcher.</p>
+        </div>
+        <p><strong>Formula:</strong> be + past participle (+ by + agent)</p>
+    </div>
+</div>
+
+<!-- Slide 4: When to Use Passive -->
+<div class="slide">
+    <div class="slide-number">4/24</div>
+    <div class="content">
+        <h2>When Do We Use Passive Voice?</h2>
+        <ul>
+            <li>Unknown or unimportant agent</li>
+            <li>Focus on the action/result, not the doer</li>
+            <li>Formal, academic, or scientific writing</li>
+            <li>When the object is more important than the subject</li>
+        </ul>
+        <div class="example">
+            <p><em>The experiment was completed last week.</em></p>
+            <p><em>Mistakes were made in the analysis.</em></p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Exercise 1 Introduction -->
+<div class="slide">
+    <div class="slide-number">5/24</div>
+    <div class="content">
+        <h2>Exercise 1: Verb Identification</h2>
+        <p class="big-text">Identify each verb as:</p>
+        <ul>
+            <li><strong>T</strong> = Transitive only</li>
+            <li><strong>I</strong> = Intransitive only</li>
+            <li><strong>B</strong> = Both (depends on context)</li>
+        </ul>
+        <div class="highlight">
+            <p>Remember: Context matters for many verbs!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Exercise 1 - Verbs -->
+<div class="slide">
+    <div class="slide-number">6/24</div>
+    <div class="content">
+        <h3>Identify These Verbs</h3>
+        <div class="exercise-box">
+            <ol>
+                <li>arrive</li>
+                <li>eat</li>
+                <li>sleep</li>
+                <li>write</li>
+                <li>run</li>
+                <li>break</li>
+                <li>happen</li>
+                <li>study</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Discussion -->
+<div class="slide">
+    <div class="slide-number">7/24</div>
+    <div class="content">
+        <h3>Let's Discuss!</h3>
+        <div class="highlight">
+            <p class="big-text">Share your answers and reasoning</p>
+            <p>Which verbs were tricky? Why?</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Exercise 2 Introduction -->
+<div class="slide">
+    <div class="slide-number">8/24</div>
+    <div class="content">
+        <h2>Exercise 2: Correct vs. Incorrect Passive</h2>
+        <p class="big-text">Which sentences are correctly formed?</p>
+        <div class="highlight">
+            <p>Look for:</p>
+            <ul>
+                <li>Proper use of "be" + past participle</li>
+                <li>Transitive verbs only</li>
+                <li>Logical meaning</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: Exercise 2 - Sentences -->
+<div class="slide">
+    <div class="slide-number">9/24</div>
+    <div class="content">
+        <h3>Correct or Incorrect?</h3>
+        <div class="exercise-box">
+            <ol>
+                <li>The report was written by the student.</li>
+                <li>The accident was happened yesterday.</li>
+                <li>The meeting will be attended by all staff.</li>
+                <li>The food was tasted delicious.</li>
+                <li>The problem has been solved.</li>
+                <li>The baby was cried all night.</li>
+                <li>The results were analyzed carefully.</li>
+                <li>The presentation was lasted two hours.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: Discussion -->
+<div class="slide">
+    <div class="slide-number">10/24</div>
+    <div class="content">
+        <h3>Let's Check Together</h3>
+        <div class="highlight">
+            <p class="big-text">Which sentences are correct?</p>
+            <p>What makes the incorrect ones wrong?</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Exercise 3 Introduction -->
+<div class="slide">
+    <div class="slide-number">11/24</div>
+    <div class="content">
+        <h2>Exercise 3: Active ↔ Passive Conversion</h2>
+        <p class="big-text">Convert when possible</p>
+        <div class="highlight">
+            <p><strong>Remember:</strong></p>
+            <ul>
+                <li>Only transitive verbs can be converted</li>
+                <li>Keep the same tense</li>
+                <li>Subject becomes agent (by phrase)</li>
+                <li>Object becomes subject</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Exercise 3 - Part A (Active to Passive) -->
+<div class="slide">
+    <div class="slide-number">12/24</div>
+    <div class="content">
+        <h3>Convert to Passive (if possible)</h3>
+        <div class="exercise-box">
+            <ol>
+                <li>The professor explained the theory clearly.</li>
+                <li>Students often make mistakes in grammar.</li>
+                <li>The storm occurred last night.</li>
+                <li>The committee will review the proposal.</li>
+                <li>The flowers bloomed beautifully.</li>
+                <li>The researcher has completed the study.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Discussion -->
+<div class="slide">
+    <div class="slide-number">13/24</div>
+    <div class="content">
+        <h3>Let's Review Together</h3>
+        <div class="highlight">
+            <p class="big-text">Share your conversions</p>
+            <p>Which sentences couldn't be converted? Why?</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 14: Exercise 3 - Part B (Passive to Active) -->
+<div class="slide">
+    <div class="slide-number">14/24</div>
+    <div class="content">
+        <h3>Convert to Active</h3>
+        <div class="exercise-box">
+            <ol>
+                <li>The assignment was submitted by the student.</li>
+                <li>The building was constructed in 1995.</li>
+                <li>The results have been published in the journal.</li>
+                <li>The meeting will be postponed until next week.</li>
+                <li>The data was analyzed by the research team.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 15: Discussion -->
+<div class="slide">
+    <div class="slide-number">15/24</div>
+    <div class="content">
+        <h3>Let's Share Results</h3>
+        <div class="highlight">
+            <p class="big-text">What active sentences did you create?</p>
+            <p>What did you do when there was no clear agent?</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 16: Exercise 4 Introduction -->
+<div class="slide">
+    <div class="slide-number">16/24</div>
+    <div class="content">
+        <h2>Exercise 4: Choose the Better Option</h2>
+        <p class="big-text">Active or Passive?</p>
+        <div class="highlight">
+            <p>Consider:</p>
+            <ul>
+                <li>What is the focus?</li>
+                <li>Is the agent important?</li>
+                <li>What sounds more natural?</li>
+                <li>What fits the context better?</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 17: Exercise 4 - Scenarios -->
+<div class="slide">
+    <div class="slide-number">17/24</div>
+    <div class="content">
+        <h3>Which is Better?</h3>
+        <div class="exercise-box">
+            <ol>
+                <li>
+                    <strong>A:</strong> Someone stole my laptop.<br>
+                    <strong>B:</strong> My laptop was stolen.
+                </li>
+                <li>
+                    <strong>A:</strong> The famous author wrote this novel.<br>
+                    <strong>B:</strong> This novel was written by the famous author.
+                </li>
+                <li>
+                    <strong>A:</strong> We will hold the conference in May.<br>
+                    <strong>B:</strong> The conference will be held in May.
+                </li>
+                <li>
+                    <strong>A:</strong> Scientists discovered the new species.<br>
+                    <strong>B:</strong> The new species was discovered by scientists.
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 18: Discussion -->
+<div class="slide">
+    <div class="slide-number">18/24</div>
+    <div class="content">
+        <h3>Let's Compare Choices</h3>
+        <div class="highlight">
+            <p class="big-text">What influenced your decisions?</p>
+            <p>When is focus more important than the agent?</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 19: Passive Modals Review -->
+<div class="slide">
+    <div class="slide-number">19/24</div>
+    <div class="content">
+        <h2>Passive Modals</h2>
+        <p class="big-text">Modal + be + past participle</p>
+        <div class="highlight">
+            <ul>
+                <li><strong>Possibility:</strong> <em>The problem might be solved.</em></li>
+                <li><strong>Necessity:</strong> <em>The report must be completed.</em></li>
+                <li><strong>Advice:</strong> <em>The essay should be revised.</em></li>
+                <li><strong>Permission:</strong> <em>The document can be shared.</em></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 20: Common Passive Mistakes -->
+<div class="slide">
+    <div class="slide-number">20/24</div>
+    <div class="content">
+        <h2>Common Mistakes to Avoid</h2>
+        <div class="exercise-box">
+            <p><strong>❌ Wrong:</strong> The meeting was lasted three hours.</p>
+            <p><strong>✅ Correct:</strong> The meeting lasted three hours.</p>
+            
+            <p><strong>❌ Wrong:</strong> The accident was happened suddenly.</p>
+            <p><strong>✅ Correct:</strong> The accident happened suddenly.</p>
+            
+            <p><strong>❌ Wrong:</strong> The food was tasted good.</p>
+            <p><strong>✅ Correct:</strong> The food tasted good.</p>
+        </div>
+        <div class="highlight">
+            <p><strong>Remember:</strong> Intransitive and linking verbs cannot be passive!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 21: Academic Writing Tips -->
+<div class="slide">
+    <div class="slide-number">21/24</div>
+    <div class="content">
+        <h2>Passive Voice in Academic Writing</h2>
+        <div class="highlight">
+            <p><strong>Use passive when:</strong></p>
+            <ul>
+                <li>Describing research methods</li>
+                <li>Reporting results</li>
+                <li>Stating general facts</li>
+                <li>Focusing on processes</li>
+            </ul>
+        </div>
+        <div class="example">
+            <p><em>The data was collected over six months.</em></p>
+            <p><em>The hypothesis was tested using statistical analysis.</em></p>
+            <p><em>The results were published in a peer-reviewed journal.</em></p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 22: Group Work Preparation -->
+<div class="slide">
+    <div class="slide-number">22/24</div>
+    <div class="content">
+        <h2>Time for Group Work!</h2>
+        <p class="big-text">Breakout Room Activities</p>
+        <div class="highlight">
+            <p>You will work in small groups on:</p>
+            <ul>
+                <li>Error detection and correction</li>
+                <li>Active to passive conversions</li>
+                <li>Context-appropriate choices</li>
+                <li>Sentence reconstruction</li>
+            </ul>
+        </div>
+        <p>Check your Google Doc for specific instructions!</p>
+    </div>
+</div>
+
+<!-- Slide 23: Wrap-up -->
+<div class="slide">
+    <div class="slide-number">23/24</div>
+    <div class="content">
+        <h2>Key Takeaways</h2>
+        <ul>
+            <li>Only transitive verbs can be passive</li>
+            <li>Use passive to focus on action/result</li>
+            <li>Common in academic and formal writing</li>
+            <li>Context determines active vs. passive choice</li>
+            <li>Avoid overusing passive voice</li>
+        </ul>
+        <div class="highlight">
+            <p><strong>Practice makes perfect!</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 24: Questions -->
+<div class="slide">
+    <div class="slide-number">24/24</div>
+    <div class="content">
+        <h1>Questions?</h1>
+        <p class="big-text">Let's discuss any challenges from the group work</p>
+    </div>
+</div>
+
+<div class="navigation">
+    Use ↑↓ arrows or scroll to navigate
+</div>
+
+<script>
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            window.scrollBy(0, window.innerHeight);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            window.scrollBy(0, -window.innerHeight);
+        }
+    });
+    
+    // Smooth scrolling for better presentation
+    document.documentElement.style.scrollBehavior = 'smooth';
+</script>
+
+</body>
+</html>
