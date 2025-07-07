@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argument Analysis - EAP 1520</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff5f2 0%, #ffe6e0 100%);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(255, 153, 128, 0.2);
+            border: 2px solid #ffcccc;
+        }
+
+        h1 {
+            color: #ff9980;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ff9980;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #ff9980;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #ff9980;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ff9980;
+            padding-bottom: 8px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        ul {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .example-box {
+            background: #fff5f2;
+            border: 2px solid #ffcccc;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #ff9980, #ffb366);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #ff9980;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ff7a5c;
+            transform: translateY(-2px);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #ff9980;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.6em;
+            }
+            
+            p, ul {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide">
+        <div class="slide-content">
+            <h1>Argument Analysis</h1>
+            <h2>What We're Practicing Today</h2>
+            <ul>
+                <li>Identifying the point (conclusion) vs. support in arguments</li>
+                <li>Evaluating if support is relevant to the point</li>
+                <li>Determining if support is adequate (sufficient evidence)</li>
+                <li>Recognizing valid vs. invalid arguments</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 2: Review -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Argument Basics Review</h2>
+            <h3>Every Good Argument Has:</h3>
+            <ul>
+                <li><strong>Point/Conclusion</strong> - What the author wants you to believe</li>
+                <li><strong>Support</strong> - Evidence that backs up the point</li>
+            </ul>
+            <h3>Key Questions:</h3>
+            <ul>
+                <li>What is the main point being made?</li>
+                <li>What evidence supports this point?</li>
+                <li>Does the support actually relate to the point?</li>
+                <li>Is there enough support to be convincing?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3: Finding the Point -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Practice - Finding the Point</h2>
+            <div class="example-box">
+                Students should be required to take a personal finance course before graduating high school. Many young adults struggle with credit card debt within their first year of college. Financial literacy rates among teenagers are at an all-time low. Most high school graduates cannot explain basic concepts like compound interest or budgeting.
+            </div>
+            <div class="question-box">
+                Which sentence is the point? Which sentences are support?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Relevant vs Irrelevant -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Relevant vs. Irrelevant Support</h2>
+            <h3>Point: Our city needs more public transportation.</h3>
+            <p><strong>Which support is relevant?</strong></p>
+            <ul>
+                <li>A) Traffic congestion has increased 40% in five years</li>
+                <li>B) Public buses reduce air pollution</li>
+                <li>C) The mayor grew up in this city</li>
+                <li>D) Many residents cannot afford car payments</li>
+            </ul>
+            <div class="question-box">
+                Which pieces of support actually relate to needing more public transportation?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Adequate vs Inadequate -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Adequate vs. Inadequate Support</h2>
+            <h3>Point: Online learning is more effective than traditional classroom instruction.</h3>
+            <div class="example-box">
+                <strong>Support:</strong> My friend Jake learned Spanish faster using an online program than he did in his high school Spanish class.
+            </div>
+            <div class="question-box">
+                Is this enough evidence to support such a broad claim?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Challenge Practice -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Challenge Practice</h2>
+            <p><strong>Analyze this complete argument:</strong></p>
+            <div class="example-box">
+                Violent video games should be banned for players under 18. Last month, a teenager who played violent games committed a serious crime. These games desensitize young people to violence. However, millions of teenagers play these games without becoming violent. Research shows that aggressive behavior decreases when teens have healthy outlets for competition.
+            </div>
+            <div class="question-box">
+                Identify: Point, support, and any problems with the argument.
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Strong Argument Example -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Strong Argument Example</h2>
+            <h3>Point: Regular exercise improves academic performance in students.</h3>
+            <h3>Support:</h3>
+            <ul>
+                <li>Students who exercise 30+ minutes daily score 15% higher on standardized tests</li>
+                <li>Physical activity increases blood flow to the brain, improving concentration</li>
+                <li>Schools with daily PE programs show improved graduation rates</li>
+                <li>Exercise reduces stress hormones that interfere with learning</li>
+            </ul>
+            <div class="question-box">
+                Why is this a strong argument?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Evaluation Strategy -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Evaluation Strategy</h2>
+            <h3>When analyzing arguments, ask:</h3>
+            <ul>
+                <li><strong>What's the point?</strong> (Look for opinion statements, recommendations)</li>
+                <li><strong>What's the support?</strong> (Facts, examples, expert opinions, statistics)</li>
+                <li><strong>Is support relevant?</strong> (Does it actually relate to the point?)</li>
+                <li><strong>Is support adequate?</strong> (Enough evidence to be convincing?)</li>
+                <li><strong>Overall judgment:</strong> Valid or invalid argument?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 9: Additional Practice - Point Identification -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>More Practice - Finding the Point</h2>
+            <div class="example-box">
+                Remote employees are 22% more productive than office workers according to recent studies. They experience fewer workplace interruptions and can customize their work environment for optimal focus. However, employers should still provide flexible remote work policies rather than mandating full-time remote work. Video calls cannot fully replace face-to-face collaboration for creative projects.
+            </div>
+            <div class="question-box">
+                What is the main point this author is making?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Additional Practice - Relevance Challenge -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Relevance Challenge</h2>
+            <h3>Point: High school students should learn coding as a required subject.</h3>
+            <p><strong>Evaluate this support:</strong></p>
+            <ul>
+                <li>A) Programming jobs pay well and are in high demand</li>
+                <li>B) Steve Jobs was a visionary technology leader</li>
+                <li>C) Coding develops logical thinking and problem-solving skills</li>
+                <li>D) Many everyday devices now contain computer chips</li>
+                <li>E) Understanding technology helps students become informed digital citizens</li>
+            </ul>
+            <div class="question-box">
+                Which support items are relevant to requiring coding education?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Additional Practice - Adequacy Evaluation -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Adequacy Practice</h2>
+            <h3>Point: Plant-based diets are healthier than diets that include meat.</h3>
+            <div class="example-box">
+                <strong>Support:</strong> A comprehensive 20-year study of 125,000 participants found that people following plant-based diets had 25% lower rates of heart disease, 30% reduced cancer risk, and lived an average of 3.6 years longer. The benefits remained consistent across different age groups, ethnicities, and geographic regions.
+            </div>
+            <div class="question-box">
+                Is this support adequate to prove the point? What makes it strong or weak?
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Small Group Time -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Small Group Time</h2>
+            <h3>Now practice in breakout rooms:</h3>
+            <ul>
+                <li>Analyze various arguments together</li>
+                <li>Identify points and support</li>
+                <li>Evaluate relevance and adequacy</li>
+                <li>Discuss your reasoning with teammates</li>
+                <li>Prepare to share one interesting finding</li>
+            </ul>
+            <div class="question-box">
+                Return in 25 minutes
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Prev</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function updateProgressBar() {
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function goToSlide(n) {
+            currentSlide = Math.max(0, Math.min(n, totalSlides - 1));
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            updateProgressBar();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Update current slide based on scroll position
+        let isScrolling = false;
+        window.addEventListener('scroll', function() {
+            if (!isScrolling) {
+                const scrollPosition = window.scrollY + window.innerHeight / 2;
+                
+                slides.forEach((slide, index) => {
+                    const slideTop = slide.offsetTop;
+                    const slideBottom = slideTop + slide.offsetHeight;
+                    
+                    if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+                        currentSlide = index;
+                        updateProgressBar();
+                    }
+                });
+            }
+        });
+
+        // Prevent scroll position update during programmatic scrolling
+        function smoothScrollTo(target) {
+            isScrolling = true;
+            target.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        }
+
+        // Initialize
+        updateProgressBar();
+    </script>
+</body>
+</html>
