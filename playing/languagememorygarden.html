@@ -1,0 +1,399 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+const LanguageMemoryGarden = () => {
+  const [words, setWords] = useState([]);
+  const [inputFrequency, setInputFrequency] = useState(2); // 1=low, 2=medium, 3=high
+  const [exposureTypes, setExposureTypes] = useState({
+    reading: true,
+    listening: false,
+    speaking: false,
+    writing: false
+  });
+  const [timeSpeed, setTimeSpeed] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [spacedRepetition, setSpacedRepetition] = useState(false);
+  const intervalRef = useRef(null);
+
+  // Sample vocabulary words for different languages
+  const vocabularyWords = [
+    'hello', 'goodbye', 'thank you', 'please', 'water', 'food', 'house', 'friend',
+    'love', 'happy', 'sad', 'big', 'small', 'red', 'blue', 'green', 'sun', 'moon',
+    'tree', 'flower', 'book', 'music', 'time', 'family', 'school'
+  ];
+
+  // Initialize words starting from center and spreading outward
+  useEffect(() => {
+    const centerX = 400;
+    const centerY = 200;
+    
+    const initialWords = vocabularyWords.map((word, index) => {
+      // Create spiral pattern from center
+      const angle = (index * 2.4) + Math.random() * 0.5;
+      const radius = Math.sqrt(index) * 25 + Math.random() * 20;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+      
+      return {
+        id: index,
+        word,
+        x: Math.max(30, Math.min(770, x)),
+        y: Math.max(30, Math.min(370, y)),
+        brightness: Math.random() * 0.3 + 0.2, // 0.2-0.5
+        size: Math.random() * 0.3 + 0.7, // 0.7-1.0
+        proficiency: Math.random() * 3, // Continuous 0-3 for smooth gradients
+        lastExposure: 0,
+        sparkles: []
+      };
+    });
+    setWords(initialWords);
+  }, []);
+
+  // Calculate color based on proficiency level with smooth gradients
+  const getWordColor = (proficiency, brightness) => {
+    // Smooth gradient between blue -> yellow -> green
+    let r, g, b;
+    
+    if (proficiency <= 1) {
+      // Blue (59,130,246) to Yellow (245,158,11)
+      const t = proficiency;
+      r = Math.round(59 + (245 - 59) * t);
+      g = Math.round(130 + (158 - 130) * t);
+      b = Math.round(246 + (11 - 246) * t);
+    } else if (proficiency <= 2) {
+      // Yellow (245,158,11) to Green (34,197,94)
+      const t = proficiency - 1;
+      r = Math.round(245 + (34 - 245) * t);
+      g = Math.round(158 + (197 - 158) * t);
+      b = Math.round(11 + (94 - 11) * t);
+    } else {
+      // Pure green for mastery
+      r = 34;
+      g = 197;
+      b = 94;
+    }
+    
+    return `rgba(${r}, ${g}, ${b}, ${brightness})`;
+  };
+
+  // Calculate exposure multiplier based on active exposure types
+  const getExposureMultiplier = () => {
+    const activeTypes = Object.values(exposureTypes).filter(Boolean).length;
+    return Math.max(1, activeTypes * 0.5);
+  };
+
+  // Update word states over time
+  const updateWords = () => {
+    setWords(prevWords => {
+      return prevWords.map(word => {
+        let newWord = { ...word };
+        
+        // Natural forgetting - brightness decreases over time
+        const forgettingRate = 0.002 * timeSpeed;
+        newWord.brightness = Math.max(0.1, newWord.brightness - forgettingRate);
+        
+        // Size decreases with brightness and increases with proficiency
+        newWord.size = Math.max(0.4, 0.4 + (newWord.brightness * 0.8) + (newWord.proficiency * 0.3));
+        
+        // Input frequency effects
+        if (isPlaying) {
+          const reinforcementChance = inputFrequency * 0.01 * getExposureMultiplier();
+          
+          if (Math.random() < reinforcementChance) {
+            // Strengthen memory
+            newWord.brightness = Math.min(1, newWord.brightness + 0.05);
+            newWord.lastExposure = Date.now();
+            
+            // Gradually increase proficiency
+            newWord.proficiency = Math.min(3, newWord.proficiency + 0.02);
+            
+            // Check for major proficiency milestones for sparkles
+            const prevLevel = Math.floor(word.proficiency);
+            const newLevel = Math.floor(newWord.proficiency);
+            
+            if (newLevel > prevLevel && newLevel <= 2) {
+              const sparkleCount = newLevel === 1 ? 5 : 8;
+              const sparkleRange = newLevel === 1 ? 20 : 30;
+              
+              newWord.sparkles = Array.from({length: sparkleCount}, (_, i) => ({
+                id: i,
+                x: Math.random() * sparkleRange - sparkleRange/2,
+                y: Math.random() * sparkleRange - sparkleRange/2,
+                life: 30
+              }));
+            }
+          }
+        }
+        
+        // Spaced repetition logic
+        if (spacedRepetition && isPlaying) {
+          const timeSinceExposure = Date.now() - newWord.lastExposure;
+          const optimalInterval = (Math.floor(newWord.proficiency) + 1) * 5000; // 5s, 10s, 15s intervals
+          
+          if (timeSinceExposure > optimalInterval) {
+            // Highlight for review
+            newWord.brightness = Math.min(1, newWord.brightness + 0.02);
+          }
+        }
+        
+        // Update sparkles
+        newWord.sparkles = newWord.sparkles.map(sparkle => ({
+          ...sparkle,
+          life: sparkle.life - 1
+        })).filter(sparkle => sparkle.life > 0);
+        
+        return newWord;
+      });
+    });
+  };
+
+  // Start/stop simulation
+  useEffect(() => {
+    if (isPlaying) {
+      intervalRef.current = setInterval(updateWords, 100);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+    
+    return () => clearInterval(intervalRef.current);
+  }, [isPlaying, inputFrequency, exposureTypes, timeSpeed, spacedRepetition]);
+
+  // Reset simulation
+  const resetSimulation = () => {
+    setIsPlaying(false);
+    const centerX = 400;
+    const centerY = 200;
+    
+    const resetWords = words.map((word, index) => {
+      // Recreate spiral pattern from center
+      const angle = (index * 2.4) + Math.random() * 0.5;
+      const radius = Math.sqrt(index) * 25 + Math.random() * 20;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+      
+      return {
+        ...word,
+        x: Math.max(30, Math.min(770, x)),
+        y: Math.max(30, Math.min(370, y)),
+        brightness: Math.random() * 0.3 + 0.2,
+        size: Math.random() * 0.3 + 0.7,
+        proficiency: Math.random() * 0.5, // Start lower for better demonstration
+        lastExposure: 0,
+        sparkles: []
+      };
+    });
+    setWords(resetWords);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold text-green-800 mb-2">🌱 Language Memory Garden</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Watch how input frequency affects vocabulary retention. Each word is a living plant that thrives with attention and withers without care.
+          </p>
+        </div>
+
+        {/* Controls */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Input Frequency */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Input Frequency
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="3"
+                value={inputFrequency}
+                onChange={(e) => setInputFrequency(Number(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>Low</span>
+                <span>Medium</span>
+                <span>High</span>
+              </div>
+            </div>
+
+            {/* Time Speed */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Time Speed
+              </label>
+              <input
+                type="range"
+                min="0.5"
+                max="3"
+                step="0.1"
+                value={timeSpeed}
+                onChange={(e) => setTimeSpeed(Number(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0.5x</span>
+                <span>1x</span>
+                <span>2x</span>
+                <span>3x</span>
+              </div>
+            </div>
+
+            {/* Control Buttons */}
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  isPlaying 
+                    ? 'bg-red-500 hover:bg-red-600 text-white' 
+                    : 'bg-green-500 hover:bg-green-600 text-white'
+                }`}
+              >
+                {isPlaying ? '⏸️ Pause' : '▶️ Start'}
+              </button>
+              <button
+                onClick={resetSimulation}
+                className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-medium transition-colors"
+              >
+                🔄 Reset
+              </button>
+            </div>
+          </div>
+
+          {/* Exposure Types */}
+          <div className="mt-6">
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Exposure Types (more types = stronger reinforcement)
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {Object.entries(exposureTypes).map(([type, active]) => (
+                <label key={type} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={active}
+                    onChange={(e) => setExposureTypes(prev => ({
+                      ...prev,
+                      [type]: e.target.checked
+                    }))}
+                    className="w-4 h-4 text-green-600 rounded"
+                  />
+                  <span className="text-sm capitalize">{type}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Spaced Repetition */}
+          <div className="mt-4">
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={spacedRepetition}
+                onChange={(e) => setSpacedRepetition(e.target.checked)}
+                className="w-4 h-4 text-green-600 rounded"
+              />
+              <span className="text-sm">Enable Spaced Repetition Mode</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Garden Visualization */}
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="relative w-full h-96 bg-gradient-to-b from-sky-100 to-green-100 rounded-lg overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-green-200 to-transparent opacity-50"></div>
+            
+            {/* Central seed/root indicator */}
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="w-3 h-3 bg-amber-600 rounded-full opacity-60"></div>
+              <div className="absolute -inset-2 border border-amber-400 rounded-full opacity-30"></div>
+            </div>
+            
+            {/* Word orbs */}
+            {words.map((word) => (
+              <div key={word.id} className="absolute group">
+                <div
+                  style={{
+                    left: `${word.x}px`,
+                    top: `${word.y}px`,
+                    transform: `scale(${word.size})`,
+                    transition: 'all 0.5s ease'
+                  }}
+                >
+                  {/* Word orb */}
+                  <div
+                    className="w-12 h-12 rounded-full border-2 border-white shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110"
+                    style={{
+                      backgroundColor: getWordColor(word.proficiency, word.brightness),
+                      boxShadow: `0 0 ${word.brightness * 20}px ${getWordColor(word.proficiency, word.brightness * 0.5)}`
+                    }}
+                  >
+                    {/* Sparkles */}
+                    {word.sparkles.map((sparkle) => (
+                      <div
+                        key={sparkle.id}
+                        className="absolute w-1 h-1 bg-yellow-300 rounded-full animate-pulse"
+                        style={{
+                          left: `${24 + sparkle.x}px`,
+                          top: `${24 + sparkle.y}px`,
+                          opacity: sparkle.life / 30
+                        }}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Word label */}
+                  <div className="absolute top-14 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-2 py-1 rounded shadow-md whitespace-nowrap">
+                    {word.word}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Legend */}
+        <div className="mt-6 bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Understanding Your Garden</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-medium text-gray-700 mb-2">Visual Indicators</h4>
+              <ul className="space-y-1 text-sm text-gray-600">
+                <li>• <strong>Brightness:</strong> Memory strength (brighter = better retained)</li>
+                <li>• <strong>Size:</strong> Familiarity level (larger = more familiar)</li>
+                <li>• <strong>Color:</strong> Proficiency stage</li>
+                <li>• <strong>Sparkles:</strong> Level-up moments</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-700 mb-2">Proficiency Levels</h4>
+              <div className="space-y-1 text-sm">
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-yellow-500"></div>
+                  <span>Recognition → Production</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-r from-yellow-500 to-green-500"></div>
+                  <span>Production → Fluent</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 rounded-full bg-green-500"></div>
+                  <span>Mastery (automatic)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 p-4 bg-green-50 rounded-lg">
+            <p className="text-sm text-green-800">
+              <strong>💡 Key Insight:</strong> Notice how words fade without input, but multiple exposure types and consistent frequency help them thrive and advance through proficiency levels!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LanguageMemoryGarden;
