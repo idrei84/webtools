@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallelism Review - EAP 1540</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e1f6f7 0%, #f9f9f9 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(90, 183, 185, 0.2);
+            padding: 60px;
+            text-align: center;
+            border: 3px solid #5ab7b9;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        h1 {
+            color: #5ab7b9;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #5ab7b9;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #5ab7b9;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #5ab7b9;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.8em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .definition-box {
+            background: #e1f6f7;
+            border: 2px solid #5ab7b9;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            font-size: 1.9em;
+            color: #2c5a5b;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: #f0f8ff;
+            border-left: 5px solid #5ab7b9;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .example-box p {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        .correct {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .parallel-items {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 1.5em;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: #5ab7b9;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #4a9a9c;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: #5ab7b9;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.2em;
+        }
+
+        ul {
+            text-align: left;
+            font-size: 1.6em;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        li {
+            margin: 15px 0;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">11</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Parallelism Review</h1>
+            <p style="font-size: 2.2em; color: #5ab7b9; margin-top: 50px;">Also known as Parallel Structure</p>
+            <p style="font-size: 1.4em; margin-top: 80px; color: #666;">EAP 1540</p>
+        </div>
+
+        <!-- Slide 2: Definition -->
+        <div class="slide">
+            <h2>What is Parallelism?</h2>
+            <div class="definition-box">
+                Each item in a list, series, or comparison matches the grammatical form of the others.
+            </div>
+            <p>Items in a series must have the same grammatical structure to be parallel.</p>
+        </div>
+
+        <!-- Slide 3: Why Parallelism Matters -->
+        <div class="slide">
+            <h2>Why Use Parallelism?</h2>
+            <div style="display: flex; justify-content: space-around; margin: 50px 0;">
+                <div style="flex: 1; margin: 0 20px;">
+                    <h3 style="color: #2e7d32;">✓ Good Parallelism</h3>
+                    <ul>
+                        <li>More effective writing</li>
+                        <li>Easier to follow</li>
+                        <li>Logical flow</li>
+                        <li>Professional appearance</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; margin: 0 20px;">
+                    <h3 style="color: #d32f2f;">✗ Poor Parallelism</h3>
+                    <ul>
+                        <li>Unprofessional writing</li>
+                        <li>Confusing meaning</li>
+                        <li>Unclear message</li>
+                        <li>Difficult to read</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Basic Examples -->
+        <div class="slide">
+            <h2>Basic Examples</h2>
+            <div class="example-box">
+                <p><span class="correct">✓ Correct:</span> Steven is a <span class="highlight">father</span>, a <span class="highlight">husband</span>, and a <span class="highlight">businessman</span>.</p>
+                <p style="color: #666; font-size: 1.3em;">Three nouns</p>
+            </div>
+            <div class="example-box">
+                <p><span class="correct">✓ Correct:</span> Steven is <span class="highlight">tired</span>, <span class="highlight">friendly</span>, and <span class="highlight">silly</span>.</p>
+                <p style="color: #666; font-size: 1.3em;">Three adjectives</p>
+            </div>
+            <div class="example-box">
+                <p><span class="incorrect">✗ Incorrect:</span> Steven is a <span class="highlight">father</span>, <span class="highlight">eating breakfast</span>, and <span class="highlight">tired</span>.</p>
+                <p style="color: #666; font-size: 1.3em;">Mixed forms = bad parallelism</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Coordinating Conjunctions -->
+        <div class="slide">
+            <h2>Coordinating Conjunctions</h2>
+            <p style="font-size: 2em; margin-bottom: 40px;"><strong>and</strong>, <strong>or</strong>, <strong>but</strong></p>
+            <div class="example-box">
+                <p>He's worked at an <span class="highlight">ice cream shop</span>, a <span class="highlight">movie theater</span>, and a <span class="highlight">retail store</span>.</p>
+            </div>
+            <div class="example-box">
+                <p>It could be my <span class="highlight">sister</span>, my <span class="highlight">cousin</span>, or <span class="highlight">me</span>.</p>
+            </div>
+            <div class="example-box">
+                <p>We enjoyed the <span class="highlight">book</span>, but not the <span class="highlight">movie</span>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Paired Conjunctions -->
+        <div class="slide">
+            <h2>Paired Conjunctions</h2>
+            <p style="font-size: 1.8em; margin-bottom: 30px;"><strong>both...and</strong> | <strong>either...or</strong> | <strong>neither...nor</strong> | <strong>not only...but also</strong></p>
+            <div class="example-box">
+                <p>Either a <span class="highlight">roast turkey</span> or a <span class="highlight">honey glazed ham</span> will make a delicious Christmas dinner.</p>
+            </div>
+            <div class="example-box">
+                <p>I not only <span class="highlight">asked for extra salad dressing</span> but also <span class="highlight">requested extra crispy croutons</span>.</p>
+            </div>
+            <div class="example-box">
+                <p>Neither her <span class="highlight">parents</span> nor her <span class="highlight">siblings</span> were able to attend.</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Types of Parallel Items -->
+        <div class="slide">
+            <h2>Types of Parallel Items</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0;">
+                <div>
+                    <h3 style="font-size: 1.8em;">Nouns</h3>
+                    <p style="font-size: 1.4em;">TV, PlayStation, games</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.8em;">Verbs</h3>
+                    <p style="font-size: 1.4em;">walk, swim, run</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.8em;">Adjectives</h3>
+                    <p style="font-size: 1.4em;">intelligent, hardworking, impatient</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.8em;">Gerunds</h3>
+                    <p style="font-size: 1.4em;">cooking, eating, playing</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.8em;">Infinitives</h3>
+                    <p style="font-size: 1.4em;">to marry, have children</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.8em;">Phrases/Clauses</h3>
+                    <p style="font-size: 1.4em;">under the bed, behind the couch</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Infinitive Example -->
+        <div class="slide">
+            <h2>Infinitive Parallelism</h2>
+            <div class="example-box">
+                <p><span class="correct">✓ Correct:</span> She likes to <span class="highlight">exercise</span>, <span class="highlight">cook</span>, and <span class="highlight">sleep</span>.</p>
+                <p style="color: #666; font-size: 1.3em;">Don't repeat "to" - connect to the first verb</p>
+            </div>
+            <div class="example-box">
+                <p><span class="correct">✓ Correct:</span> The desire to <span class="highlight">marry</span> and <span class="highlight">have children</span> is strong.</p>
+                <p style="color: #666; font-size: 1.3em;">Base form verbs complete the infinitive</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Complex Parallel Structures -->
+        <div class="slide">
+            <h2>Complex Parallel Structures</h2>
+            <div class="example-box">
+                <p><strong>Nouns with prepositional phrases:</strong></p>
+                <p>Either a <span class="highlight">cabin in the woods</span> or a <span class="highlight">condo on the beach</span>.</p>
+            </div>
+            <div class="example-box">
+                <p><strong>Nouns with adjectives:</strong></p>
+                <p>She had <span class="highlight">curly blonde hair</span>, <span class="highlight">bright green eyes</span>, and a <span class="highlight">slim physique</span>.</p>
+            </div>
+            <div class="example-box">
+                <p><strong>Verbs with objects:</strong></p>
+                <p>They neither <span class="highlight">cooked anything to eat</span> nor <span class="highlight">ordered takeout from a restaurant</span>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Parallelism in Comparisons -->
+        <div class="slide">
+            <h2>Parallelism in Comparisons</h2>
+            <p style="font-size: 1.8em; margin-bottom: 40px;">Items on both sides of <strong>"than"</strong> must be parallel</p>
+            <div class="example-box">
+                <p>My <span class="highlight">car</span> is bigger than her <span class="highlight">car</span>.</p>
+            </div>
+            <div class="example-box">
+                <p>They would rather eat <span class="highlight">Japanese food</span> than <span class="highlight">Turkish food</span>.</p>
+            </div>
+            <div class="example-box">
+                <p><span class="highlight">Running</span> is more enjoyable than <span class="highlight">swimming</span>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Practice Time -->
+        <div class="slide">
+            <h1>Practice Time!</h1>
+            <p style="font-size: 2em; margin-top: 50px;">Let's identify and fix parallelism errors together.</p>
+            <p style="font-size: 1.5em; margin-top: 80px; color: #666;">Ready for breakout rooms?</p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (direction === -1 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                changeSlide(1);
+            } else if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
