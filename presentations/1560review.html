@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Review</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
+            min-height: 100vh;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        .slide {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ff9500;
+        }
+
+        .question-number {
+            color: #e67e00;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .question {
+            font-size: 28px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            color: #333;
+            text-align: center;
+        }
+
+        .blank {
+            border-bottom: 3px solid #ff9500;
+            min-width: 200px;
+            display: inline-block;
+            margin: 0 8px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #fff8f0;
+            border: 2px solid #ffb366;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: #333;
+        }
+
+        .option:hover:not(.selected) {
+            background: #ff9500;
+            color: white;
+            border-color: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        .option.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        .option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #da190b;
+        }
+
+        .option.selected {
+            cursor: default;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #ff9500;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 149, 0, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 149, 0, 0.4);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 18px;
+            color: #e67e00;
+            font-weight: bold;
+            border: 2px solid #ff9500;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 30px;
+            }
+            
+            .question {
+                font-size: 24px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .option {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-indicator">
+        <span id="current-slide">1</span> / <span id="total-slides">30</span>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 1</div>
+            <div class="question">The research team <span class="blank"></span> on this project for over two years when they finally published their findings.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) worked</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) has worked</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) had been working</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) was working</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 2</div>
+            <div class="question">The scientist <span class="blank"></span> received the Nobel Prize.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) who research revolutionized the field</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) whose research revolutionized the field</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) which research revolutionized the field</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) that research revolutionized the field</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 3</div>
+            <div class="question">The CEO postponed <span class="blank"></span> until after the quarterly review.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) to make a decision</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) making a decision</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) make a decision</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) having made a decision</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 4</div>
+            <div class="question">The new software system will be implemented <span class="blank"></span>.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, true)">a) as soon as all employees complete the training</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) even though all employees complete the training</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) in case all employees complete the training</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) provided that all employees will complete the training</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 5</div>
+            <div class="question">Given the evidence presented, the defendant <span class="blank"></span> the crime.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) should have committed</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) must have committed</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) would have committed</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) could have committed</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 6</div>
+            <div class="question">The construction crew <span class="blank"></span> the bridge repairs for three weeks now, but they're still not finished.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) does</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) is doing</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) has done</div>
+                <div class="option" onclick="selectAnswer(this, true)">d) has been doing</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 7</div>
+            <div class="question">The committee hasn't decided <span class="blank"></span>.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, true)">a) whether the new policy should be implemented</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) that the new policy should be implemented</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) if should the new policy be implemented</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) what the new policy should be implemented</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 8</div>
+            <div class="question">The ancient manuscript <span class="blank"></span> by scholars for decades before its true significance was understood.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) had studied</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) was being studied</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) had been studied</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) has been studied</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 9</div>
+            <div class="question"><span class="blank"></span>, we decided to proceed with the outdoor event.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) Since the weather forecast predicted rain</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) Although the weather forecast predicted rain</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) Because the weather forecast predicted rain</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) Unless the weather forecast predicted rain</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 10</div>
+            <div class="question">I regret <span class="blank"></span> that your application was not successful.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) informing you</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) to inform you</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) having informed you</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) inform you</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 11</div>
+            <div class="question">By the time the presentation begins, I <span class="blank"></span> my notes three times already.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) will review</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) will have reviewed</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) am reviewing</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) have reviewed</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 12</div>
+            <div class="question">The proposal <span class="blank"></span> requires further review.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) that was submitted last week</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) which was submitted last week</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) what was submitted last week</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) who was submitted last week</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 13</div>
+            <div class="question">New safety protocols <span class="blank"></span> in all departments following last month's incident.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) are implementing</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) have been implemented</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) are being implemented</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) will implement</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 14</div>
+            <div class="question">The professor encouraged his students <span class="blank"></span> in their academic work.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) developing critical thinking skills</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) to develop critical thinking skills</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) develop critical thinking skills</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) having developed critical thinking skills</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 15</div>
+            <div class="question"><span class="blank"></span>, significant restructuring will be necessary.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, true)">a) Should the merger go through</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) Would the merger go through</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) Could the merger go through</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) If the merger would go through</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 16</div>
+            <div class="question">While I <span class="blank"></span> the report last night, my computer suddenly crashed and I lost everything.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, true)">a) was writing</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) had written</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) have been writing</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) wrote</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 17</div>
+            <div class="question">You <span class="blank"></span> your application by now; the deadline was yesterday.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) must submit</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) should have submitted</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) would have submitted</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) could have submitted</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 18</div>
+            <div class="question">The research indicates <span class="blank"></span>.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, true)">a) that sleep deprivation affects cognitive performance</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) what sleep deprivation affects cognitive performance</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) which sleep deprivation affects cognitive performance</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) whether sleep deprivation affects cognitive performance</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 19</div>
+            <div class="question">The stock market <span class="blank"></span> significantly by the time investors realized the impact of the news.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) fell</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) has fallen</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) had fallen</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) was falling</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 20</div>
+            <div class="question">Despite <span class="blank"></span>, she still made several errors.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) reading the instructions carefully</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) to read the instructions carefully</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) having read the instructions carefully</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) read the instructions carefully</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 21</div>
+            <div class="question">The period <span class="blank"></span> was crucial for the company's success.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) during that the company expanded internationally</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) during when the company expanded internationally</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) during which the company expanded internationally</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) during where the company expanded internationally</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 22</div>
+            <div class="question">Scientists predict that global temperatures <span class="blank"></span> by 2°C within the next decade.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) will increase</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) will have increased</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) are increasing</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) increase</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 23</div>
+            <div class="question">In a professional setting, employees <span class="blank"></span> at meetings on time.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) have to arrive</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) must arrive</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) should arrive</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) need to arrive</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 24</div>
+            <div class="question">The award-winning novel <span class="blank"></span> into twelve languages since its publication.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) has translated</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) has been translating</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) has been translated</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) is being translated</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 25</div>
+            <div class="question">She <span class="blank"></span> as the department head since Dr. Johnson retired last month.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) works</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) has been working</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) is working</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) worked</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 26</div>
+            <div class="question"><span class="blank"></span> surprised everyone.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) That the project was completed quickly</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) What the project was completed quickly</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) How quickly the project was completed</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) Which the project was completed quickly</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 27</div>
+            <div class="question">The experiment <span class="blank"></span> if we had controlled for temperature variations.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) should have succeeded</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) must have succeeded</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) might have succeeded</div>
+                <div class="option" onclick="selectAnswer(this, true)">d) would have succeeded</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 28</div>
+            <div class="question">I <span class="blank"></span> the same mistake twice before I finally learned my lesson.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) made</div>
+                <div class="option" onclick="selectAnswer(this, false)">b) have made</div>
+                <div class="option" onclick="selectAnswer(this, true)">c) had made</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) was making</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 29</div>
+            <div class="question"><span class="blank"></span>, it would be more competitive today.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) If the company invested more in R&D</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) If the company had invested more in R&D</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) If the company invests more in R&D</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) If the company would invest more in R&D</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="question-number">Question 30</div>
+            <div class="question"><span class="blank"></span>, you would have heard the important announcement.</div>
+            <div class="options">
+                <div class="option" onclick="selectAnswer(this, false)">a) If you attended the meeting yesterday</div>
+                <div class="option" onclick="selectAnswer(this, true)">b) If you had attended the meeting yesterday</div>
+                <div class="option" onclick="selectAnswer(this, false)">c) If you attend the meeting yesterday</div>
+                <div class="option" onclick="selectAnswer(this, false)">d) If you would attend the meeting yesterday</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="previousSlide()" disabled>Previous</button>
+        <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function updateSlideIndicator() {
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function goToSlide(slideIndex) {
+            if (slideIndex >= 0 && slideIndex < totalSlides) {
+                currentSlide = slideIndex;
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+                updateSlideIndicator();
+                updateNavButtons();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        // Handle scroll snap detection
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollY = window.scrollY;
+                const newSlide = Math.round(scrollY / window.innerHeight);
+                if (newSlide !== currentSlide && newSlide >= 0 && newSlide < totalSlides) {
+                    currentSlide = newSlide;
+                    updateSlideIndicator();
+                    updateNavButtons();
+                }
+            }, 100);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                previousSlide();
+            }
+        });
+
+        // Answer selection functionality
+        function selectAnswer(element, isCorrect) {
+            const options = element.parentElement.children;
+            
+            // Prevent multiple selections
+            for (let option of options) {
+                if (option.classList.contains('selected')) return;
+            }
+            
+            // Mark all options as selected to prevent further clicks
+            for (let option of options) {
+                option.classList.add('selected');
+            }
+            
+            // Show correct/incorrect for the clicked option
+            if (isCorrect) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+                // Also highlight the correct answer
+                for (let option of options) {
+                    if (option.onclick.toString().includes('true')) {
+                        option.classList.add('correct');
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Initialize
+        updateSlideIndicator();
+        updateNavButtons();
+    </script>
+</body>
+</html>
